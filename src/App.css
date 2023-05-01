@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@700&family=Ubuntu:wght@400;500&display=swap');
 
+* {
+    border-radius: 0 !important;
+}
+
+main {
+    min-height: calc(100vh - 176px);
+    padding-bottom: 100px;
+}
+
 h1 {
     font-family: 'Sora', sans-serif;
     font-weight: 700;
-    /*font-size: 20px;*/
-}
-
-h2 {
-    font-weight: 500;
-    font-size: 24px;
+    font-size: 20px !important;
 }
 
 p,
@@ -18,4 +22,25 @@ h2 {
 
 p {
     font-weight: 400;
+    margin-bottom: 0 !important;
+}
+
+.undertitle-p {
+    font-weight: 500;
+}
+
+a {
+    color: black !important;
+    text-decoration: none !important;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.smallIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.mediumIcon {
+    width: 20px;
+    height: 20px;
 }

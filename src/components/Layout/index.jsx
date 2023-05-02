@@ -4,9 +4,9 @@ import Footer from '../Footer/index';
 
 function Layout() {
     return (
-        <div>
+        <div className='bg-light'>
             <Header />
-            <main>
+            <main className='my-5'>
                 <Outlet />
             </main>
             <Footer />

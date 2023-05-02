@@ -3,6 +3,7 @@
     font-family: 'Ubuntu', sans-serif;
     padding-left: 40px;
     border-color: black;
+    height: 40px;
 }
 
 .custom-header-searchbar:focus {
@@ -40,7 +41,7 @@
 }
 
 .expandMenu {
-    height: 140px;
+    height: 160px;
 }
 
 #header-dropdown-menu {
@@ -48,7 +49,11 @@
     z-index: 7;
     top: 119%;
     right: 0;
-    width: 250%;
+    width: 260%;
+}
+
+#header-dropdown-menu a {
+    color: black !important;
 }
 
 #header-dropdown-menu a:hover {

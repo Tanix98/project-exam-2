@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import holidazeLogo from '../../assets/imgs/logo.svg';
 
@@ -77,6 +78,15 @@ export default function Header() {
                                 aria-label='Search'
                             />
                         </InputGroup>
+                        <Button className='d-none btn-dark rounded-pill'>
+                            <Link
+                                to='/login'
+                                className='d-flex align-items-center justify-content-end gap-2 text-light'
+                                role='menuitem'
+                            >
+                                Log In
+                            </Link>
+                        </Button>
                         <div
                             className='ms-auto'
                             id='header-menu-parent'
@@ -84,7 +94,7 @@ export default function Header() {
                         >
                             <button
                                 id='header-menu-btn'
-                                className='bg-transparent border-0 pe-0'
+                                className='bg-transparent border-0 p-0'
                                 aria-haspopup='true'
                                 aria-controls='menu'
                                 onClick={handleClick}
@@ -123,8 +133,8 @@ export default function Header() {
                             <Nav
                                 className={
                                     isOpen
-                                        ? 'dropdownMenu expandMenu flex-column gap-1 bg-light rounded-bottom shadow-sm'
-                                        : 'dropdownMenu flex-column gap-1 bg-light rounded-bottom shadow-sm'
+                                        ? 'dropdownMenu expandMenu flex-column bg-light rounded-bottom shadow-sm'
+                                        : 'dropdownMenu flex-column bg-light rounded-bottom shadow-sm'
                                 }
                                 id='header-dropdown-menu'
                                 role='menu'
@@ -132,7 +142,7 @@ export default function Header() {
                                 onClick={handleClick}
                             >
                                 <Link
-                                    className='px-2 py-1 d-flex align-items-center justify-content-end gap-2'
+                                    className='p-2 d-flex align-items-center justify-content-end gap-2'
                                     role='menuitem'
                                 >
                                     Create booking
@@ -147,7 +157,7 @@ export default function Header() {
                                     </svg>
                                 </Link>
                                 <Link
-                                    className='px-2 py-1 d-flex align-items-center justify-content-end gap-2'
+                                    className='p-2 d-flex align-items-center justify-content-end gap-2'
                                     role='menuitem'
                                 >
                                     Create venue
@@ -162,45 +172,8 @@ export default function Header() {
                                     </svg>
                                 </Link>
                                 <Link
-                                    to='/bookings'
-                                    className='d-none px-2 py-1 d-flex align-items-center justify-content-end gap-2'
-                                    role='menuitem'
-                                >
-                                    My Bookings
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='currentColor'
-                                        className='mediumIcon bi bi-journal-bookmark-fill'
-                                        viewBox='0 0 16 16'
-                                        alt='My bookings'
-                                    >
-                                        <path
-                                            fillRule='evenodd'
-                                            d='M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8V1z'
-                                        />
-                                        <path d='M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z' />
-                                        <path d='M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z' />
-                                    </svg>
-                                </Link>
-                                <Link
-                                    to='/venues'
-                                    className='d-none px-2 py-1 d-flex align-items-center justify-content-end gap-2'
-                                    role='menuitem'
-                                >
-                                    My Venues
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='currentColor'
-                                        className='mediumIcon bi bi-buildings-fill'
-                                        viewBox='0 0 16 16'
-                                        alt='My venues'
-                                    >
-                                        <path d='M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V.5ZM2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-1 2v1H2v-1h1Zm1 0h1v1H4v-1Zm9-10v1h-1V3h1ZM8 5h1v1H8V5Zm1 2v1H8V7h1ZM8 9h1v1H8V9Zm2 0h1v1h-1V9Zm-1 2v1H8v-1h1Zm1 0h1v1h-1v-1Zm3-2v1h-1V9h1Zm-1 2h1v1h-1v-1Zm-2-4h1v1h-1V7Zm3 0v1h-1V7h1Zm-2-2v1h-1V5h1Zm1 0h1v1h-1V5Z' />
-                                    </svg>
-                                </Link>
-                                <Link
                                     to='/profile'
-                                    className='px-2 py-1 d-flex align-items-center justify-content-end gap-2'
+                                    className='p-2 d-flex align-items-center justify-content-end gap-2'
                                     role='menuitem'
                                 >
                                     My Profile
@@ -215,11 +188,11 @@ export default function Header() {
                                     </svg>
                                 </Link>
                                 <Link
-                                    to='/login'
-                                    className='px-2 py-1 d-flex align-items-center justify-content-end gap-2'
+                                    to='/'
+                                    className='p-2 d-flex align-items-center justify-content-end gap-2'
                                     role='menuitem'
                                 >
-                                    Log In
+                                    Log Out
                                     <svg
                                         xmlns='http://www.w3.org/2000/svg'
                                         fill='currentColor'

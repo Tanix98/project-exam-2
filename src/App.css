@@ -9,20 +9,29 @@ main {
     padding-bottom: 100px;
 }
 
-h1 {
+h1,
+h2 {
     font-family: 'Sora', sans-serif;
     font-weight: 700;
+}
+
+h1 {
     font-size: 20px !important;
 }
 
-p,
 h2 {
-    font-family: 'Ubuntu', sans-serif;
+    font-size: 17px !important;
+}
+
+p,
+h1,
+h2 {
+    margin-bottom: 0 !important;
 }
 
 p {
+    font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
-    margin-bottom: 0 !important;
 }
 
 .undertitle-p {
@@ -35,12 +44,41 @@ a {
     font-family: 'Ubuntu', sans-serif;
 }
 
+.linkText {
+    color: #73a609 !important;
+}
+.linkText:hover {
+    color: #68930a !important;
+}
+
 .smallIcon {
     width: 16px;
     height: 16px;
 }
-
 .mediumIcon {
     width: 20px;
     height: 20px;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+}
+.lds-dual-ring:after {
+    content: ' ';
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-color: black transparent black transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

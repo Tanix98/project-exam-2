@@ -1,0 +1,48 @@
+#venue-container {
+    max-width: 300px;
+    justify-content: center;
+}
+
+.venueContainer {
+    max-width: 250px;
+}
+
+.venueImgContainer {
+    height: 160px;
+    overflow: hidden;
+}
+
+.venueImg {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.venueImg:hover {
+    transform: scale(1.03);
+}
+
+.venueOwner img,
+svg {
+    width: 16px;
+    height: 16px;
+    object-fit: cover;
+}
+
+.venueTitle {
+    width: 0;
+    min-width: 100%;
+}
+
+@media only screen and (min-width: 620px) {
+    #venue-container {
+        max-width: 600px;
+        justify-content: space-between;
+    }
+}
+
+@media only screen and (min-width: 950px) {
+    #venue-container {
+        max-width: 900px;
+    }
+}

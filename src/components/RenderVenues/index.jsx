@@ -42,25 +42,21 @@ function RenderVenues() {
                         className='venuesContainer d-flex flex-column my-2'
                     >
                         <div className='venuesImgContainer rounded shadow-sm d-inline-block'>
-                            {venue.media[0] ? (
-                                <img
-                                    className='img-fluid venuesImg'
-                                    src={venue.media[0]}
-                                    alt={'Venue: ' + venue.name}
-                                />
-                            ) : (
-                                <img
-                                    className='img-fluid venuesImg'
-                                    src={noImg}
-                                    alt='No venue image'
-                                />
-                            )}
+                            <img
+                                className='img-fluid venuesImg'
+                                src={venue.media[0] ? venue.media[0] : noImg}
+                                alt={venue.name}
+                            />
                         </div>
-                        <div className='venuesOwner mt-1 d-flex align-items-center gap-1'>
+                        <Link
+                            to={{ pathname: `/profile/${venue.owner.name}` }}
+                            className='venuesOwner mt-1 d-flex align-items-center gap-1'
+                        >
                             {venue.owner.avatar ? (
                                 <img
                                     src={venue.owner.avatar}
                                     className='rounded-circle'
+                                    alt='Avatar'
                                 />
                             ) : (
                                 <svg
@@ -68,7 +64,7 @@ function RenderVenues() {
                                     fill='currentColor'
                                     className='bi bi-person-circle mw-100 mh-100'
                                     viewBox='0 0 16 16'
-                                    alt='Navigation links'
+                                    alt='Default avatar'
                                 >
                                     <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                                     <path
@@ -78,8 +74,8 @@ function RenderVenues() {
                                 </svg>
                             )}
                             <p className='text-muted'>{venue.owner.name}</p>
-                        </div>
-                        <h2 className='venuesTitle'>{venue.name}</h2>
+                        </Link>
+                        <p className='venuesTitle title-p'>{venue.name}</p>
                         <p>Price: {venue.price}kr</p>
                     </div>
                 </Link>

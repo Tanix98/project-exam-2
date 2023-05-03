@@ -15,7 +15,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path='login' element={<Login />} />
                 <Route path='venue/:id' element={<SingleVenue />} />
-                <Route path='profile' element={<Profile />} />
+                <Route path='profile/name' element={<Profile />} />
                 <Route path='*' element={<Error />} />
             </Route>
         </Routes>

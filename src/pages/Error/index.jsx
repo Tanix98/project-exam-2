@@ -14,12 +14,14 @@ function Error() {
     );
 
     return (
-        <Container>
-            <h1 className='mb-3'>Page not found!</h1>
-            <p className='mb-1'>
-                The page you are requesting was deleted or never existed.
-            </p>
-            <p>Check that you entered the link correctly, or {link}</p>
+        <Container className='d-flex justify-content-center'>
+            <div>
+                <h1 className='mb-3'>Page not found!</h1>
+                <p className='mb-1'>
+                    The page you are requesting was deleted or never existed.
+                </p>
+                <p>Check that you entered the link correctly, or {link}</p>
+            </div>
         </Container>
     );
 }

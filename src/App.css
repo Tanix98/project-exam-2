@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Ubuntu:wght@400;500&display=swap');
 
-* {
-    border-radius: 0 !important;
-}
-
 main {
     min-height: calc(100vh - 176px);
     padding-bottom: 100px;
@@ -32,7 +28,8 @@ h1 {
     font-weight: 500;
 }
 
-p {
+p,
+.ubuntuText {
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
 }
@@ -45,6 +42,7 @@ a {
 
 .linkText {
     color: #73a609 !important;
+    text-decoration: underline !important;
 }
 .linkText:hover {
     color: #68930a !important;
@@ -80,4 +78,8 @@ a {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.formContainer {
+    max-width: 400px !important;
 }

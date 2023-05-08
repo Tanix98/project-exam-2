@@ -2,17 +2,28 @@
     max-width: 600px;
 }
 
-#venueImgContainer {
+.venueImg {
     max-height: 400px;
-    max-width: 700px;
-    overflow: hidden;
 }
 
-.venueImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+#img-carousel {
+    height: 400px;
+    width: 700px;
 }
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    background-color: black;
+    width: 38px;
+    height: 38px;
+    border-radius: 50% !important;
+}
+
+/*.carousel-indicators {
+    background-color: white;
+    border-radius: 4px !important;
+    opacity: 50%;
+}*/
 
 #venueOwner img,
 #venueOwner svg {
@@ -21,7 +32,11 @@
     object-fit: cover;
 }
 
-#venueMeta svg {
+#venueMeta a:hover {
+    color: #73a609 !important;
+}
+
+#venueMetaPets svg {
     width: 26px;
     height: 100%;
 }

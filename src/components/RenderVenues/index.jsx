@@ -1,29 +1,21 @@
 import '../RenderVenues/index.css';
+import LoadingScreen from '../LoadingScreen';
+import LoadingError from '../LoadingError';
 import noImg from '../../assets/imgs/no_img.svg';
-import UseApi from '../../api/UseApi';
+import UseApiGet from '../../api/UseApiGet';
 import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 
 function RenderVenues() {
-    const { data, isLoading, isError } = UseApi(
+    const { data, isLoading, isError } = UseApiGet(
         'https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
     );
 
     if (isLoading) {
-        return (
-            <div className='text-center'>
-                <div className='lds-dual-ring'></div>
-                <p>Loading venues...</p>
-            </div>
-        );
+        return <LoadingScreen />;
     }
 
     if (isError) {
-        return (
-            <Container>
-                <h1>Error, could not load venues.</h1>
-            </Container>
-        );
+        return <LoadingError />;
     }
 
     return (

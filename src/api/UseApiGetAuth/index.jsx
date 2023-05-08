@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // Api fetch hook module
-function UseApiPostSignup(
-    url,
-    userName,
-    userEmail,
-    userPassword,
-    userAccountType
-) {
+function UseApiGetAuth(url) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -16,12 +10,12 @@ function UseApiPostSignup(
         async function fetchData() {
             try {
                 const response = await fetch(url, {
-                    method: 'POST',
-                    body: {
-                        name: userName,
-                        email: userEmail,
-                        password: userPassword,
-                        venueManager: userAccountType,
+                    headers: {
+                        Authorization:
+                            'Bearer ' +
+                            localStorage
+                                .getItem('userToken')
+                                .replace(/['"]+/g, ''),
                     },
                 });
                 const json = await response.json();
@@ -38,4 +32,4 @@ function UseApiPostSignup(
     return { data, isLoading, isError };
 }
 
-export default UseApiPostSignup;
+export default UseApiGetAuth;

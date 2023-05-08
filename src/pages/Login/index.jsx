@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,6 +10,7 @@ function Login() {
     }, []);
 
     // Input fields states sign up
+    const [signupFormClasses, setSignupFormClasses] = useState('d-none');
     const [userVenueManager, setUserVenueManager] = useState(false);
     const onOptionChange = () => {
         setUserVenueManager(!userVenueManager);
@@ -20,11 +22,16 @@ function Login() {
         venueManager: userVenueManager,
     });
     const [signupSubmitAlert, setSignupSubmitAlert] = useState('');
+    const [signupSubmitAlertClasses, setSignupSubmitAlertClasses] =
+        useState('');
     const [signupNameError, setSignupNameError] = useState('');
     const [signupEmailError, setSignupEmailError] = useState('');
     const [signupPasswordError, setSignupPasswordError] = useState('');
 
     // Input fields states login
+    const [loginFormClasses, setLoginFormClasses] = useState(
+        'formContainer ubuntuText w-100'
+    );
     const [loginFormData, setLoginFormData] = useState({
         email: '',
         password: '',
@@ -33,6 +40,11 @@ function Login() {
     const [loginSubmitAlertClasses, setLoginSubmitAlertClasses] = useState('');
     const [loginEmailError, setLoginEmailError] = useState('');
     const [loginPasswordError, setLoginPasswordError] = useState('');
+    const navigate = useNavigate();
+
+    if (localStorage.getItem('userName')) {
+        navigate('/');
+    }
 
     // Sign up form fetch
     const onFormSubmitSignup = async (event) => {
@@ -54,30 +66,63 @@ function Login() {
             console.log(data);
 
             if (data.name) {
+                setSignupNameError('');
                 setSignupEmailError('');
                 setSignupPasswordError('');
 
                 setSignupFormData({
                     ...signupFormData,
+                    name: '',
                     email: '',
                     password: '',
                 });
-
+                setSignupSubmitAlertClasses('text-success mt-2');
                 setSignupSubmitAlert('Account created! You may now log in.');
             }
 
             // Errors
+
+            if (data.errors) {
+                if (data.errors[0].message === 'Profile already exists') {
+                    setSignupNameError('');
+                    setSignupEmailError('');
+                    setSignupPasswordError('');
+                    setSignupSubmitAlertClasses('text-danger mt-2');
+                    setSignupSubmitAlert(data.errors[0].message);
+                }
+            }
             if (signupFormData.name === '') {
                 setSignupNameError('Please fill out this field');
                 setSignupSubmitAlert('');
+            } else {
+                if (data.errors) {
+                    if (data.errors[0].message) {
+                        setSignupNameError(data.errors[0].message);
+                        setSignupSubmitAlert('');
+                    }
+                }
             }
             if (signupFormData.email === '') {
                 setSignupEmailError('Please fill out this field');
                 setSignupSubmitAlert('');
+            } else {
+                if (data.errors) {
+                    if (data.errors[1].message) {
+                        setSignupEmailError(data.errors[1].message);
+                        setSignupSubmitAlert('');
+                    }
+                }
             }
             if (signupFormData.password === '') {
                 setSignupPasswordError('Please fill out this field');
                 setSignupSubmitAlert('');
+            } else {
+                if (data.errors) {
+                    if (data.errors[2].message) {
+                        setSignupPasswordError(data.errors[2].message);
+                        setSignupSubmitAlert('');
+                    }
+                }
             }
         } catch (error) {
             console.log(error);
@@ -124,28 +169,14 @@ function Login() {
                     JSON.stringify(data.venueManager)
                 );
                 localStorage.setItem(
-                    'userAccessToken',
+                    'userToken',
                     JSON.stringify(data.accessToken)
                 );
+                navigate('/');
+                window.location.reload(false);
             }
+
             // Errors
-            if (
-                loginFormData.password.length > 0 &&
-                loginFormData.password.length > 0 &&
-                data.errors[0].message === 'Invalid email or password'
-            ) {
-                setLoginEmailError('');
-                setLoginPasswordError('');
-                setLoginSubmitAlertClasses('text-danger mt-2');
-                setLoginSubmitAlert(data.errors[0].message);
-            }
-            if (
-                loginFormData.email.length > 0 &&
-                data.errors[0].message === 'Email must be a valid email'
-            ) {
-                setLoginEmailError(data.errors[0].message);
-                setLoginSubmitAlert('');
-            }
             if (loginFormData.email === '') {
                 setLoginEmailError('Please fill out this field');
                 setLoginSubmitAlert('');
@@ -156,6 +187,25 @@ function Login() {
             }
             if (loginFormData.password.length > 0) {
                 setLoginPasswordError('');
+            }
+            if (data.errors) {
+                if (
+                    loginFormData.password.length > 0 &&
+                    loginFormData.password.length > 0 &&
+                    data.errors[0].message === 'Invalid email or password'
+                ) {
+                    setLoginEmailError('');
+                    setLoginPasswordError('');
+                    setLoginSubmitAlertClasses('text-danger mt-2');
+                    setLoginSubmitAlert(data.errors[0].message);
+                }
+                if (
+                    loginFormData.email.length > 0 &&
+                    data.errors[0].message === 'Email must be a valid email'
+                ) {
+                    setLoginEmailError(data.errors[0].message);
+                    setLoginSubmitAlert('');
+                }
             }
         } catch (error) {
             console.log(error);
@@ -176,10 +226,24 @@ function Login() {
         }
     }
 
+    const renderSignupForm = () => {
+        setLoginFormClasses('d-none');
+        setSignupFormClasses('formContainer ubuntuText w-100');
+    };
+    const renderLoginForm = () => {
+        setSignupFormClasses('d-none');
+        setLoginFormClasses('formContainer ubuntuText w-100');
+    };
+
     return (
-        <Container className='d-flex justify-content-center flex-wrap gap-5'>
-            <Form className='formContainer ubuntuText w-100'>
-                <h1 className='mb-3'>Log in</h1>
+        <Container className='d-flex justify-content-center'>
+            <Form className={loginFormClasses}>
+                <div className='d-flex flex-wrap justify-content-between mb-3 gap-2'>
+                    <h1>Log in</h1>
+                    <Link onClick={renderSignupForm} className='linkText'>
+                        Don't have an account?
+                    </Link>
+                </div>
                 <Form.Group className='mb-3'>
                     <Form.Label>Email address *</Form.Label>
                     <Form.Control
@@ -195,7 +259,6 @@ function Login() {
                     />
                     <p className='text-danger mt-1'>{loginEmailError}</p>
                 </Form.Group>
-
                 <Form.Group className='mb-3'>
                     <Form.Label>Password *</Form.Label>
                     <Form.Control
@@ -211,22 +274,25 @@ function Login() {
                     />
                     <p className='text-danger mt-1'>{loginPasswordError}</p>
                 </Form.Group>
-                <div className='d-flex justify-content-center justify-content-sm-start'>
-                    <Button
-                        variant='success'
-                        className='formContainerBtn rounded-pill px-5 mt-2'
-                        type='submit'
-                        onKeyDown={handleKeyDownLogin}
-                        onClick={onFormSubmitLogin}
-                    >
-                        Log in
-                    </Button>
-                </div>
+                <Button
+                    variant='success'
+                    className='rounded-pill mt-2 w-100'
+                    type='submit'
+                    onKeyDown={handleKeyDownLogin}
+                    onClick={onFormSubmitLogin}
+                >
+                    Log in
+                </Button>
                 <p className={loginSubmitAlertClasses}>{loginSubmitAlert}</p>
             </Form>
 
-            <Form className='formContainer ubuntuText w-100'>
-                <h1 className='mb-3'>Sign up</h1>
+            <Form className={signupFormClasses}>
+                <div className='d-flex flex-wrap justify-content-between mb-3 gap-2'>
+                    <h1>Sign up</h1>
+                    <Link onClick={renderLoginForm} className='linkText'>
+                        Already have an account?
+                    </Link>
+                </div>
                 <Form.Group className='mb-3'>
                     <Form.Label>Name *</Form.Label>
                     <Form.Control
@@ -295,7 +361,7 @@ function Login() {
                 <div className='d-flex justify-content-center justify-content-sm-start'>
                     <Button
                         variant='success'
-                        className='formContainerBtn rounded-pill px-5 mt-2'
+                        className='rounded-pill mt-2 w-100'
                         type='submit'
                         onKeyDown={handleKeyDownSignup}
                         onClick={onFormSubmitSignup}
@@ -303,7 +369,7 @@ function Login() {
                         Sign up
                     </Button>
                 </div>
-                <p className='text-danger mt-2'>{signupSubmitAlert}</p>
+                <p className={signupSubmitAlertClasses}>{signupSubmitAlert}</p>
             </Form>
         </Container>
     );

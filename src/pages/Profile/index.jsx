@@ -1,4 +1,5 @@
 import '../Profile/index.css';
+import EditUserAvatar from '../../components/EditUserAvatar';
 import UseApiGetAuth from '../../api/UseApiGetAuth';
 import LoadingScreen from '../../components/LoadingScreen';
 import LoadingError from '../../components/LoadingError';
@@ -10,31 +11,20 @@ import Container from 'react-bootstrap/Container';
 function Profile() {
     let { name } = useParams();
 
-    const { data, isLoading, isError } = UseApiGetAuth(
+    const { data, isLoading, isError, noAuth } = UseApiGetAuth(
         `https://api.noroff.dev/api/v1/holidaze/profiles/${name}?_venues=true`
     );
-
-    console.log(data);
 
     useEffect(() => {
         document.title = data.name + ' - Holidaze';
     }, [data.name + ' - Holidaze']);
-
-    if (isLoading) {
-        return <LoadingScreen />;
-    }
-
-    if (isError) {
-        return <LoadingError />;
-    }
 
     const link = (
         <Link to='/login' className='linkText'>
             Log in or sign up
         </Link>
     );
-
-    if (data.statusCode === 401) {
+    if (noAuth) {
         document.title = 'User profile - Holidaze';
 
         return (
@@ -47,23 +37,23 @@ function Profile() {
         );
     }
 
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
+
+    if (isError) {
+        return <LoadingError />;
+    }
+
     return (
         <Container>
-            <div className='d-flex d-md-block justify-content-center gap-4 flex-wrap'>
-                <div className='d-flex d-md-none flex-column gap-2'>
-                    <Button variant='success' className='rounded-pill'>
-                        Edit avatar
-                    </Button>
-                    <Button
-                        variant='outline-dark'
-                        className='px-4 rounded-pill'
-                    >
-                        My bookings
-                    </Button>
-                    <Button variant='dark' className='rounded-pill'>
-                        My venues
-                    </Button>
-                </div>
+            <div
+                className={
+                    localStorage.getItem('userVenueManager')
+                        ? 'd-flex justify-content-center flex-wrap gap-5'
+                        : 'd-flex flex-column justify-content-center flex-wrap gap-4'
+                }
+            >
                 <div className='text-center'>
                     {data.avatar ? (
                         <img
@@ -89,22 +79,38 @@ function Profile() {
                         </svg>
                     )}
                     <h1 className='mt-1'>{data.name}</h1>
-                    {data.venueManager && <p>Venue manager</p>}
+                    {data.venueManager && (
+                        <p className='text-muted'>Venue manager</p>
+                    )}
                 </div>
-                <div className='d-none d-md-flex justify-content-center gap-2 mt-3'>
-                    <Button variant='success' className='px-4 rounded-pill'>
-                        Edit avatar
-                    </Button>
-                    <Button
-                        variant='outline-dark'
-                        className='px-4 rounded-pill'
+                {data.name ===
+                    localStorage.getItem('userName').replace(/['"]+/g, '') && (
+                    <div
+                        className={
+                            localStorage.getItem('userVenueManager')
+                                ? 'd-flex flex-column gap-2'
+                                : 'd-flex justify-content-center gap-2'
+                        }
                     >
-                        My bookings
-                    </Button>
-                    <Button variant='dark' className='px-4 rounded-pill'>
-                        My venues
-                    </Button>
-                </div>
+                        <EditUserAvatar />
+                        {data.venueManager && (
+                            <Button
+                                variant='dark'
+                                className='px-5 rounded-pill'
+                            >
+                                My bookings
+                            </Button>
+                        )}
+                        {data.venueManager && (
+                            <Button
+                                variant='outline-dark'
+                                className='rounded-pill'
+                            >
+                                My venues
+                            </Button>
+                        )}
+                    </div>
+                )}
             </div>
         </Container>
     );

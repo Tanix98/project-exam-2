@@ -28,11 +28,9 @@ function RenderVenues() {
                     to={{
                         pathname: `/venue/${venue.id}`,
                     }}
+                    key={key}
                 >
-                    <div
-                        key={key}
-                        className='venuesContainer d-flex flex-column my-2'
-                    >
+                    <div className='venuesContainer d-flex flex-column my-2'>
                         <div className='venuesImgContainer rounded shadow-sm d-inline-block'>
                             <img
                                 className='img-fluid venuesImg'
@@ -40,10 +38,7 @@ function RenderVenues() {
                                 alt={venue.name}
                             />
                         </div>
-                        <Link
-                            to={{ pathname: `/profile/${venue.owner.name}` }}
-                            className='venuesOwner mt-1 d-flex align-items-center gap-1'
-                        >
+                        <div className='venuesOwner mt-1 d-flex align-items-center gap-1'>
                             {venue.owner.avatar ? (
                                 <img
                                     src={venue.owner.avatar}
@@ -66,7 +61,7 @@ function RenderVenues() {
                                 </svg>
                             )}
                             <p className='text-muted'>{venue.owner.name}</p>
-                        </Link>
+                        </div>
                         <p className='venuesTitle title-p'>{venue.name}</p>
                         <p>Price: {venue.price}kr</p>
                     </div>

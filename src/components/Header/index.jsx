@@ -47,15 +47,35 @@ export default function Header() {
         }
     };
 
+    // Log out user
     const logOutUser = () => {
         localStorage.removeItem('userName');
         localStorage.removeItem('userAvatar');
         localStorage.removeItem('userVenueManager');
         localStorage.removeItem('userToken');
+        window.location.reload(false);
     };
 
+    const [openMenuClasses, setOpenMenuClasses] = useState();
+
+    useEffect(() => {
+        if (localStorage.getItem('userVenueManager')) {
+            setOpenMenuClasses(
+                'dropdownMenu expandMenuManager flex-column bg-light rounded-bottom shadow-sm'
+            );
+        } else {
+            setOpenMenuClasses(
+                'dropdownMenu expandMenuRegular flex-column bg-light rounded-bottom shadow-sm'
+            );
+        }
+    });
+
     return (
-        <Navbar bg='light' variant='light' className='sticky-top mb-4'>
+        <Navbar
+            bg='light'
+            variant='light'
+            className='sticky-top mb-4 shadow-sm'
+        >
             <Container>
                 <div className='d-flex flex-column gap-2 w-100'>
                     <div className='d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center gap-3'>
@@ -112,7 +132,9 @@ export default function Header() {
                                             d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'
                                         />
                                     </svg>
-                                    {localStorage.getItem('userAvatar') ? (
+                                    {localStorage
+                                        .getItem('userAvatar')
+                                        .replace(/['"]+/g, '') ? (
                                         <img
                                             src={localStorage
                                                 .getItem('userAvatar')
@@ -141,7 +163,7 @@ export default function Header() {
                                 <Nav
                                     className={
                                         isOpen
-                                            ? 'dropdownMenu expandMenu flex-column bg-light rounded-bottom shadow-sm'
+                                            ? openMenuClasses
                                             : 'dropdownMenu flex-column bg-light rounded-bottom shadow-sm'
                                     }
                                     id='header-dropdown-menu'
@@ -164,21 +186,25 @@ export default function Header() {
                                             <path d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zM8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z' />
                                         </svg>
                                     </Link>
-                                    <Link
-                                        className='p-2 d-flex align-items-center justify-content-end gap-2'
-                                        role='menuitem'
-                                    >
-                                        Create venue
-                                        <svg
-                                            xmlns='http://www.w3.org/2000/svg'
-                                            fill='currentColor'
-                                            className='mediumIcon bi bi-building-fill'
-                                            viewBox='0 0 16 16'
-                                            alt='Create venue'
+                                    {localStorage.getItem(
+                                        'userVenueManager'
+                                    ) && (
+                                        <Link
+                                            className='p-2 d-flex align-items-center justify-content-end gap-2'
+                                            role='menuitem'
                                         >
-                                            <path d='M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z' />
-                                        </svg>
-                                    </Link>
+                                            Create venue
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                fill='currentColor'
+                                                className='mediumIcon bi bi-building-fill'
+                                                viewBox='0 0 16 16'
+                                                alt='Create venue'
+                                            >
+                                                <path d='M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z' />
+                                            </svg>
+                                        </Link>
+                                    )}
                                     <Link
                                         to={
                                             '/profile/' +

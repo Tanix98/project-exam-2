@@ -165,13 +165,15 @@ function Login() {
                 localStorage.setItem('userName', JSON.stringify(data.name));
                 localStorage.setItem('userAvatar', JSON.stringify(data.avatar));
                 localStorage.setItem(
-                    'userVenueManager',
-                    JSON.stringify(data.venueManager)
-                );
-                localStorage.setItem(
                     'userToken',
                     JSON.stringify(data.accessToken)
                 );
+                if (data.venueManager) {
+                    localStorage.setItem(
+                        'userVenueManager',
+                        JSON.stringify(data.venueManager)
+                    );
+                }
                 navigate('/');
                 window.location.reload(false);
             }

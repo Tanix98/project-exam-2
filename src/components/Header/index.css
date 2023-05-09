@@ -40,7 +40,10 @@
     transition: height 0.4s ease;
 }
 
-.expandMenu {
+.expandMenuRegular {
+    height: 120px;
+}
+.expandMenuManager {
     height: 160px;
 }
 
@@ -58,7 +61,7 @@
 
 #header-dropdown-menu a:hover {
     /*background-color: rgb(224, 224, 224);*/
-    color: #73a609 !important;
+    color: #4c7e0c !important;
 }
 
 #profile-img {

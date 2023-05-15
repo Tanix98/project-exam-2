@@ -20,6 +20,7 @@ export default function Header() {
     const handleClick = () => {
         setIsOpen(!isOpen);
     };
+    // Button enter keypress
     function handleKeyDown(event) {
         if (event.keyCode === 13) {
             event.preventDefault();

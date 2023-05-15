@@ -32,7 +32,7 @@
     object-fit: cover;
 }
 
-#venueMeta a:hover {
+#venueMetaLocation:hover {
     color: #73a609 !important;
 }
 

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 
 // Api fetch hook module
 function UseApiGetAuth(url) {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
+    const [dataAuth, setDataAuth] = useState([]);
+    const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+    const [isErrorAuth, setIsErrorAuth] = useState(false);
     const [noAuth, setNoAuth] = useState();
 
     useEffect(() => {
@@ -22,12 +22,12 @@ function UseApiGetAuth(url) {
                     });
                     const json = await response.json();
                     setNoAuth(false);
-                    setData(json);
+                    setDataAuth(json);
                 } catch (error) {
                     console.log(error);
-                    setIsError(true);
+                    setIsErrorAuth(true);
                 } finally {
-                    setIsLoading(false);
+                    setIsLoadingAuth(false);
                 }
             } else {
                 setNoAuth(true);
@@ -36,7 +36,7 @@ function UseApiGetAuth(url) {
         fetchData();
     }, [url]);
 
-    return { data, isLoading, isError, noAuth };
+    return { dataAuth, isLoadingAuth, isErrorAuth, noAuth };
 }
 
 export default UseApiGetAuth;

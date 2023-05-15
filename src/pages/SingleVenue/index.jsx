@@ -22,20 +22,61 @@ function SingleVenue() {
         document.title = data.name + ' - Holidaze';
     }, [data.name + ' - Holidaze']);
 
-    const dateString = new Date(data.created);
-    const venueDate = new Date(dateString).toUTCString();
-
     if (isLoading) {
         return <LoadingScreen />;
     }
 
-    if (isError) {
+    if (isError || data.errors) {
         return <LoadingError />;
     }
 
+    const dateString = new Date(data.created);
+    const venueDate = new Date(dateString).toUTCString();
     // Removes leading zeroes from day number
     const venueDateDayRaw = venueDate.substring(4, 7);
     const venueDateDay = parseFloat(venueDateDayRaw) + ' ';
+
+    const venueLocation = () => {
+        if (
+            data.location.country !== 'Unknown' &&
+            data.location.city !== 'Unknown' &&
+            data.location.address !== 'Unknown'
+        ) {
+            return (
+                <a
+                    className='d-flex align-items-center gap-3'
+                    id='venueMetaLocation'
+                    target='_blank'
+                    rel='noreferrer'
+                    href={
+                        `http://maps.google.com/?q=` +
+                        data.location.address +
+                        ', ' +
+                        data.location.city +
+                        ', ' +
+                        data.location.country
+                    }
+                >
+                    <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='24'
+                        height='24'
+                        fill='currentColor'
+                        className='bi bi-geo-alt-fill'
+                        viewBox='0 0 16 16'
+                        alt='Location'
+                    >
+                        <path d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z' />
+                    </svg>
+                    <p className='undertitle-p'>
+                        {data.location.address && data.location.address + ', '}
+                        {data.location.city && data.location.city + ', '}
+                        {data.location.country && data.location.country}
+                    </p>
+                </a>
+            );
+        }
+    };
 
     return (
         <Container
@@ -49,12 +90,11 @@ function SingleVenue() {
                     variant='dark'
                 >
                     {data.media.map((venueImg, key) => (
-                        <Carousel.Item>
+                        <Carousel.Item key={key}>
                             <img
                                 className='venueImg rounded shadow-sm m-auto'
                                 src={venueImg ? venueImg : noImg}
-                                alt={data.name}
-                                key={key}
+                                alt={data.title}
                             />
                         </Carousel.Item>
                     ))}
@@ -95,13 +135,11 @@ function SingleVenue() {
                         <p className='mt-auto text-muted'>Venue manager</p>
                     </div>
                 </Link>
-                <Button className='btn-success rounded-pill w-100 my-3'>
+                <Button variant='primary' className='rounded-pill w-100 my-3'>
                     View Available Dates
                 </Button>
-                <div
-                    className='bg-white shadow-sm rounded d-flex flex-column gap-3 p-3'
-                    id='venueMeta'
-                >
+                <div className='bg-white shadow-sm rounded d-flex flex-column gap-3 p-3'>
+                    {venueLocation()}
                     <div
                         className={
                             data.meta.wifi
@@ -213,40 +251,6 @@ function SingleVenue() {
                             {'Up to ' + data.maxGuests + ' guests'}
                         </p>
                     </div>
-                    {data.location.address && (
-                        <a
-                            className='d-flex align-items-center gap-3'
-                            target='_blank'
-                            rel='noreferrer'
-                            href={
-                                `http://maps.google.com/?q=` +
-                                data.location.address +
-                                ', ' +
-                                data.location.city +
-                                ', ' +
-                                data.location.country
-                            }
-                        >
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                fill='currentColor'
-                                className='bi bi-geo-alt-fill'
-                                viewBox='0 0 16 16'
-                                alt='Location'
-                            >
-                                <path d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z' />
-                            </svg>
-                            <p className='undertitle-p'>
-                                {data.location.address &&
-                                    data.location.address + ', '}
-                                {data.location.city &&
-                                    data.location.city + ', '}
-                                {data.location.country && data.location.country}
-                            </p>
-                        </a>
-                    )}
                 </div>
 
                 <div className='my-3'>

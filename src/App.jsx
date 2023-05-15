@@ -1,5 +1,5 @@
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/custom_css/custom.css';
 import Layout from './components/Layout/index';
 import Home from './pages/Home';
 import Login from './pages/Login';

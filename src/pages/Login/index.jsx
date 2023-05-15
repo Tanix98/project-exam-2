@@ -277,7 +277,7 @@ function Login() {
                     <p className='text-danger mt-1'>{loginPasswordError}</p>
                 </Form.Group>
                 <Button
-                    variant='success'
+                    variant='primary'
                     className='rounded-pill mt-2 w-100'
                     type='submit'
                     onKeyDown={handleKeyDownLogin}
@@ -362,7 +362,7 @@ function Login() {
                 </Form.Group>
                 <div className='d-flex justify-content-center justify-content-sm-start'>
                     <Button
-                        variant='success'
+                        variant='primary'
                         className='rounded-pill mt-2 w-100'
                         type='submit'
                         onKeyDown={handleKeyDownSignup}

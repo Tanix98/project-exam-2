@@ -17,7 +17,7 @@ function EditUserAvatar() {
     const [editAvatarSubmitAlert, setEditAvatarSubmitAlert] = useState('');
     let { name } = useParams();
 
-    const handleEditAvatar = async (event) => {
+    const handleEditAvatar = async () => {
         try {
             const response = await fetch(
                 `https://api.noroff.dev/api/v1/holidaze/profiles/${name}/media`,
@@ -51,10 +51,24 @@ function EditUserAvatar() {
         }
     };
 
+    // Buttons enter keypress
+    function handleKeyDownClose(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            handleClose();
+        }
+    }
+    function handleKeyDownEdit(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            handleEditAvatar();
+        }
+    }
+
     return (
         <div>
             <Button
-                variant='outline-success'
+                variant='outline-primary'
                 className={
                     localStorage.getItem('userVenueManager')
                         ? 'w-100 rounded-pill'
@@ -95,13 +109,15 @@ function EditUserAvatar() {
                         variant='dark rounded-pill'
                         className='px-4 w-100 col'
                         onClick={handleClose}
+                        onKeyDown={handleKeyDownClose}
                     >
                         Close
                     </Button>
                     <Button
-                        variant='success rounded-pill'
+                        variant='primary rounded-pill'
                         className='px-4 w-100 col text-nowrap'
                         onClick={handleEditAvatar}
+                        onKeyDown={handleKeyDownEdit}
                     >
                         Edit avatar
                     </Button>

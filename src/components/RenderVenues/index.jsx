@@ -5,10 +5,8 @@ import noImg from '../../assets/imgs/no_img.svg';
 import UseApiGet from '../../api/UseApiGet';
 import { Link } from 'react-router-dom';
 
-function RenderVenues() {
-    const { data, isLoading, isError } = UseApiGet(
-        'https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
-    );
+function RenderVenues(url) {
+    const { data, isLoading, isError } = UseApiGet(url);
 
     if (isLoading) {
         return <LoadingScreen />;

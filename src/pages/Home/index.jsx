@@ -6,8 +6,8 @@ function Home() {
         document.title = 'Venues - Holidaze';
     }, []);
 
-    return RenderVenues(
-        'https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
+    return (
+        <RenderVenues url='https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true' />
     );
 }
 

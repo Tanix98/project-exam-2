@@ -29,30 +29,31 @@ function RenderUserVenues(props) {
     }
 
     return (
-        <div
-            id='venues-container'
-            className='d-flex gap-3 flex-wrap text-break px-4 px-sm-4 m-auto'
-        >
-            {dataAuth.map((venue, key) => (
-                <Link
-                    to={{
-                        pathname: `/venue/${venue.id}`,
-                    }}
-                    key={key}
-                >
-                    <div className='venuesContainer d-flex flex-column my-2'>
-                        <div className='venuesImgContainer rounded shadow-sm d-inline-block'>
-                            <img
-                                className='img-fluid venuesImg'
-                                src={venue.media[0] ? venue.media[0] : noImg}
-                                alt={venue.name}
-                            />
+        <div className='d-flex justify-content-center'>
+            <div id='venues-container'>
+                {dataAuth.map((venue, key) => (
+                    <Link
+                        to={{
+                            pathname: `/venue/${venue.id}`,
+                        }}
+                        key={key}
+                    >
+                        <div className='venueContainer d-flex flex-column my-2 p-2 rounded'>
+                            <div className='venueImgContainer rounded shadow-sm d-inline-block'>
+                                <img
+                                    className='img-fluid venueImg'
+                                    src={
+                                        venue.media[0] ? venue.media[0] : noImg
+                                    }
+                                    alt={venue.name}
+                                />
+                            </div>
+                            <p className='venueTitle title-p'>{venue.name}</p>
+                            <p>Price: {venue.price}kr</p>
                         </div>
-                        <p className='venuesTitle title-p'>{venue.name}</p>
-                        <p>Price: {venue.price}kr</p>
-                    </div>
-                </Link>
-            ))}
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }

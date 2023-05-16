@@ -1,4 +1,6 @@
 import '../Header/index.css';
+import holidazeLogo from '../../assets/imgs/logo.svg';
+import UseApiGet from '../../api/UseApiGet';
 import { useRef, useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,10 +8,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import holidazeLogo from '../../assets/imgs/logo.svg';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
+    const { data, isLoading, isError } = UseApiGet(
+        'https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
+    );
+
     // useRef hook creates a reference to the dropdown element
     const dropdownMenuRef = useRef(null);
 
@@ -57,8 +62,8 @@ export default function Header() {
         window.location.reload(false);
     };
 
+    // Show regular or venue manager dropdown menu
     const [openMenuClasses, setOpenMenuClasses] = useState();
-
     useEffect(() => {
         if (localStorage.getItem('userVenueManager')) {
             setOpenMenuClasses(
@@ -70,6 +75,35 @@ export default function Header() {
             );
         }
     });
+
+    // Search venues
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchWord, setSearchWord] = useState('');
+
+    function handleKeyDownSearch(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            search();
+        }
+    }
+
+    function handleFilter(event) {
+        const searchWord = event.target.value;
+        const newFilter = data.filter((venue) => {
+            return venue.name.toLowerCase().includes(searchWord.toLowerCase());
+        });
+        if (searchWord.replace(/ /g, '') === '') {
+            setFilteredData([]);
+        } else {
+            setFilteredData(newFilter);
+        }
+        setSearchWord(searchWord);
+    }
+
+    const navigate = useNavigate();
+    function search() {
+        navigate(`/Search/${searchWord}`);
+    }
 
     return (
         <Navbar
@@ -88,7 +122,10 @@ export default function Header() {
                             />
                         </Link>
                         <InputGroup className='d-none d-sm-flex w-50 ms-auto'>
-                            <button className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'>
+                            <button
+                                className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
+                                onClick={search}
+                            >
                                 <svg
                                     xmlns='http://www.w3.org/2000/svg'
                                     fill='currentColor'
@@ -104,8 +141,30 @@ export default function Header() {
                                 placeholder='Search'
                                 className='custom-header-searchbar rounded-pill bg-light'
                                 aria-label='Search'
+                                value={searchWord}
+                                onChange={handleFilter}
+                                onKeyDown={handleKeyDownSearch}
                             />
                         </InputGroup>
+                        {filteredData.length > 0 && (
+                            <div className='searchResults d-none d-sm-flex bg-white shadow-sm rounded-bottom'>
+                                <div className='searchList rounded-bottom'>
+                                    {filteredData.map((venue, key) => {
+                                        return (
+                                            <Link
+                                                to={{
+                                                    pathname: `/venue/${venue.id}`,
+                                                }}
+                                                className='search-list-item text-decoration-none text-dark d-block p-2'
+                                                key={key}
+                                            >
+                                                {venue.name}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
                         {localStorage.getItem('userName') ? (
                             <div
                                 className='ms-auto'
@@ -258,7 +317,10 @@ export default function Header() {
                         )}
                     </div>
                     <InputGroup className='d-flex d-sm-none '>
-                        <button className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'>
+                        <button
+                            className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
+                            onClick={search}
+                        >
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 fill='currentColor'
@@ -274,8 +336,30 @@ export default function Header() {
                             placeholder='Search'
                             className='custom-header-searchbar rounded-pill bg-light'
                             aria-label='Search'
+                            value={searchWord}
+                            onChange={handleFilter}
+                            onKeyDown={handleKeyDownSearch}
                         />
                     </InputGroup>
+                    {filteredData.length > 0 && (
+                        <div className='searchResults d-flex d-sm-none bg-white shadow-sm rounded-bottom'>
+                            <div className='searchList rounded-bottom'>
+                                {filteredData.map((venue, key) => {
+                                    return (
+                                        <Link
+                                            to={{
+                                                pathname: `/product/${venue.id}`,
+                                            }}
+                                            className='search-list-item text-decoration-none text-dark d-block p-2'
+                                            key={key}
+                                        >
+                                            {venue.name}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </Container>
         </Navbar>

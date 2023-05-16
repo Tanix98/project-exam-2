@@ -10,6 +10,8 @@ Open the project folder in a terminal and type `npm i` to install dependencies, 
 
 Icons from [Font Awesome](https://fontawesome.com) and [Bootstrap](https://icons.getbootstrap.com)
 
+Redux ToolKit [RTK](https://redux-toolkit.js.org/)
+
 Persist state from? [Redux Persist?](https://www.npmjs.com/package/redux-persist)
 
 Calendar from? [MUI?](https://mui.com/)

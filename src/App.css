@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Ubuntu:wght@400;500&display=swap');
 
+:root {
+    --link: #4c7e0c;
+    --link-hover: #3d650a;
+    --element-hover: #eaf4eb;
+    --scrollbarBG: #efefef;
+    --thumbBG: #9a9a9a;
+}
+
 main {
     min-height: calc(100vh - 176px);
     padding-bottom: 100px;
@@ -46,11 +54,11 @@ a {
 }
 
 .linkText {
-    color: #4c7e0c !important;
+    color: var(--link) !important;
     text-decoration: underline !important;
 }
 .linkText:hover {
-    color: #3d650a !important;
+    color: var(--link-hover) !important;
 }
 
 .smallIcon {

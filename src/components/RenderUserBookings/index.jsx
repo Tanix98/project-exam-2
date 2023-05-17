@@ -3,7 +3,6 @@ import LoadingError from '../LoadingError';
 import UseApiGetAuth from '../../api/UseApiGetAuth';
 import EditUserBooking from '../EditUserBooking';
 import DeleteUserBooking from '../deleteUserBooking';
-import { Button } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 
 function RenderUserBookings(props) {
@@ -20,22 +19,6 @@ function RenderUserBookings(props) {
 
     if (dataAuth.length === 0) {
         return <h2>Your booking list is empty</h2>;
-    }
-
-    const editBooking = (id) => {
-        console.log(id);
-    };
-
-    const deleteBooking = (id) => {
-        console.log(id);
-    };
-
-    // Buttons enter keypress
-    function handleKeyDownDelete(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            deleteBooking('');
-        }
     }
 
     return (

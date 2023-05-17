@@ -11,7 +11,7 @@ import { Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
-    const { data, isLoading, isError } = UseApiGet(
+    const { data } = UseApiGet(
         'https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
     );
 
@@ -33,16 +33,6 @@ export default function Header() {
         }
     }
 
-    // useEffect calls handleClickOutside if the user clicks anywhere
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside, true);
-        document.addEventListener('keydown', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-            document.removeEventListener('keydown', handleClickOutside, true);
-        };
-    }, []);
-
     // If the user clicks anywhere outside the useRef hook, set isOpen to false
     const handleClickOutside = (event) => {
         if (
@@ -52,6 +42,16 @@ export default function Header() {
             setIsOpen(false);
         }
     };
+
+    // useEffect calls handleClickOutside if the user clicks anywhere
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true);
+        document.addEventListener('keydown', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+            document.removeEventListener('keydown', handleClickOutside, true);
+        };
+    }, []);
 
     // Log out user
     const logOutUser = () => {
@@ -74,7 +74,7 @@ export default function Header() {
                 'dropdownMenu expandMenuRegular flex-column bg-light rounded-bottom shadow-sm'
             );
         }
-    });
+    }, []);
 
     // Search venues
     const [filteredData, setFilteredData] = useState([]);
@@ -84,6 +84,7 @@ export default function Header() {
         if (event.keyCode === 13) {
             event.preventDefault();
             search();
+            event.target.blur();
         }
     }
 
@@ -104,6 +105,40 @@ export default function Header() {
     function search() {
         navigate(`/Search/${searchWord}`);
     }
+
+    // onBlur to hide search autocomplete, is not accessible as shift focus cannot select the autocomplete list
+    const [focusedMobile, setFocusedMobile] = useState(
+        'searchResults d-flex d-sm-none bg-light shadow-sm rounded-bottom'
+    );
+    const onFocusMobile = () =>
+        setFocusedMobile(
+            'searchResults d-flex d-sm-none bg-light shadow-sm rounded-bottom'
+        );
+    const onBlurMobile = () => {
+        setTimeout(
+            () =>
+                setFocusedMobile(
+                    'searchResults d-none bg-light shadow-sm rounded-bottom'
+                ),
+            100
+        );
+    };
+    const [focusedDesktop, setFocusedDesktop] = useState(
+        'searchResults d-none d-sm-flex bg-light shadow-sm rounded-bottom'
+    );
+    const onFocusDesktop = () =>
+        setFocusedDesktop(
+            'searchResults d-none d-sm-flex bg-light shadow-sm rounded-bottom'
+        );
+    const onBlurDesktop = () => {
+        setTimeout(
+            () =>
+                setFocusedDesktop(
+                    'searchResults d-none bg-light shadow-sm rounded-bottom'
+                ),
+            100
+        );
+    };
 
     return (
         <Navbar
@@ -144,10 +179,12 @@ export default function Header() {
                                 value={searchWord}
                                 onChange={handleFilter}
                                 onKeyDown={handleKeyDownSearch}
+                                onFocus={onFocusDesktop}
+                                onBlur={onBlurDesktop}
                             />
                         </InputGroup>
                         {filteredData.length > 0 && (
-                            <div className='searchResults d-none d-sm-flex bg-white shadow-sm rounded-bottom'>
+                            <div className={focusedDesktop}>
                                 <div className='searchList rounded-bottom'>
                                     {filteredData.map((venue, key) => {
                                         return (
@@ -339,16 +376,18 @@ export default function Header() {
                             value={searchWord}
                             onChange={handleFilter}
                             onKeyDown={handleKeyDownSearch}
+                            onFocus={onFocusMobile}
+                            onBlur={onBlurMobile}
                         />
                     </InputGroup>
                     {filteredData.length > 0 && (
-                        <div className='searchResults d-flex d-sm-none bg-white shadow-sm rounded-bottom'>
+                        <div className={focusedMobile}>
                             <div className='searchList rounded-bottom'>
                                 {filteredData.map((venue, key) => {
                                     return (
                                         <Link
                                             to={{
-                                                pathname: `/product/${venue.id}`,
+                                                pathname: `/venue/${venue.id}`,
                                             }}
                                             className='search-list-item text-decoration-none text-dark d-block p-2'
                                             key={key}

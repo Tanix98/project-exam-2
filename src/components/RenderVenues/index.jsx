@@ -49,7 +49,7 @@ function RenderVenues(props) {
                                     }}
                                     key={key}
                                 >
-                                    <div className='venueContainer d-flex flex-column my-2 p-2 rounded'>
+                                    <div className='venueContainer d-flex flex-column p-2 rounded'>
                                         <div className='venueImgContainer rounded shadow-sm d-inline-block'>
                                             <img
                                                 className='img-fluid venueImg'
@@ -105,7 +105,7 @@ function RenderVenues(props) {
                             }}
                             key={key}
                         >
-                            <div className='venueContainer d-flex flex-column my-2 p-2 rounded'>
+                            <div className='venueContainer d-flex flex-column p-2 rounded'>
                                 <div className='venueImgContainer rounded shadow-sm d-inline-block'>
                                     <img
                                         className='img-fluid venueImg'

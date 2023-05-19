@@ -1,0 +1,8 @@
+.venueMediaListItem p {
+    max-width: 50px;
+}
+
+.venueMediaListItem svg {
+    width: 10px;
+    height: 10px;
+}

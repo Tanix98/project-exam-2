@@ -6,7 +6,7 @@ function Layout() {
     return (
         <div className='bg-light'>
             <Header />
-            <main className='mb-5 mt-3'>
+            <main className='mb-5 pt-4'>
                 <Outlet />
             </main>
             <Footer />

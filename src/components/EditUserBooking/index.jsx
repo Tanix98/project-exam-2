@@ -94,6 +94,9 @@ function EditUserBooking(props) {
                         'Check-in date cannot be after check-out date'
                     );
                 }
+                if (data.errors[0].message === 'Guests must be a number') {
+                    setEditBookingSubmitAlert('Guests must be a number');
+                }
             }
 
             if (!data.errors) {
@@ -116,6 +119,17 @@ function EditUserBooking(props) {
         if (event.keyCode === 13) {
             event.preventDefault();
             handleEditBooking();
+        }
+    }
+    function handleKeyDownNumber(event) {
+        if (!/[0-9]/.test(event.key)) {
+            if (event.keyCode !== 8) {
+                if (event.keyCode === 13) {
+                    handleEditBooking();
+                } else {
+                    event.preventDefault();
+                }
+            }
         }
     }
     function handleKeyDownClose(event) {
@@ -144,12 +158,6 @@ function EditUserBooking(props) {
             guests: e.target.value,
         });
     }
-    function handleKeyDownGuests(event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-            handleEditBooking();
-        }
-    }
 
     return (
         <div>
@@ -172,16 +180,18 @@ function EditUserBooking(props) {
                 <Modal.Body>
                     <Form.Label>Guests</Form.Label>
                     <Form.Control
+                        name='guests'
                         type='number'
                         min='1'
                         value={editBookingFormData.guests}
                         onChange={handleGuestsChange}
-                        onKeyDown={handleKeyDownGuests}
+                        onKeyDown={handleKeyDownNumber}
                         className='mb-2'
                         autoFocus
                     />
                     <Form.Label>Check-in</Form.Label>
                     <Form.Control
+                        name='check-in'
                         type='date'
                         placeholder='Enter check-in date'
                         value={editBookingFormData.dateFrom}
@@ -191,6 +201,7 @@ function EditUserBooking(props) {
                     />
                     <Form.Label>Check-out</Form.Label>
                     <Form.Control
+                        name='check-out'
                         type='date'
                         placeholder='Enter check-out date'
                         value={editBookingFormData.dateTo}

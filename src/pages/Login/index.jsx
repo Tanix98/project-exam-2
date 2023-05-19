@@ -9,6 +9,11 @@ function Login() {
         document.title = 'Log In / Sign up - Holidaze';
     }, []);
 
+    const navigate = useNavigate();
+    if (localStorage.getItem('userName')) {
+        navigate('/');
+    }
+
     // Input fields states sign up
     const [signupFormClasses, setSignupFormClasses] = useState('d-none');
     const [userVenueManager, setUserVenueManager] = useState(false);
@@ -40,11 +45,6 @@ function Login() {
     const [loginSubmitAlertClasses, setLoginSubmitAlertClasses] = useState('');
     const [loginEmailError, setLoginEmailError] = useState('');
     const [loginPasswordError, setLoginPasswordError] = useState('');
-    const navigate = useNavigate();
-
-    if (localStorage.getItem('userName')) {
-        navigate('/');
-    }
 
     // Sign up form fetch
     const onFormSubmitSignup = async (event) => {
@@ -249,6 +249,7 @@ function Login() {
                 <Form.Group className='mb-3'>
                     <Form.Label>Email address *</Form.Label>
                     <Form.Control
+                        name='email'
                         type='email'
                         placeholder='Enter email address'
                         value={loginFormData.email}
@@ -264,6 +265,7 @@ function Login() {
                 <Form.Group className='mb-3'>
                     <Form.Label>Password *</Form.Label>
                     <Form.Control
+                        name='password'
                         type='password'
                         placeholder='Enter password'
                         value={loginFormData.password}
@@ -298,6 +300,7 @@ function Login() {
                 <Form.Group className='mb-3'>
                     <Form.Label>Name *</Form.Label>
                     <Form.Control
+                        name='name'
                         type='name'
                         placeholder='Enter name'
                         value={signupFormData.name}
@@ -313,6 +316,7 @@ function Login() {
                 <Form.Group className='mb-3'>
                     <Form.Label>Email address *</Form.Label>
                     <Form.Control
+                        name='email'
                         type='email'
                         placeholder='Enter email address'
                         value={signupFormData.email}
@@ -328,6 +332,7 @@ function Login() {
                 <Form.Group className='mb-3'>
                     <Form.Label>Password *</Form.Label>
                     <Form.Control
+                        name='password'
                         type='password'
                         placeholder='Enter password'
                         value={signupFormData.password}

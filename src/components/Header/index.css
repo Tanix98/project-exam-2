@@ -72,10 +72,8 @@
 
 .searchResults {
     position: absolute;
-    top: 104px;
-    left: 12px;
-    right: 12px;
-    max-height: 160px;
+    top: 48px;
+    width: 100%;
 }
 
 .searchList {
@@ -105,16 +103,9 @@
     background-color: var(--element-hover);
 }
 
-@media only screen and (max-width: 241px) {
-    .searchResults {
-        top: 160px;
-    }
-}
-
 @media only screen and (min-width: 576px) {
     .searchResults {
-        top: 56px;
-        left: 53.5%;
+        left: 50%;
         transform: translate(-50%);
         max-height: 160px;
         max-width: 100%;

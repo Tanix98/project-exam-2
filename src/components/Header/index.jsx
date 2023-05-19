@@ -17,10 +17,8 @@ export default function Header() {
 
     // useRef hook creates a reference to the dropdown element
     const dropdownMenuRef = useRef(null);
-
     // Dropdown menu and arrow up icon renders if the isOpen state is set to true
     const [isOpen, setIsOpen] = useState(false);
-
     // Toggles the isOpen state between true and false
     const handleClick = () => {
         setIsOpen(!isOpen);
@@ -32,17 +30,6 @@ export default function Header() {
             handleClick();
         }
     }
-
-    // If the user clicks anywhere outside the useRef hook, set isOpen to false
-    const handleClickOutside = (event) => {
-        if (
-            dropdownMenuRef.current &&
-            !dropdownMenuRef.current.contains(event.target)
-        ) {
-            setIsOpen(false);
-        }
-    };
-
     // useEffect calls handleClickOutside if the user clicks anywhere
     useEffect(() => {
         document.addEventListener('click', handleClickOutside, true);
@@ -52,6 +39,15 @@ export default function Header() {
             document.removeEventListener('keydown', handleClickOutside, true);
         };
     }, []);
+    // If the user clicks anywhere outside the useRef hook, set isOpen to false
+    const handleClickOutside = (event) => {
+        if (
+            dropdownMenuRef.current &&
+            !dropdownMenuRef.current.contains(event.target)
+        ) {
+            setIsOpen(false);
+        }
+    };
 
     // Log out user
     const logOutUser = () => {
@@ -76,7 +72,7 @@ export default function Header() {
         }
     }, []);
 
-    // Search venues
+    // Search and autocomplete
     const [filteredData, setFilteredData] = useState([]);
     const [searchWord, setSearchWord] = useState('');
 
@@ -182,26 +178,26 @@ export default function Header() {
                                 onFocus={onFocusDesktop}
                                 onBlur={onBlurDesktop}
                             />
-                        </InputGroup>
-                        {filteredData.length > 0 && (
-                            <div className={focusedDesktop}>
-                                <div className='searchList rounded-bottom'>
-                                    {filteredData.map((venue, key) => {
-                                        return (
-                                            <Link
-                                                to={{
-                                                    pathname: `/venue/${venue.id}`,
-                                                }}
-                                                className='search-list-item text-decoration-none text-dark d-block p-2'
-                                                key={key}
-                                            >
-                                                {venue.name}
-                                            </Link>
-                                        );
-                                    })}
+                            {filteredData.length > 0 && (
+                                <div className={focusedDesktop}>
+                                    <div className='searchList rounded-bottom'>
+                                        {filteredData.map((venue, key) => {
+                                            return (
+                                                <Link
+                                                    to={{
+                                                        pathname: `/venue/${venue.id}`,
+                                                    }}
+                                                    className='search-list-item text-decoration-none text-dark d-block p-2'
+                                                    key={key}
+                                                >
+                                                    {venue.name}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </InputGroup>
                         {localStorage.getItem('userName') ? (
                             <div
                                 className='ms-auto'
@@ -287,6 +283,7 @@ export default function Header() {
                                         'userVenueManager'
                                     ) && (
                                         <Link
+                                            to='/create-venue'
                                             className='p-2 d-flex align-items-center justify-content-end gap-2'
                                             role='menuitem'
                                         >
@@ -353,7 +350,7 @@ export default function Header() {
                             </Button>
                         )}
                     </div>
-                    <InputGroup className='d-flex d-sm-none '>
+                    <InputGroup className='d-flex d-sm-none'>
                         <button
                             className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
                             onClick={search}
@@ -379,26 +376,26 @@ export default function Header() {
                             onFocus={onFocusMobile}
                             onBlur={onBlurMobile}
                         />
-                    </InputGroup>
-                    {filteredData.length > 0 && (
-                        <div className={focusedMobile}>
-                            <div className='searchList rounded-bottom'>
-                                {filteredData.map((venue, key) => {
-                                    return (
-                                        <Link
-                                            to={{
-                                                pathname: `/venue/${venue.id}`,
-                                            }}
-                                            className='search-list-item text-decoration-none text-dark d-block p-2'
-                                            key={key}
-                                        >
-                                            {venue.name}
-                                        </Link>
-                                    );
-                                })}
+                        {filteredData.length > 0 && (
+                            <div className={focusedMobile}>
+                                <div className='searchList rounded-bottom'>
+                                    {filteredData.map((venue, key) => {
+                                        return (
+                                            <Link
+                                                to={{
+                                                    pathname: `/venue/${venue.id}`,
+                                                }}
+                                                className='search-list-item text-decoration-none text-dark d-block p-2'
+                                                key={key}
+                                            >
+                                                {venue.name}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </InputGroup>
                 </div>
             </Container>
         </Navbar>

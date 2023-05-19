@@ -7,6 +7,7 @@ import SingleVenue from './pages/SingleVenue';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Search from './pages/Search';
+import CreateVenue from './pages/CreateVenue';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route path='login' element={<Login />} />
                 <Route path='venue/:id' element={<SingleVenue />} />
                 <Route path='profile/:name' element={<Profile />} />
+                <Route path='create-venue' element={<CreateVenue />} />
                 <Route path='*' element={<Error />} />
             </Route>
         </Routes>

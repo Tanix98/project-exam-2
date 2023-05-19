@@ -89,6 +89,7 @@ function EditUserAvatar() {
                 <Modal.Body>
                     <Form.Label>Media URL</Form.Label>
                     <Form.Control
+                        name='media'
                         type='url'
                         placeholder='Enter media URL'
                         value={editAvatarFormData.avatar}

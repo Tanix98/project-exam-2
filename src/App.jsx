@@ -4,6 +4,7 @@ import Layout from './components/Layout/index';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SingleVenue from './pages/SingleVenue';
+import VenueBookings from './pages/VenueBookings';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Search from './pages/Search';
@@ -19,6 +20,7 @@ function App() {
                 <Route path='search/:searchTerm' element={<Search />} />
                 <Route path='login' element={<Login />} />
                 <Route path='venue/:id' element={<SingleVenue />} />
+                <Route path='venue/bookings/:id' element={<VenueBookings />} />
                 <Route path='profile/:name' element={<Profile />} />
                 <Route path='create-venue' element={<CreateVenue />} />
                 <Route path='*' element={<Error />} />

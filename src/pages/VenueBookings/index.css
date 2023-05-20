@@ -1,0 +1,22 @@
+#user-bookings {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: repeat(auto-fill, minmax(1px, 104px));
+    grid-gap: 25px;
+}
+/*#user-bookings {
+    display: flex;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(1px, 500px));
+    grid-gap: 25px;
+}*/
+
+.userVenueBooking {
+    width: 100vw;
+}
+
+@media only screen and (min-width: 444px) {
+    .userVenueBooking {
+        width: auto;
+    }
+}

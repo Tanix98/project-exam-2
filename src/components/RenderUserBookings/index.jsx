@@ -25,11 +25,11 @@ function RenderUserBookings(props) {
         <div className='d-flex gap-3 flex-wrap text-break px-4 px-sm-4 m-auto'>
             {dataAuth.map((booking, key) => (
                 <div
-                    className='rounded d-flex flex-column my-2 p-3 bg-secondary'
+                    className='rounded d-flex flex-column my-1 p-3 bg-secondary'
                     key={key}
                 >
                     <div>
-                        <p>Guests: {booking.guests}</p>
+                        <p>Guest amount: {booking.guests}</p>
                         <p>
                             Check-in:{' '}
                             {booking.dateFrom.substring(8, 10) +

@@ -180,7 +180,7 @@ export default function Header() {
                             />
                             {filteredData.length > 0 && (
                                 <div className={focusedDesktop}>
-                                    <div className='searchList rounded-bottom'>
+                                    <div className='searchList scrollBarContent rounded-bottom'>
                                         {filteredData.map((venue, key) => {
                                             return (
                                                 <Link
@@ -378,7 +378,7 @@ export default function Header() {
                         />
                         {filteredData.length > 0 && (
                             <div className={focusedMobile}>
-                                <div className='searchList rounded-bottom'>
+                                <div className='searchList scrollBarContent rounded-bottom'>
                                     {filteredData.map((venue, key) => {
                                         return (
                                             <Link

@@ -1,19 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 
-function DeleteUserBooking(props) {
+function DeleteUserVenue(props) {
+    const navigate = useNavigate();
+
     // Modal
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
 
-    // Delete booking
-    const handleDeleteBooking = async () => {
+    // Delete venue
+    const handleDeleteVenue = async () => {
         try {
             const response = await fetch(
-                `https://api.noroff.dev/api/v1/holidaze/bookings/${props.id}`,
+                `https://api.noroff.dev/api/v1/holidaze/venues/${props.id}`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -24,14 +26,13 @@ function DeleteUserBooking(props) {
                                 .getItem('userToken')
                                 .replace(/['"]+/g, ''),
                     },
-                    body: {},
                 }
             );
-            const data = await response.json();
-
-            if (!data.errors) {
-                window.location.reload(false);
-            }
+            navigate(
+                `/profile/${localStorage
+                    .getItem('userName')
+                    .replace(/['"]+/g, '')}`
+            );
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +48,7 @@ function DeleteUserBooking(props) {
     function handleKeyDownDelete(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            handleDeleteBooking();
+            handleDeleteVenue();
         }
     }
     function handleKeyDownClose(event) {
@@ -56,7 +57,6 @@ function DeleteUserBooking(props) {
             handleClose();
         }
     }
-
     return (
         <div>
             <Button
@@ -77,8 +77,8 @@ function DeleteUserBooking(props) {
             >
                 <Modal.Body>
                     <p className='text-danger'>
-                        Are you sure you want to delete this booking? Once
-                        deleted it cannot be recovered.
+                        Are you sure you want to delete this venue? Once deleted
+                        it cannot be recovered.
                     </p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
@@ -93,7 +93,7 @@ function DeleteUserBooking(props) {
                     <Button
                         variant='outline-danger rounded-pill'
                         className='px-4 w-100 col text-nowrap'
-                        onClick={handleDeleteBooking}
+                        onClick={handleDeleteVenue}
                         onKeyDown={handleKeyDownDelete}
                     >
                         Delete
@@ -104,4 +104,4 @@ function DeleteUserBooking(props) {
     );
 }
 
-export default DeleteUserBooking;
+export default DeleteUserVenue;

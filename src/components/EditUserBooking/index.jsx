@@ -1,9 +1,12 @@
+/*import { useNavigate } from 'react-router-dom';*/
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 function EditUserBooking(props) {
+    //const navigate = useNavigate();
+
     // Modal
     const [open, setOpen] = useState(false);
 
@@ -11,7 +14,7 @@ function EditUserBooking(props) {
     const [editBookingFormData, setEditBookingFormData] = useState({
         dateFrom: '',
         dateTo: '',
-        guests: '',
+        guests: 1,
     });
     const [editBookingSubmitAlert, setEditBookingSubmitAlert] = useState('');
 
@@ -101,8 +104,14 @@ function EditUserBooking(props) {
 
             if (!data.errors) {
                 setEditBookingSubmitAlert();
+                /*navigate(
+                    `/profile/${localStorage
+                        .getItem('userName')
+                        .replace(/['"]+/g, '')}`
+                );*/
                 window.location.reload(false);
             }
+            console.log(JSON.stringify(editBookingFormData));
         } catch (error) {
             console.log(error);
         }
@@ -155,7 +164,7 @@ function EditUserBooking(props) {
     function handleGuestsChange(e) {
         setEditBookingFormData({
             ...editBookingFormData,
-            guests: e.target.value,
+            guests: Number(e.target.value),
         });
     }
 
@@ -209,9 +218,9 @@ function EditUserBooking(props) {
                         onKeyDown={handleKeyDownEdit}
                         className='mb-2'
                     />
-                    <Form.Text className='text-danger'>
+                    <p className='text-danger'>
                         {editBookingSubmitAlert.substring(0, 200)}
-                    </Form.Text>
+                    </p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
                     <Button

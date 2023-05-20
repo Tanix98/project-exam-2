@@ -4,14 +4,21 @@ import '../SingleVenue/index.css';
 import LoadingScreen from '../../components/LoadingScreen';
 import LoadingError from '../../components/LoadingError';
 import UseApiGet from '../../api/UseApiGet';
+import EditUserVenue from '../../components/EditUserVenue';
+import DeleteUserVenue from '../../components/DeleteUserVenue';
 import noImg from '../../assets/imgs/no_img.svg';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import { Button, Col } from 'react-bootstrap';
 
 function SingleVenue() {
+    const navigate = useNavigate();
+    const NavigateToVenueBookings = () => {
+        navigate(`/venue/bookings/${data.id}`);
+    };
+
     let { id } = useParams();
 
     const { data, isLoading, isError } = UseApiGet(
@@ -38,13 +45,16 @@ function SingleVenue() {
 
     const venueLocation = () => {
         if (
-            data.location.country !== 'Unknown' &&
-            data.location.city !== 'Unknown' &&
-            data.location.address !== 'Unknown'
+            (data.location.country !== 'Unknown' &&
+                data.location.city !== 'Unknown' &&
+                data.location.address !== 'Unknown') ||
+            (data.location.country !== '' &&
+                data.location.city !== '' &&
+                data.location.address !== '')
         ) {
             return (
                 <a
-                    className='d-flex align-items-center gap-3'
+                    className='d-inline-flex align-items-center gap-3'
                     id='venueMetaLocation'
                     target='_blank'
                     rel='noreferrer'
@@ -78,19 +88,63 @@ function SingleVenue() {
         }
     };
 
+    const venueBtns = () => {
+        if (localStorage.getItem('userName')) {
+            if (
+                data.owner.name ===
+                localStorage.getItem('userName').replace(/['"]+/g, '')
+            ) {
+                return (
+                    <div className='my-3'>
+                        <Button
+                            variant='primary'
+                            className='rounded-pill w-100 mb-3'
+                            onClick={NavigateToVenueBookings}
+                        >
+                            View Bookings
+                        </Button>
+                        <div className='d-flex flex-wrap gap-3'>
+                            <Col>
+                                <DeleteUserVenue id={data.id} />
+                            </Col>
+                            <Col>
+                                <EditUserVenue data={data} />
+                            </Col>
+                        </div>
+                    </div>
+                );
+            } else {
+                return (
+                    <Button
+                        variant='primary'
+                        className='rounded-pill w-100 my-3'
+                    >
+                        View Available Dates
+                    </Button>
+                );
+            }
+        } else {
+            return (
+                <Button variant='primary' className='rounded-pill w-100 my-3'>
+                    View Available Dates
+                </Button>
+            );
+        }
+    };
+
     return (
         <Container id='venue-container'>
             <Carousel
                 id='img-carousel'
                 variant='dark'
-                className='rounded'
+                className='rounded d-flex align-items-center justify-content-center'
                 interval={50000}
             >
                 {data.media[0] ? (
                     data.media.map((venueImg, key) => (
                         <Carousel.Item
                             key={key}
-                            className='carouselImgContainer rounded '
+                            className='carouselImgContainer rounded text-center'
                         >
                             <img
                                 className='carouselImg rounded shadow-sm my-auto'
@@ -145,16 +199,33 @@ function SingleVenue() {
                     <p className='mt-auto text-muted'>Venue manager</p>
                 </div>
             </Link>
-            <Button variant='primary' className='rounded-pill w-100 my-3'>
-                View Available Dates
-            </Button>
+            {venueBtns()}
             <div className='bg-white shadow-sm rounded d-flex flex-column gap-3 p-3'>
                 {venueLocation()}
                 <div
+                    className='d-flex align-items-center gap-3'
+                    id='venue-meta'
+                >
+                    <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='24'
+                        height='24'
+                        fill='currentColor'
+                        className='bi bi-people-fill'
+                        viewBox='0 0 16 16'
+                        alt='Max guests'
+                    >
+                        <path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z' />
+                    </svg>
+                    <p className='undertitle-p'>
+                        {'Up to ' + data.maxGuests + ' guests'}
+                    </p>
+                </div>
+                <div
                     className={
                         data.meta.wifi
-                            ? 'd-flex align-items-center gap-3'
-                            : 'd-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3'
+                            : 'd-inline-flex align-items-center gap-3 text-muted'
                     }
                 >
                     <svg
@@ -178,8 +249,8 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.parking
-                            ? 'd-flex align-items-center gap-3'
-                            : 'd-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3'
+                            : 'd-inline-flex align-items-center gap-3 text-muted'
                     }
                 >
                     <svg
@@ -202,8 +273,8 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.breakfast
-                            ? 'd-flex align-items-center gap-3'
-                            : 'd-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3'
+                            : 'd-inline-flex align-items-center gap-3 text-muted'
                     }
                 >
                     <svg
@@ -230,33 +301,14 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.pets
-                            ? 'd-flex align-items-center gap-3'
-                            : 'd-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3'
+                            : 'd-inline-flex align-items-center gap-3 text-muted'
                     }
                     id='venueMetaPets'
                 >
                     <FontAwesomeIcon icon={faDog} />
                     <p className='undertitle-p'>
                         {data.meta.pets ? 'Pets allowed' : 'Pets not allowed'}
-                    </p>
-                </div>
-                <div
-                    className='d-flex align-items-center gap-3'
-                    id='venue-meta'
-                >
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='24'
-                        height='24'
-                        fill='currentColor'
-                        className='bi bi-people-fill'
-                        viewBox='0 0 16 16'
-                        alt='Max guests'
-                    >
-                        <path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z' />
-                    </svg>
-                    <p className='undertitle-p'>
-                        {'Up to ' + data.maxGuests + ' guests'}
                     </p>
                 </div>
             </div>

@@ -101,9 +101,9 @@ function EditUserAvatar() {
                         }
                         autoFocus
                     />
-                    <Form.Text className='text-danger'>
+                    <p className='text-danger'>
                         {editAvatarSubmitAlert.substring(0, 62)}
-                    </Form.Text>
+                    </p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
                     <Button

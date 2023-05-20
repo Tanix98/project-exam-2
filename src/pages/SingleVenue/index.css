@@ -14,13 +14,13 @@
 
 .carouselImg {
     max-height: 400px;
-    width: 100%;
+    max-width: 100%;
     object-fit: contain;
 }
 
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
-    background-color: black;
+    background-color: var(--dark);
     width: 38px;
     height: 38px;
     border-radius: 50% !important;
@@ -40,7 +40,7 @@
 }
 
 #venueMetaLocation:hover {
-    color: #73a609 !important;
+    color: var(--link) !important;
 }
 
 #venueMetaPets svg {
@@ -59,6 +59,9 @@
     .carouselImg {
         position: absolute;
         top: 50%;
+        left: 0;
+        right: 0;
+        margin: auto;
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
     }

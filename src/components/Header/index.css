@@ -27,17 +27,26 @@
 
 #rotate-arrow {
     transform: rotateX(180deg);
-    transition: transform 0.4s;
-}
-
-#arrow {
-    transition: transform 0.4s;
 }
 
 .dropdownMenu {
     overflow: hidden;
     height: 0px;
-    transition: height 0.4s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    #rotate-arrow {
+        transform: rotateX(180deg);
+        transition: transform 0.4s;
+    }
+    #arrow {
+        transition: transform 0.4s;
+    }
+    .dropdownMenu {
+        overflow: hidden;
+        height: 0px;
+        transition: height 0.4s ease;
+    }
 }
 
 .expandMenuRegular {

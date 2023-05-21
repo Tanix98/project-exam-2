@@ -8,7 +8,7 @@ function Error() {
     }, []);
 
     const link = (
-        <Link to='/' className='linkText'>
+        <Link to='/' className='linkText' aria-label='Return to homepage'>
             return to the homepage.
         </Link>
     );

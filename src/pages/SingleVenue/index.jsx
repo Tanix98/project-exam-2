@@ -1,6 +1,6 @@
+import '../SingleVenue/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDog } from '@fortawesome/free-solid-svg-icons';
-import '../SingleVenue/index.css';
 import LoadingScreen from '../../components/LoadingScreen';
 import LoadingError from '../../components/LoadingError';
 import UseApiGet from '../../api/UseApiGet';
@@ -8,7 +8,7 @@ import EditUserVenue from '../../components/EditUserVenue';
 import DeleteUserVenue from '../../components/DeleteUserVenue';
 import noImg from '../../assets/imgs/no_img.svg';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import { Button, Col } from 'react-bootstrap';
@@ -27,7 +27,10 @@ function SingleVenue() {
 
     useEffect(() => {
         document.title = data.name + ' - Holidaze';
-    }, [data.name + ' - Holidaze']);
+    }, [data.name]);
+
+    // If false, only show 100 characters of venue description. Show all if true
+    const [showMore, setShowMore] = useState(false);
 
     if (isLoading) {
         return <LoadingScreen />;
@@ -45,12 +48,14 @@ function SingleVenue() {
 
     const venueLocation = () => {
         if (
-            (data.location.country !== 'Unknown' &&
-                data.location.city !== 'Unknown' &&
-                data.location.address !== 'Unknown') ||
-            (data.location.country !== '' &&
-                data.location.city !== '' &&
-                data.location.address !== '')
+            !(
+                (data.location.country === 'Unknown' &&
+                    data.location.city === 'Unknown' &&
+                    data.location.address === 'Unknown') ||
+                (data.location.country === '' &&
+                    data.location.city === '' &&
+                    data.location.address === '')
+            )
         ) {
             return (
                 <a
@@ -74,7 +79,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-geo-alt-fill'
                         viewBox='0 0 16 16'
-                        alt='Location'
+                        alt='Venue location'
                     >
                         <path d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z' />
                     </svg>
@@ -132,13 +137,47 @@ function SingleVenue() {
         }
     };
 
+    const renderVenueDescription = () => {
+        if (data.description.length > 227) {
+            return (
+                <div className='my-3'>
+                    <p className='undertitle-p'>Description:</p>
+                    <p
+                        id={
+                            showMore
+                                ? 'venue-description-open'
+                                : 'venue-description-hidden'
+                        }
+                    >
+                        {data.description}
+                    </p>
+                    <Link
+                        className='linkText'
+                        onClick={() => setShowMore(!showMore)}
+                        aria-label='Show or hide the venue description'
+                    >
+                        {showMore ? 'Show less' : 'Show more'}
+                    </Link>
+                </div>
+            );
+        } else {
+            return (
+                <div className='my-3'>
+                    <p className='undertitle-p'>Description:</p>
+                    <p>{data.description}</p>
+                </div>
+            );
+        }
+    };
+
     return (
         <Container id='venue-container'>
             <Carousel
                 id='img-carousel'
                 variant='dark'
                 className='rounded d-flex align-items-center justify-content-center'
-                interval={50000}
+                interval={100000}
+                slide={!localStorage.getItem('prefersReducedMotion')}
             >
                 {data.media[0] ? (
                     data.media.map((venueImg, key) => (
@@ -171,13 +210,14 @@ function SingleVenue() {
             <Link
                 to={{ pathname: `/profile/${data.owner.name}` }}
                 id='venueOwner'
-                className='mt-1 d-flex align-items-center gap-2'
+                className='mt-1 d-inline-flex align-items-center gap-2 pe-2'
+                aria-label="Go to venue owner's profile"
             >
                 {data.owner.avatar ? (
                     <img
                         src={data.owner.avatar}
                         className='rounded-circle'
-                        alt='Avatar'
+                        alt={`Venue owner ${data.owner.name}'s Avatar`}
                     />
                 ) : (
                     <svg
@@ -185,7 +225,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-person-circle mw-100 mh-100'
                         viewBox='0 0 16 16'
-                        alt='Default avatar'
+                        alt={`Venue owner ${data.owner.name}'s Avatar`}
                     >
                         <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                         <path
@@ -213,7 +253,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-people-fill'
                         viewBox='0 0 16 16'
-                        alt='Max guests'
+                        alt='Venue max guests'
                     >
                         <path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z' />
                     </svg>
@@ -235,7 +275,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-wifi'
                         viewBox='0 0 16 16'
-                        alt='Wi-Fi'
+                        alt='Venue wi-Fi'
                     >
                         <path d='M15.384 6.115a.485.485 0 0 0-.047-.736A12.444 12.444 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c2.507 0 4.827.802 6.716 2.164.205.148.49.13.668-.049z' />
                         <path d='M13.229 8.271a.482.482 0 0 0-.063-.745A9.455 9.455 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.61-.091l.016-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z' />
@@ -260,7 +300,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-car-front-fill'
                         viewBox='0 0 16 16'
-                        alt='Parking'
+                        alt='Venue parking'
                     >
                         <path d='M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679c.033.161.049.325.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.807.807 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2H6ZM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17 1.247 0 3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z' />
                     </svg>
@@ -284,7 +324,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-cup-hot-fill'
                         viewBox='0 0 16 16'
-                        alt='Breakfast'
+                        alt='Venue breakfast'
                     >
                         <path
                             fillRule='evenodd'
@@ -312,11 +352,7 @@ function SingleVenue() {
                     </p>
                 </div>
             </div>
-
-            <div className='my-3'>
-                <p className='undertitle-p'>Description:</p>
-                <p>{data.description}</p>
-            </div>
+            {renderVenueDescription()}
             <div>
                 <p className='undertitle-p'>Created:</p>
                 <p>{venueDateDay + venueDate.substring(8, 16)}</p>

@@ -8,6 +8,9 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 
 function EditUserVenue(props) {
+    // Edit venue api call loading state
+    const [isLoading, setIsLoading] = useState(false);
+
     //const navigate = useNavigate();
 
     // Modal
@@ -91,6 +94,7 @@ function EditUserVenue(props) {
         }
 
         try {
+            setIsLoading(true);
             const response = await fetch(
                 `https://api.noroff.dev/api/v1/holidaze/venues/${props.data.id}`,
                 {
@@ -109,12 +113,14 @@ function EditUserVenue(props) {
             const editVenueData = await response.json();
 
             if (editVenueData.errors) {
+                setIsLoading(false);
                 if (editVenueData.errors[0].path[0] === 'media') {
                     setEditVenueSubmitAlert('Media must be a valid URL');
                 }
             }
 
             if (editVenueData.id) {
+                setIsLoading(false);
                 setEditVenueSubmitAlert();
                 //navigate(`/venue/${props.data.id}`);
                 window.location.reload(false);
@@ -285,9 +291,9 @@ function EditUserVenue(props) {
                 show={open}
                 onHide={handleClose}
                 animation={false}
-                className='mt-5'
+                className='mt-3'
             >
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Edit venue</Modal.Title>
                 </Modal.Header>
                 <Modal.Body id='edit-venue-modal' className='scrollBarContent'>
@@ -358,6 +364,7 @@ function EditUserVenue(props) {
                                             onClick={() =>
                                                 removeMediaListItem(media)
                                             }
+                                            aria-label='Remove the media URL'
                                         >
                                             <p className='d-block text-truncate'>
                                                 {media}
@@ -367,6 +374,7 @@ function EditUserVenue(props) {
                                                 fill='currentColor'
                                                 className='bi bi-x'
                                                 viewBox='0 0 16 16'
+                                                alt='Delete symbol'
                                             >
                                                 <path d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z' />
                                             </svg>
@@ -452,26 +460,60 @@ function EditUserVenue(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Col>
-                        <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
-                        >
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col>
-                        <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100'
-                            onClick={handleEditVenue}
-                            onKeyDown={handleKeyDown}
-                        >
-                            Edit
-                        </Button>
-                    </Col>
+                    {isLoading && (
+                        <div className='text-center vw-100'>
+                            <div className='lds-dual-ring'></div>
+                            <p>Loading...</p>
+                        </div>
+                    )}
+                    {isLoading ? (
+                        <Col>
+                            <Button
+                                variant='dark rounded-pill'
+                                className='px-4 w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                                disabled
+                            >
+                                Cancel
+                            </Button>
+                        </Col>
+                    ) : (
+                        <Col>
+                            <Button
+                                variant='dark rounded-pill'
+                                className='px-4 w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                            >
+                                Cancel
+                            </Button>
+                        </Col>
+                    )}
+                    {isLoading ? (
+                        <Col>
+                            <Button
+                                variant='primary rounded-pill'
+                                className='px-4 w-100'
+                                onClick={handleEditVenue}
+                                onKeyDown={handleKeyDown}
+                                disabled
+                            >
+                                Edit
+                            </Button>
+                        </Col>
+                    ) : (
+                        <Col>
+                            <Button
+                                variant='primary rounded-pill'
+                                className='px-4 w-100'
+                                onClick={handleEditVenue}
+                                onKeyDown={handleKeyDown}
+                            >
+                                Edit
+                            </Button>
+                        </Col>
+                    )}
                 </Modal.Footer>
             </Modal>
         </div>

@@ -21,7 +21,9 @@ function RenderUserVenues(props) {
             <div>
                 <h2>Your venue list is empty</h2>
                 <div className='d-flex gap-2'>
-                    <Link to='/'>Click here</Link>
+                    <Link to='/create-venue' aria-label='Create a new venue'>
+                        Click here
+                    </Link>
                     <p>to create a new venue</p>
                 </div>
             </div>
@@ -37,6 +39,7 @@ function RenderUserVenues(props) {
                             pathname: `/venue/${venue.id}`,
                         }}
                         key={key}
+                        aria-label={`Go to venue ${venue.name}`}
                     >
                         <div className='venueContainer d-flex flex-column my-2 p-2 rounded'>
                             <div className='venueImgContainer rounded shadow-sm d-inline-block'>

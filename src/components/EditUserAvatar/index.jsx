@@ -5,6 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 function EditUserAvatar() {
+    // Edit avatar api call loading state
+    const [isLoading, setIsLoading] = useState(false);
+
     // Modal
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -19,6 +22,7 @@ function EditUserAvatar() {
 
     const handleEditAvatar = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch(
                 `https://api.noroff.dev/api/v1/holidaze/profiles/${name}/media`,
                 {
@@ -37,10 +41,12 @@ function EditUserAvatar() {
             const data = await response.json();
 
             if (data.errors) {
+                setIsLoading(false);
                 setEditAvatarSubmitAlert(data.errors[0].message);
             }
 
             if (data.name) {
+                setIsLoading(false);
                 localStorage.setItem('userAvatar', editAvatarFormData.avatar);
                 //setEditAvatarSubmitAlert('');
                 //andleClose();
@@ -84,7 +90,7 @@ function EditUserAvatar() {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-5'
+                className='mt-3'
             >
                 <Modal.Body>
                     <Form.Label>Media URL</Form.Label>
@@ -106,22 +112,52 @@ function EditUserAvatar() {
                     </p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
-                    <Button
-                        variant='dark rounded-pill'
-                        className='px-4 w-100 col'
-                        onClick={handleClose}
-                        onKeyDown={handleKeyDownClose}
-                    >
-                        Close
-                    </Button>
-                    <Button
-                        variant='primary rounded-pill'
-                        className='px-4 w-100 col text-nowrap'
-                        onClick={handleEditAvatar}
-                        onKeyDown={handleKeyDownEdit}
-                    >
-                        Edit avatar
-                    </Button>
+                    {isLoading && (
+                        <div className='text-center vw-100'>
+                            <div className='lds-dual-ring'></div>
+                            <p>Loading...</p>
+                        </div>
+                    )}
+                    {isLoading ? (
+                        <Button
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
+                            disabled
+                        >
+                            Close
+                        </Button>
+                    ) : (
+                        <Button
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
+                        >
+                            Close
+                        </Button>
+                    )}
+                    {isLoading ? (
+                        <Button
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditAvatar}
+                            onKeyDown={handleKeyDownEdit}
+                            disabled
+                        >
+                            Edit avatar
+                        </Button>
+                    ) : (
+                        <Button
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditAvatar}
+                            onKeyDown={handleKeyDownEdit}
+                        >
+                            Edit avatar
+                        </Button>
+                    )}
                 </Modal.Footer>
             </Modal>
         </div>

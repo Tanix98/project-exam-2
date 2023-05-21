@@ -16,8 +16,6 @@ function RenderVenues(props) {
         return <LoadingError />;
     }
 
-    console.log(props.searchTerm);
-
     return (
         <div className='d-flex justify-content-center'>
             {props.searchTerm ? (
@@ -48,6 +46,7 @@ function RenderVenues(props) {
                                         pathname: `/venue/${venue.id}`,
                                     }}
                                     key={key}
+                                    aria-label={`Go to venue ${venue.name}`}
                                 >
                                     <div className='venueContainer d-flex flex-column p-2 rounded'>
                                         <div className='venueImgContainer rounded shadow-sm d-inline-block'>
@@ -66,7 +65,7 @@ function RenderVenues(props) {
                                                 <img
                                                     src={venue.owner.avatar}
                                                     className='rounded-circle'
-                                                    alt='Avatar'
+                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
                                                 />
                                             ) : (
                                                 <svg
@@ -74,7 +73,7 @@ function RenderVenues(props) {
                                                     fill='currentColor'
                                                     className='bi bi-person-circle mw-100 mh-100'
                                                     viewBox='0 0 16 16'
-                                                    alt='Default avatar'
+                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
                                                 >
                                                     <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                                                     <path
@@ -104,6 +103,7 @@ function RenderVenues(props) {
                                 pathname: `/venue/${venue.id}`,
                             }}
                             key={key}
+                            aria-label={`Go to venue ${venue.name}`}
                         >
                             <div className='venueContainer d-flex flex-column p-2 rounded'>
                                 <div className='venueImgContainer rounded shadow-sm d-inline-block'>
@@ -122,7 +122,7 @@ function RenderVenues(props) {
                                         <img
                                             src={venue.owner.avatar}
                                             className='rounded-circle'
-                                            alt='Avatar'
+                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
                                         />
                                     ) : (
                                         <svg
@@ -130,7 +130,7 @@ function RenderVenues(props) {
                                             fill='currentColor'
                                             className='bi bi-person-circle mw-100 mh-100'
                                             viewBox='0 0 16 16'
-                                            alt='Default avatar'
+                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
                                         >
                                             <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                                             <path

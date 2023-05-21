@@ -145,7 +145,7 @@ export default function Header() {
             <Container>
                 <div className='d-flex flex-column gap-2 w-100'>
                     <div className='d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center gap-3'>
-                        <Link to='/'>
+                        <Link to='/' aria-label='To homepage'>
                             <img
                                 src={holidazeLogo}
                                 alt='Holidaze logo'
@@ -162,7 +162,7 @@ export default function Header() {
                                     fill='currentColor'
                                     className='smallIcon bi bi-search'
                                     viewBox='0 0 16 16'
-                                    alt='Search'
+                                    alt='Search symbol, a magnifying glass'
                                 >
                                     <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z' />
                                 </svg>
@@ -189,6 +189,7 @@ export default function Header() {
                                                     }}
                                                     className='search-list-item text-decoration-none text-dark d-block p-2'
                                                     key={key}
+                                                    aria-label={`Go to the venue`}
                                                 >
                                                     {venue.name}
                                                 </Link>
@@ -267,6 +268,7 @@ export default function Header() {
                                     <Link
                                         className='p-2 d-flex align-items-center justify-content-end gap-2'
                                         role='menuitem'
+                                        aria-label='Create booking'
                                     >
                                         Create booking
                                         <svg
@@ -286,6 +288,7 @@ export default function Header() {
                                             to='/create-venue'
                                             className='p-2 d-flex align-items-center justify-content-end gap-2'
                                             role='menuitem'
+                                            aria-label='Create venue'
                                         >
                                             Create venue
                                             <svg
@@ -308,6 +311,7 @@ export default function Header() {
                                         }
                                         className='p-2 d-flex align-items-center justify-content-end gap-2'
                                         role='menuitem'
+                                        aria-label='My profile'
                                     >
                                         My Profile
                                         <svg
@@ -324,6 +328,7 @@ export default function Header() {
                                         className='p-2 d-flex align-items-center justify-content-end gap-2'
                                         role='menuitem'
                                         onClick={logOutUser}
+                                        aria-label='Log out'
                                     >
                                         Log Out
                                         <svg
@@ -344,6 +349,7 @@ export default function Header() {
                                     to='/login'
                                     className='d-flex align-items-center justify-content-end gap-2 px-2 text-light'
                                     role='menuitem'
+                                    aria-label='Log in'
                                 >
                                     Log In
                                 </Link>
@@ -360,7 +366,7 @@ export default function Header() {
                                 fill='currentColor'
                                 className='smallIcon bi bi-search'
                                 viewBox='0 0 16 16'
-                                alt='Search'
+                                alt='Search symbol, a magnifying glass'
                             >
                                 <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z' />
                             </svg>
@@ -387,6 +393,7 @@ export default function Header() {
                                                 }}
                                                 className='search-list-item text-decoration-none text-dark d-block p-2'
                                                 key={key}
+                                                aria-label='Go to the venue'
                                             >
                                                 {venue.name}
                                             </Link>

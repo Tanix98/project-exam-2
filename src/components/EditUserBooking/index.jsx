@@ -5,6 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 function EditUserBooking(props) {
+    // Edit booking api call loading state
+    const [isLoading, setIsLoading] = useState(false);
+
     //const navigate = useNavigate();
 
     // Modal
@@ -62,6 +65,7 @@ function EditUserBooking(props) {
     // Edit booking
     const handleEditBooking = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch(
                 `https://api.noroff.dev/api/v1/holidaze/bookings/${props.id}`,
                 {
@@ -80,6 +84,7 @@ function EditUserBooking(props) {
             const data = await response.json();
 
             if (data.errors) {
+                setIsLoading(false);
                 setEditBookingSubmitAlert(data.errors[0].message);
                 if (
                     data.errors[0].message ===
@@ -103,6 +108,7 @@ function EditUserBooking(props) {
             }
 
             if (!data.errors) {
+                setIsLoading(false);
                 setEditBookingSubmitAlert();
                 /*navigate(
                     `/profile/${localStorage
@@ -184,7 +190,7 @@ function EditUserBooking(props) {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-5'
+                className='mt-3'
             >
                 <Modal.Body>
                     <Form.Label>Guests</Form.Label>
@@ -223,22 +229,52 @@ function EditUserBooking(props) {
                     </p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
-                    <Button
-                        variant='dark rounded-pill'
-                        className='px-4 w-100 col'
-                        onClick={handleClose}
-                        onKeyDown={handleKeyDownClose}
-                    >
-                        Close
-                    </Button>
-                    <Button
-                        variant='primary rounded-pill'
-                        className='px-4 w-100 col text-nowrap'
-                        onClick={handleEditBooking}
-                        onKeyDown={handleKeyDownEdit}
-                    >
-                        Edit booking
-                    </Button>
+                    {isLoading && (
+                        <div className='text-center vw-100'>
+                            <div className='lds-dual-ring'></div>
+                            <p>Loading...</p>
+                        </div>
+                    )}
+                    {isLoading ? (
+                        <Button
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
+                            disabled
+                        >
+                            Close
+                        </Button>
+                    ) : (
+                        <Button
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
+                        >
+                            Close
+                        </Button>
+                    )}
+                    {isLoading ? (
+                        <Button
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditBooking}
+                            onKeyDown={handleKeyDownEdit}
+                            disabled
+                        >
+                            Edit avatar
+                        </Button>
+                    ) : (
+                        <Button
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditBooking}
+                            onKeyDown={handleKeyDownEdit}
+                        >
+                            Edit avatar
+                        </Button>
+                    )}
                 </Modal.Footer>
             </Modal>
         </div>

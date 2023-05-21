@@ -19,7 +19,7 @@ function Profile() {
 
     useEffect(() => {
         document.title = dataAuth.name + ' - Holidaze';
-    }, [dataAuth.name + ' - Holidaze']);
+    }, [dataAuth.name]);
 
     // Toggle between user booking and user venues
     const [bookingsDisplay, setBookingsDisplay] = useState('d-flex');
@@ -34,7 +34,7 @@ function Profile() {
     };
 
     const link = (
-        <Link to='/login' className='linkText'>
+        <Link to='/login' className='linkText' aria-label='Log in or sign up'>
             Log in or sign up
         </Link>
     );
@@ -75,7 +75,7 @@ function Profile() {
                                 src={dataAuth.avatar}
                                 className='rounded-circle img-fluid'
                                 id='profile-page-avatar'
-                                alt='Avatar'
+                                alt={`${dataAuth.name}'s Avatar`}
                             />
                         ) : (
                             <svg
@@ -83,7 +83,7 @@ function Profile() {
                                 fill='currentColor'
                                 className='bi bi-person-circle mw-100 mh-100'
                                 viewBox='0 0 16 16'
-                                alt='Default avatar'
+                                alt={`${dataAuth.name}'s Avatar`}
                                 id='profile-page-avatar'
                             >
                                 <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />

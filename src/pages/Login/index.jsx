@@ -242,7 +242,11 @@ function Login() {
             <Form className={loginFormClasses}>
                 <div className='d-flex flex-wrap justify-content-between mb-3 gap-2'>
                     <h1>Log in</h1>
-                    <Link onClick={renderSignupForm} className='linkText'>
+                    <Link
+                        onClick={renderSignupForm}
+                        className='linkText'
+                        aria-label='Show sign up form'
+                    >
                         Don't have an account?
                     </Link>
                 </div>
@@ -293,7 +297,11 @@ function Login() {
             <Form className={signupFormClasses}>
                 <div className='d-flex flex-wrap justify-content-between mb-3 gap-2'>
                     <h1>Sign up</h1>
-                    <Link onClick={renderLoginForm} className='linkText'>
+                    <Link
+                        onClick={renderLoginForm}
+                        className='linkText'
+                        aria-label='Show log in form'
+                    >
                         Already have an account?
                     </Link>
                 </div>

@@ -9,6 +9,9 @@ export default function CreateVenue() {
         document.title = 'Create venue - Holidaze';
     }, []);
 
+    // Create venue api call loading state
+    const [isLoading, setIsLoading] = useState(false);
+
     const navigate = useNavigate();
     const handleCancel = () => {
         navigate('/');
@@ -41,7 +44,7 @@ export default function CreateVenue() {
     const [createVenueSubmitAlert, setCreateVenueSubmitAlert] = useState('');
 
     const link = (
-        <Link to='/' className='linkText'>
+        <Link to='/' className='linkText' aria-label='Return to homepage'>
             Click here to return to homepage
         </Link>
     );
@@ -72,6 +75,7 @@ export default function CreateVenue() {
         }
 
         try {
+            setIsLoading(true);
             const response = await fetch(
                 `https://api.noroff.dev/api/v1/holidaze/venues`,
                 {
@@ -88,14 +92,17 @@ export default function CreateVenue() {
                 }
             );
             const data = await response.json();
+            console.log(data);
 
             if (data.errors) {
-                if (data.errors[0].path[0] === 'media') {
-                    setCreateVenueSubmitAlert('Media must be a valid URL');
-                }
+                setIsLoading(false);
+                setCreateVenueSubmitAlert(
+                    data.errors[0].message.substring(0, 62)
+                );
             }
 
             if (data.id) {
+                setIsLoading(false);
                 setCreateVenueSubmitAlert();
                 navigate(`/venue/${data.id}`);
             }
@@ -337,6 +344,7 @@ export default function CreateVenue() {
                                         onClick={() =>
                                             removeMediaListItem(media)
                                         }
+                                        aria-label='Remove media URL'
                                     >
                                         <p className='d-block text-truncate'>
                                             {media}
@@ -346,6 +354,7 @@ export default function CreateVenue() {
                                             fill='currentColor'
                                             className='bi bi-x'
                                             viewBox='0 0 16 16'
+                                            alt='Delete symbol'
                                         >
                                             <path d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z' />
                                         </svg>
@@ -425,27 +434,58 @@ export default function CreateVenue() {
                             onChange={handleCountryChange}
                         ></Form.Control>
                     </Form.Group>
-                    <p className='text-danger text-center'>
+                    <p className='text-danger'>
                         <h2>{createVenueSubmitAlert}</h2>
                     </p>
                     <div className='d-flex flex-wrap gap-3 mt-4'>
-                        <Col>
-                            <Button
-                                variant='dark'
-                                className='rounded-pill w-100'
-                                onClick={handleCancel}
-                            >
-                                Cancel
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                className='rounded-pill w-100'
-                                onClick={handleCreateVenue}
-                            >
-                                Create venue
-                            </Button>
-                        </Col>
+                        {isLoading && (
+                            <div className='text-center vw-100'>
+                                <div className='lds-dual-ring'></div>
+                                <p>Loading...</p>
+                            </div>
+                        )}
+                        {isLoading ? (
+                            <Col>
+                                <Button
+                                    variant='dark'
+                                    className='rounded-pill w-100 px-2'
+                                    onClick={handleCancel}
+                                    disabled
+                                >
+                                    Cancel
+                                </Button>
+                            </Col>
+                        ) : (
+                            <Col>
+                                <Button
+                                    variant='dark'
+                                    className='rounded-pill w-100 px-2'
+                                    onClick={handleCancel}
+                                >
+                                    Cancel
+                                </Button>
+                            </Col>
+                        )}
+                        {isLoading ? (
+                            <Col>
+                                <Button
+                                    className='rounded-pill w-100 px-2'
+                                    onClick={handleCreateVenue}
+                                    disabled
+                                >
+                                    Create venue
+                                </Button>
+                            </Col>
+                        ) : (
+                            <Col>
+                                <Button
+                                    className='rounded-pill w-100 px-2'
+                                    onClick={handleCreateVenue}
+                                >
+                                    Create venue
+                                </Button>
+                            </Col>
+                        )}
                     </div>
                 </Form>
             </Container>

@@ -70,6 +70,12 @@ function EditUserAvatar() {
             handleEditAvatar();
         }
     }
+    function handleKeyDownOpen(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            handleShow();
+        }
+    }
 
     return (
         <div>
@@ -81,6 +87,7 @@ function EditUserAvatar() {
                         : 'px-5 rounded-pill'
                 }
                 onClick={handleShow}
+                onKeyDown={handleKeyDownOpen}
             >
                 Edit avatar
             </Button>

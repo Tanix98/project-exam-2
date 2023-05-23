@@ -32,6 +32,16 @@ function Profile() {
         setBookingsDisplay('d-none');
         setVenuesDisplay('d-flex');
     };
+    const handleKeyDownViewBookings = (event) => {
+        if (event.keyCode === 13) {
+            viewBookings();
+        }
+    };
+    const handleKeyDownViewVenues = (event) => {
+        if (event.keyCode === 13) {
+            viewVenues();
+        }
+    };
 
     const link = (
         <Link to='/login' className='linkText' aria-label='Log in or sign up'>
@@ -44,7 +54,7 @@ function Profile() {
         return (
             <Container className='d-flex justify-content-center'>
                 <div>
-                    <h1 className='mb-3'>Access denied! </h1>
+                    <h1 className='mb-3'>Access denied!</h1>
                     <p>{link} to view profile.</p>
                 </div>
             </Container>
@@ -116,6 +126,7 @@ function Profile() {
                                         variant='outline-dark'
                                         className='px-5 rounded-pill'
                                         onClick={viewBookings}
+                                        onKeyDown={handleKeyDownViewBookings}
                                     >
                                         My bookings
                                     </Button>
@@ -123,6 +134,7 @@ function Profile() {
                                         variant='outline-dark'
                                         className='rounded-pill'
                                         onClick={viewVenues}
+                                        onKeyDown={handleKeyDownViewVenues}
                                     >
                                         My venues
                                     </Button>

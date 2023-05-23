@@ -116,7 +116,7 @@ export default function Header() {
                 setFocusedMobile(
                     'searchResults d-none bg-light shadow-sm rounded-bottom'
                 ),
-            100
+            200
         );
     };
     const [focusedDesktop, setFocusedDesktop] = useState(
@@ -132,8 +132,18 @@ export default function Header() {
                 setFocusedDesktop(
                     'searchResults d-none bg-light shadow-sm rounded-bottom'
                 ),
-            100
+            200
         );
+    };
+
+    // Login button
+    const handleLogin = () => {
+        navigate('/login');
+    };
+    const handleKeyDownLogin = (event) => {
+        if (event.keyCode === 13) {
+            handleLogin();
+        }
     };
 
     return (
@@ -156,6 +166,7 @@ export default function Header() {
                             <button
                                 className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
                                 onClick={search}
+                                onKeyDown={handleKeyDownSearch}
                             >
                                 <svg
                                     xmlns='http://www.w3.org/2000/svg'
@@ -266,6 +277,7 @@ export default function Header() {
                                     onClick={handleClick}
                                 >
                                     <Link
+                                        to='/create-booking'
                                         className='p-2 d-flex align-items-center justify-content-end gap-2'
                                         role='menuitem'
                                         aria-label='Create booking'
@@ -344,15 +356,12 @@ export default function Header() {
                                 </Nav>
                             </div>
                         ) : (
-                            <Button className='ms-auto btn-dark rounded-pill'>
-                                <Link
-                                    to='/login'
-                                    className='d-flex align-items-center justify-content-end gap-2 px-2 text-light'
-                                    role='menuitem'
-                                    aria-label='Log in'
-                                >
-                                    Log In
-                                </Link>
+                            <Button
+                                className='ms-auto btn-dark rounded-pill'
+                                onClick={handleLogin}
+                                onKeyDown={handleKeyDownLogin}
+                            >
+                                Log In
                             </Button>
                         )}
                     </div>
@@ -360,6 +369,7 @@ export default function Header() {
                         <button
                             className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
                             onClick={search}
+                            onKeyDown={handleKeyDownSearch}
                         >
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'

@@ -18,6 +18,9 @@ function SingleVenue() {
     const NavigateToVenueBookings = () => {
         navigate(`/venue/bookings/${data.id}`);
     };
+    const NavigateToCreateBooking = () => {
+        navigate(`/create-booking/${data.id}`);
+    };
 
     let { id } = useParams();
 
@@ -93,6 +96,17 @@ function SingleVenue() {
         }
     };
 
+    const handleKeyDownVenueBookings = (event) => {
+        if (event.keyCode === 13) {
+            NavigateToVenueBookings();
+        }
+    };
+    const handleKeyDownCreateBooking = (event) => {
+        if (event.keyCode === 13) {
+            NavigateToCreateBooking();
+        }
+    };
+
     const venueBtns = () => {
         if (localStorage.getItem('userName')) {
             if (
@@ -105,6 +119,7 @@ function SingleVenue() {
                             variant='primary'
                             className='rounded-pill w-100 mb-3'
                             onClick={NavigateToVenueBookings}
+                            onKeyDown={handleKeyDownVenueBookings}
                         >
                             View Bookings
                         </Button>
@@ -123,15 +138,22 @@ function SingleVenue() {
                     <Button
                         variant='primary'
                         className='rounded-pill w-100 my-3'
+                        onClick={NavigateToCreateBooking}
+                        onKeyDown={handleKeyDownCreateBooking}
                     >
-                        View Available Dates
+                        Create booking
                     </Button>
                 );
             }
         } else {
             return (
-                <Button variant='primary' className='rounded-pill w-100 my-3'>
-                    View Available Dates
+                <Button
+                    variant='primary'
+                    className='rounded-pill w-100 my-3'
+                    onClick={NavigateToCreateBooking}
+                    onKeyDown={handleKeyDownCreateBooking}
+                >
+                    Create booking
                 </Button>
             );
         }
@@ -204,7 +226,7 @@ function SingleVenue() {
             </Carousel>
             <div className='mt-3'>
                 <h1 className='mb-1'>{data.name}</h1>
-                <p className='undertitle-p'>Price: {data.price}kr</p>
+                <p className='undertitle-p'>Price: {data.price}kr per day</p>
             </div>
             <hr />
             <Link

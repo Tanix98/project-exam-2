@@ -16,6 +16,11 @@ export default function CreateVenue() {
     const handleCancel = () => {
         navigate('/');
     };
+    const handleKeyDownCancel = (event) => {
+        if (event.keyCode === 13) {
+            navigate('/');
+        }
+    };
 
     // Create venue states
     const [venueMedia, setVenueMedia] = useState('');
@@ -434,9 +439,7 @@ export default function CreateVenue() {
                             onChange={handleCountryChange}
                         ></Form.Control>
                     </Form.Group>
-                    <p className='text-danger'>
-                        <h2>{createVenueSubmitAlert}</h2>
-                    </p>
+                    <h2 className='text-danger'>{createVenueSubmitAlert}</h2>
                     <div className='d-flex flex-wrap gap-3 mt-4'>
                         {isLoading && (
                             <div className='text-center vw-100'>
@@ -450,6 +453,7 @@ export default function CreateVenue() {
                                     variant='dark'
                                     className='rounded-pill w-100 px-2'
                                     onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                     disabled
                                 >
                                     Cancel
@@ -461,6 +465,7 @@ export default function CreateVenue() {
                                     variant='dark'
                                     className='rounded-pill w-100 px-2'
                                     onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                 >
                                     Cancel
                                 </Button>
@@ -471,6 +476,7 @@ export default function CreateVenue() {
                                 <Button
                                     className='rounded-pill w-100 px-2'
                                     onClick={handleCreateVenue}
+                                    onKeyDown={handleKeyDown}
                                     disabled
                                 >
                                     Create venue
@@ -481,6 +487,7 @@ export default function CreateVenue() {
                                 <Button
                                     className='rounded-pill w-100 px-2'
                                     onClick={handleCreateVenue}
+                                    onKeyDown={handleKeyDown}
                                 >
                                     Create venue
                                 </Button>

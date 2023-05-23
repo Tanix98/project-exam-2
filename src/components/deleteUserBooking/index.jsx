@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 
 function DeleteUserBooking(props) {
     // Modal
@@ -24,14 +23,10 @@ function DeleteUserBooking(props) {
                                 .getItem('userToken')
                                 .replace(/['"]+/g, ''),
                     },
-                    body: {},
                 }
             );
-            const data = await response.json();
 
-            if (!data.errors) {
-                window.location.reload(false);
-            }
+            window.location.reload(false);
         } catch (error) {
             console.log(error);
         }

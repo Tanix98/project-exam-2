@@ -454,9 +454,9 @@ function EditUserVenue(props) {
                                 onChange={handleCountryChange}
                             ></Form.Control>
                         </Form.Group>
-                        <p className='text-danger text-center'>
-                            <h2>{editVenueSubmitAlert}</h2>
-                        </p>
+                        <h2 className='text-danger text-center'>
+                            {editVenueSubmitAlert}
+                        </h2>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

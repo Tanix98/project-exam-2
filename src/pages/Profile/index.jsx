@@ -7,7 +7,7 @@ import LoadingScreen from '../../components/LoadingScreen';
 import LoadingError from '../../components/LoadingError';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 
 function Profile() {
@@ -72,75 +72,92 @@ function Profile() {
     return (
         <Container>
             <div className='d-flex flex-column align-items-center gap-5'>
-                <div
-                    className={
-                        localStorage.getItem('userVenueManager')
-                            ? 'd-flex justify-content-center flex-wrap gap-5'
-                            : 'd-flex flex-column justify-content-center flex-wrap gap-4'
-                    }
-                >
-                    <div className='text-center'>
-                        {dataAuth.avatar ? (
-                            <img
-                                src={dataAuth.avatar}
-                                className='rounded-circle img-fluid'
-                                id='profile-page-avatar'
-                                alt={`${dataAuth.name}'s Avatar`}
-                            />
-                        ) : (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='currentColor'
-                                className='bi bi-person-circle mw-100 mh-100'
-                                viewBox='0 0 16 16'
-                                alt={`${dataAuth.name}'s Avatar`}
-                                id='profile-page-avatar'
-                            >
-                                <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
-                                <path
-                                    fillRule='evenodd'
-                                    d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'
+                <div className='d-flex flex-column justify-content-center flex-wrap gap-4'>
+                    {dataAuth.venueManager ? (
+                        <Col className='text-center'>
+                            {dataAuth.avatar ? (
+                                <img
+                                    src={dataAuth.avatar}
+                                    className='profile-page-avatar rounded'
+                                    alt={`${dataAuth.name}'s Avatar`}
                                 />
-                            </svg>
-                        )}
-                        <h1 className='mt-1'>{dataAuth.name}</h1>
-                        {dataAuth.venueManager && (
+                            ) : (
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='currentColor'
+                                    className='bi bi-person-fill profile-page-avatar mw-100 mh-100 bg-dark text-light p-1 rounded'
+                                    viewBox='0 0 16 16'
+                                    alt={`${dataAuth.name}'s Avatar`}
+                                >
+                                    <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
+                                </svg>
+                            )}
+                            <h1 className='mt-2'>{dataAuth.name}</h1>
                             <p className='text-muted'>Venue manager</p>
-                        )}
-                    </div>
+                        </Col>
+                    ) : (
+                        <Col className='text-center'>
+                            {dataAuth.avatar ? (
+                                <img
+                                    src={dataAuth.avatar}
+                                    className='profile-page-avatar rounded'
+                                    alt={`${dataAuth.name}'s Avatar`}
+                                />
+                            ) : (
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='currentColor'
+                                    className='bi bi-person-fill profile-page-avatar mw-100 mh-100 bg-dark text-light p-1 rounded'
+                                    viewBox='0 0 16 16'
+                                    alt={`${dataAuth.name}'s Avatar`}
+                                >
+                                    <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
+                                </svg>
+                            )}
+                            <h1 className='mt-1'>{dataAuth.name}</h1>
+                        </Col>
+                    )}
                     {dataAuth.name ===
                         localStorage
                             .getItem('userName')
                             .replace(/['"]+/g, '') && (
-                        <div
+                        <Col
                             className={
                                 localStorage.getItem('userVenueManager')
-                                    ? 'd-flex flex-column gap-2'
-                                    : 'd-flex justify-content-center gap-2'
+                                    ? 'd-flex flex-column gap-2 w-100'
+                                    : 'd-flex justify-content-center gap-2 w-100'
                             }
                         >
-                            <EditUserAvatar />
-                            {dataAuth.venueManager && (
-                                <div className='d-flex flex-column gap-2'>
-                                    <Button
-                                        variant='outline-dark'
-                                        className='px-5 rounded-pill'
-                                        onClick={viewBookings}
-                                        onKeyDown={handleKeyDownViewBookings}
-                                    >
-                                        My bookings
-                                    </Button>
-                                    <Button
-                                        variant='outline-dark'
-                                        className='rounded-pill'
-                                        onClick={viewVenues}
-                                        onKeyDown={handleKeyDownViewVenues}
-                                    >
-                                        My venues
-                                    </Button>
+                            {dataAuth.venueManager ? (
+                                <div className='d-flex flex-wrap gap-2'>
+                                    <EditUserAvatar />
+                                    <Col>
+                                        <Button
+                                            variant='outline-dark'
+                                            className='w-100 rounded-pill'
+                                            onClick={viewBookings}
+                                            onKeyDown={
+                                                handleKeyDownViewBookings
+                                            }
+                                        >
+                                            My bookings
+                                        </Button>
+                                    </Col>
+                                    <Col>
+                                        <Button
+                                            variant='outline-dark'
+                                            className='w-100 rounded-pill'
+                                            onClick={viewVenues}
+                                            onKeyDown={handleKeyDownViewVenues}
+                                        >
+                                            My venues
+                                        </Button>
+                                    </Col>
                                 </div>
+                            ) : (
+                                <EditUserAvatar />
                             )}
-                        </div>
+                        </Col>
                     )}
                 </div>
                 {dataAuth.name ===
@@ -148,12 +165,12 @@ function Profile() {
                     <div>
                         <div className={bookingsDisplay}>
                             <RenderUserBookings
-                                url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/bookings`}
+                                url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/bookings?sort=created`}
                             />
                         </div>
                         <div className={venuesDisplay}>
                             <RenderUserVenues
-                                url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/venues`}
+                                url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/venues?sort=created&limit=50`}
                             />
                         </div>
                     </div>
@@ -164,7 +181,7 @@ function Profile() {
                             .getItem('userName')
                             .replace(/['"]+/g, '') && (
                         <RenderUserVenues
-                            url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/venues`}
+                            url={`https://api.noroff.dev/api/v1/holidaze/profiles/${dataAuth.name}/venues?sort=created&limit=50`}
                         />
                     )}
             </div>

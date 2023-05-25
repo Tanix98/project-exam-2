@@ -32,8 +32,8 @@ export default function CreateVenue() {
         name: '',
         description: '',
         media: [],
-        price: 1,
-        maxGuests: 1,
+        price: '',
+        maxGuests: '',
         meta: {
             wifi: false,
             parking: false,
@@ -177,10 +177,17 @@ export default function CreateVenue() {
         });
     };
     const handlePriceChange = (e) => {
-        setCreateVenueFormData({
-            ...createVenueFormData,
-            price: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setCreateVenueFormData({
+                ...createVenueFormData,
+                price: '',
+            });
+        } else {
+            setCreateVenueFormData({
+                ...createVenueFormData,
+                price: Number(e.target.value),
+            });
+        }
     };
     const handleDescriptionChange = (e) => {
         setCreateVenueFormData({
@@ -189,10 +196,17 @@ export default function CreateVenue() {
         });
     };
     const handleGuestsChange = (e) => {
-        setCreateVenueFormData({
-            ...createVenueFormData,
-            maxGuests: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setCreateVenueFormData({
+                ...createVenueFormData,
+                maxGuests: '',
+            });
+        } else {
+            setCreateVenueFormData({
+                ...createVenueFormData,
+                maxGuests: Number(e.target.value),
+            });
+        }
     };
     const handleWifiChange = () => {
         if (venueWifi === false) {
@@ -312,7 +326,6 @@ export default function CreateVenue() {
                         <Form.Control
                             name='price'
                             type='number'
-                            min='1'
                             value={createVenueFormData.price}
                             placeholder='Enter price'
                             onKeyDown={handleKeyDownNumber}
@@ -324,7 +337,6 @@ export default function CreateVenue() {
                         <Form.Control
                             name='max guests'
                             type='number'
-                            min='1'
                             placeholder='Enter max guests'
                             value={createVenueFormData.maxGuests}
                             onKeyDown={handleKeyDownNumber}

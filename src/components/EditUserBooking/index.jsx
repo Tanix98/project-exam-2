@@ -1,6 +1,7 @@
 /*import { useNavigate } from 'react-router-dom';*/
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
@@ -17,7 +18,7 @@ function EditUserBooking(props) {
     const [editBookingFormData, setEditBookingFormData] = useState({
         dateFrom: '',
         dateTo: '',
-        guests: 1,
+        guests: '',
     });
     const [editBookingSubmitAlert, setEditBookingSubmitAlert] = useState('');
 
@@ -168,14 +169,21 @@ function EditUserBooking(props) {
         });
     }
     function handleGuestsChange(e) {
-        setEditBookingFormData({
-            ...editBookingFormData,
-            guests: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setEditBookingFormData({
+                ...editBookingFormData,
+                guests: '',
+            });
+        } else {
+            setEditBookingFormData({
+                ...editBookingFormData,
+                guests: Number(e.target.value),
+            });
+        }
     }
 
     return (
-        <div>
+        <Col>
             <Button
                 variant='primary'
                 className='rounded-pill w-100'
@@ -197,7 +205,6 @@ function EditUserBooking(props) {
                     <Form.Control
                         name='guests'
                         type='number'
-                        min='1'
                         value={editBookingFormData.guests}
                         onChange={handleGuestsChange}
                         onKeyDown={handleKeyDownNumber}
@@ -237,47 +244,47 @@ function EditUserBooking(props) {
                     )}
                     {isLoading ? (
                         <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditBooking}
+                            onKeyDown={handleKeyDownEdit}
                             disabled
                         >
-                            Close
+                            Edit avatar
                         </Button>
                     ) : (
                         <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditBooking}
+                            onKeyDown={handleKeyDownEdit}
                         >
-                            Close
+                            Edit avatar
                         </Button>
                     )}
                     {isLoading ? (
                         <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditBooking}
-                            onKeyDown={handleKeyDownEdit}
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
                             disabled
                         >
-                            Edit avatar
+                            Close
                         </Button>
                     ) : (
                         <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditBooking}
-                            onKeyDown={handleKeyDownEdit}
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
                         >
-                            Edit avatar
+                            Close
                         </Button>
                     )}
                 </Modal.Footer>
             </Modal>
-        </div>
+        </Col>
     );
 }
 

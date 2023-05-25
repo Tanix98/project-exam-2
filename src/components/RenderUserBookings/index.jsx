@@ -1,3 +1,4 @@
+import '../RenderUserBookings/index.css';
 import LoadingScreen from '../LoadingScreen';
 import LoadingError from '../LoadingError';
 import UseApiGetAuth from '../../api/UseApiGetAuth';
@@ -22,13 +23,17 @@ function RenderUserBookings(props) {
     }
 
     return (
-        <div className='d-flex gap-3 flex-wrap text-break px-4 px-sm-4 m-auto'>
+        <div
+            className='d-flex gap-3 flex-wrap text-break m-auto'
+            id='user-bookings-container'
+        >
             {dataAuth.map((booking, key) => (
                 <div
                     className='rounded d-flex flex-column my-1 p-3 bg-white shadow-sm'
                     key={key}
+                    id='user-booking'
                 >
-                    <div>
+                    <div className='d-flex flex-column gap-1'>
                         <p>Guests: {booking.guests}</p>
                         <p>
                             Length:{' '}
@@ -50,7 +55,6 @@ function RenderUserBookings(props) {
                                     }
                                 />
                             }{' '}
-                            days
                         </p>
                         <p>
                             Check-in:{' '}
@@ -69,14 +73,10 @@ function RenderUserBookings(props) {
                                 booking.dateTo.substring(0, 4)}
                         </p>
                         <hr className='pb-1' />
-                        <div className='d-flex flex-column gap-2'>
-                            <Col>
-                                <EditUserBooking id={booking.id} />
-                            </Col>
-                            <Col>
-                                <DeleteUserBooking id={booking.id} />
-                            </Col>
-                        </div>
+                    </div>
+                    <div className='d-flex flex-wrap gap-2'>
+                        <EditUserBooking id={booking.id} />
+                        <DeleteUserBooking id={booking.id} />
                     </div>
                 </div>
             ))}

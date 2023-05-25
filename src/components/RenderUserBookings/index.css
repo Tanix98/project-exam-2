@@ -1,0 +1,15 @@
+#user-bookings-container {
+    justify-content: center;
+}
+#user-booking {
+    width: 100%;
+}
+
+@media only screen and (min-width: 443px) {
+    #user-bookings-container {
+        justify-content: start;
+    }
+    #user-booking {
+        width: auto;
+    }
+}

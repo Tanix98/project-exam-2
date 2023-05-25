@@ -99,7 +99,7 @@ export default function Header() {
 
     const navigate = useNavigate();
     function search() {
-        navigate(`/Search/${searchWord}`);
+        navigate(`/Search/${searchWord}?page=1`);
     }
 
     // onBlur to hide search autocomplete, is not accessible as shift focus cannot select the autocomplete list
@@ -155,7 +155,7 @@ export default function Header() {
             <Container>
                 <div className='d-flex flex-column gap-2 w-100'>
                     <div className='d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center gap-3'>
-                        <Link to='/' aria-label='To homepage'>
+                        <Link to='/?page=1' aria-label='To homepage'>
                             <img
                                 src={holidazeLogo}
                                 alt='Holidaze logo'
@@ -244,24 +244,18 @@ export default function Header() {
                                             src={localStorage
                                                 .getItem('userAvatar')
                                                 .replace(/['"]+/g, '')}
-                                            id='profile-img'
                                             alt='Navigation links'
-                                            className='rounded-circle mw-100 mh-100'
+                                            className='profile-img rounded-circle mw-100 mh-100'
                                         />
                                     ) : (
                                         <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             fill='currentColor'
-                                            className='bi bi-person-circle mw-100 mh-100'
+                                            className='bi bi-person-fill profile-img mw-100 mh-100 bg-dark text-light p-1 rounded-circle'
                                             viewBox='0 0 16 16'
-                                            id='profile-img'
-                                            alt='Navigation links'
+                                            alt={'Navigation links'}
                                         >
-                                            <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
-                                            <path
-                                                fillRule='evenodd'
-                                                d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'
-                                            />
+                                            <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                                         </svg>
                                     )}
                                 </button>

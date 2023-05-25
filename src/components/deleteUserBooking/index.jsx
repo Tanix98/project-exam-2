@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 
 function DeleteUserBooking(props) {
@@ -53,7 +54,7 @@ function DeleteUserBooking(props) {
     }
 
     return (
-        <div>
+        <Col>
             <Button
                 variant='outline-danger'
                 className='rounded-pill w-100'
@@ -78,14 +79,6 @@ function DeleteUserBooking(props) {
                 </Modal.Body>
                 <Modal.Footer className='d-flex'>
                     <Button
-                        variant='dark rounded-pill'
-                        className='px-4 w-100 col'
-                        onClick={handleClose}
-                        onKeyDown={handleKeyDownClose}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
                         variant='outline-danger rounded-pill'
                         className='px-4 w-100 col text-nowrap'
                         onClick={handleDeleteBooking}
@@ -93,9 +86,17 @@ function DeleteUserBooking(props) {
                     >
                         Delete
                     </Button>
+                    <Button
+                        variant='dark rounded-pill'
+                        className='px-4 w-100 col'
+                        onClick={handleClose}
+                        onKeyDown={handleKeyDownClose}
+                    >
+                        Cancel
+                    </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </Col>
     );
 }
 

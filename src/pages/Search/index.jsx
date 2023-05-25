@@ -11,7 +11,7 @@ function Search() {
 
     return (
         <RenderVenues
-            url='https://api.noroff.dev/api/v1/holidaze/venues?_owner=true&_bookings=true'
+            url={`https://api.noroff.dev/api/v1/holidaze/venues?sort=created&limit=50&_owner=true`}
             searchTerm={searchTerm}
         />
     );

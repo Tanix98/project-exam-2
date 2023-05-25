@@ -3,5 +3,8 @@ export default function GetTotalAmountOfDays(props) {
     const endDate = new Date(props.date2);
     const differenceInTime = endDate.getTime() - startDate.getTime();
     const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-    return differenceInDays;
+    if (differenceInDays > 1) {
+        return differenceInDays + ' days';
+    }
+    return differenceInDays + ' day';
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
@@ -78,14 +78,10 @@ function EditUserAvatar() {
     }
 
     return (
-        <div>
+        <Col>
             <Button
                 variant='outline-primary'
-                className={
-                    localStorage.getItem('userVenueManager')
-                        ? 'w-100 rounded-pill'
-                        : 'px-5 rounded-pill'
-                }
+                className='w-100 rounded-pill'
                 onClick={handleShow}
                 onKeyDown={handleKeyDownOpen}
             >
@@ -127,47 +123,47 @@ function EditUserAvatar() {
                     )}
                     {isLoading ? (
                         <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditAvatar}
+                            onKeyDown={handleKeyDownEdit}
                             disabled
                         >
-                            Close
+                            Edit avatar
                         </Button>
                     ) : (
                         <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
+                            variant='primary rounded-pill'
+                            className='px-4 w-100 col text-nowrap'
+                            onClick={handleEditAvatar}
+                            onKeyDown={handleKeyDownEdit}
                         >
-                            Close
+                            Edit avatar
                         </Button>
                     )}
                     {isLoading ? (
                         <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditAvatar}
-                            onKeyDown={handleKeyDownEdit}
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
                             disabled
                         >
-                            Edit avatar
+                            Close
                         </Button>
                     ) : (
                         <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditAvatar}
-                            onKeyDown={handleKeyDownEdit}
+                            variant='dark rounded-pill'
+                            className='px-4 w-100 col'
+                            onClick={handleClose}
+                            onKeyDown={handleKeyDownClose}
                         >
-                            Edit avatar
+                            Close
                         </Button>
                     )}
                 </Modal.Footer>
             </Modal>
-        </div>
+        </Col>
     );
 }
 

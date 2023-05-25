@@ -22,15 +22,15 @@ export default function CreateBooking() {
 
     // Create booking states
 
-    const [selectedVenue, setSelectedVenue] = useState('');
+    /*const [selectedVenue, setSelectedVenue] = useState('');
 
-    /*const [bookingStart, setBookingStart] = useState('');
+    const [bookingStart, setBookingStart] = useState('');
     const [bookingEnd, setBookingEnd] = useState('');
     const [bookingGuests, setBookingGuests] = useState(1);*/
     const [createBookingFormData, setCreateBookingFormData] = useState({
         dateFrom: '',
         dateTo: '',
-        guests: 1,
+        guests: '',
         venueId: id,
     });
     const [createBookingSubmitAlert, setCreateBookingSubmitAlert] =
@@ -72,7 +72,7 @@ export default function CreateBooking() {
         setSearchWord('');
     };
     useEffect(() => {
-        if (chosenVenueName != 'Select a venue') {
+        if (chosenVenueName !== 'Select a venue') {
             setCreateBookingPageTitle('Create booking at ' + chosenVenueName);
         }
     }, [chosenVenueName]);
@@ -264,10 +264,17 @@ export default function CreateBooking() {
         });
     };
     const handleGuestsChange = (e) => {
-        setCreateBookingFormData({
-            ...createBookingFormData,
-            guests: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setCreateBookingFormData({
+                ...createBookingFormData,
+                guests: '',
+            });
+        } else {
+            setCreateBookingFormData({
+                ...createBookingFormData,
+                guests: Number(e.target.value),
+            });
+        }
     };
 
     // Search for venue to book
@@ -382,7 +389,6 @@ export default function CreateBooking() {
                         <Form.Control
                             name='guests'
                             type='number'
-                            min='1'
                             value={createBookingFormData.guests}
                             placeholder='Enter guest amount'
                             onKeyDown={handleKeyDownNumber}
@@ -412,14 +418,21 @@ export default function CreateBooking() {
                         ></Form.Control>
                     </Form.Group>
                     <h2 className='text-danger'>{createBookingSubmitAlert}</h2>
-                    <p className='undertitle-p'>
-                        Length: {totalDaysAmount && totalDaysAmount + ' days'}
-                    </p>
+                    <div className='d-flex gap-2'>
+                        <p className='undertitle-p'>Length: </p>
+                        {totalDaysAmount && (
+                            <p className='undertitle-p'>
+                                {totalDaysAmount > 1
+                                    ? totalDaysAmount + ' days'
+                                    : totalDaysAmount + ' day'}
+                            </p>
+                        )}
+                    </div>
                     {data.price && (
                         <p className='undertitle-p'>
                             Total:{' '}
                             {totalDaysAmount &&
-                                totalDaysAmount * data.price + 'kr'}
+                                totalDaysAmount * data.price + ' kr'}
                         </p>
                     )}
                     <div className='d-flex flex-wrap gap-3 mt-4'>

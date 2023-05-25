@@ -81,48 +81,22 @@ function Login() {
             }
 
             // Errors
-
             if (data.errors) {
-                if (data.errors[0].message === 'Profile already exists') {
-                    setSignupNameError('');
-                    setSignupEmailError('');
-                    setSignupPasswordError('');
-                    setSignupSubmitAlertClasses('text-danger mt-2');
-                    setSignupSubmitAlert(data.errors[0].message);
-                }
-            }
-            if (signupFormData.name === '') {
-                setSignupNameError('Please fill out this field');
-                setSignupSubmitAlert('');
-            } else {
-                if (data.errors) {
-                    if (data.errors[0].message) {
-                        setSignupNameError(data.errors[0].message);
-                        setSignupSubmitAlert('');
+                setSignupNameError('');
+                setSignupEmailError('');
+                setSignupPasswordError('');
+
+                data.errors.map((error) => {
+                    if (error.path[0] === 'name') {
+                        setSignupNameError(error.message);
                     }
-                }
-            }
-            if (signupFormData.email === '') {
-                setSignupEmailError('Please fill out this field');
-                setSignupSubmitAlert('');
-            } else {
-                if (data.errors) {
-                    if (data.errors[1].message) {
-                        setSignupEmailError(data.errors[1].message);
-                        setSignupSubmitAlert('');
+                    if (error.path[0] === 'email') {
+                        setSignupEmailError(error.message);
                     }
-                }
-            }
-            if (signupFormData.password === '') {
-                setSignupPasswordError('Please fill out this field');
-                setSignupSubmitAlert('');
-            } else {
-                if (data.errors) {
-                    if (data.errors[2].message) {
-                        setSignupPasswordError(data.errors[2].message);
-                        setSignupSubmitAlert('');
+                    if (error.path[0] === 'password') {
+                        setSignupPasswordError(error.message);
                     }
-                }
+                });
             }
         } catch (error) {
             console.log(error);
@@ -179,34 +153,15 @@ function Login() {
             }
 
             // Errors
-            if (loginFormData.email === '') {
-                setLoginEmailError('Please fill out this field');
-                setLoginSubmitAlert('');
-            }
-            if (loginFormData.password === '') {
-                setLoginPasswordError('Please fill out this field');
-                setLoginSubmitAlert('');
-            }
-            if (loginFormData.password.length > 0) {
-                setLoginPasswordError('');
-            }
             if (data.errors) {
-                if (
-                    loginFormData.password.length > 0 &&
-                    loginFormData.password.length > 0 &&
-                    data.errors[0].message === 'Invalid email or password'
-                ) {
+                console.log(data.errors);
+                if (data.errors[0].message === 'Invalid email or password') {
                     setLoginEmailError('');
-                    setLoginPasswordError('');
-                    setLoginSubmitAlertClasses('text-danger mt-2');
-                    setLoginSubmitAlert(data.errors[0].message);
+                    setLoginPasswordError(data.errors[0].message);
                 }
-                if (
-                    loginFormData.email.length > 0 &&
-                    data.errors[0].message === 'Email must be a valid email'
-                ) {
+                if (data.errors[0].message === 'Email must be a valid email') {
+                    setLoginPasswordError('');
                     setLoginEmailError(data.errors[0].message);
-                    setLoginSubmitAlert('');
                 }
             }
         } catch (error) {
@@ -284,7 +239,7 @@ function Login() {
                 </Form.Group>
                 <Button
                     variant='primary'
-                    className='rounded-pill mt-2 w-100'
+                    className='rounded-pill mt-2 mb-1 w-100'
                     type='submit'
                     onKeyDown={handleKeyDownLogin}
                     onClick={onFormSubmitLogin}
@@ -376,7 +331,7 @@ function Login() {
                 <div className='d-flex justify-content-center justify-content-sm-start'>
                     <Button
                         variant='primary'
-                        className='rounded-pill mt-2 w-100'
+                        className='rounded-pill mt-2 mb-1 w-100'
                         type='submit'
                         onKeyDown={handleKeyDownSignup}
                         onClick={onFormSubmitSignup}

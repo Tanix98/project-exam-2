@@ -11,11 +11,7 @@ function Copyright() {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
 
-    return (
-        <div>
-            <GetCurrentYear year={currentYear} />
-        </div>
-    );
+    return <GetCurrentYear year={currentYear} />;
 }
 
 export default Copyright;

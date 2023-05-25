@@ -62,7 +62,7 @@ function SingleVenue() {
         ) {
             return (
                 <a
-                    className='d-inline-flex align-items-center gap-3'
+                    className='d-inline-flex align-items-center gap-3 mb-1'
                     id='venueMetaLocation'
                     target='_blank'
                     rel='noreferrer'
@@ -124,12 +124,8 @@ function SingleVenue() {
                             View Bookings
                         </Button>
                         <div className='d-flex flex-wrap gap-3'>
-                            <Col>
-                                <DeleteUserVenue id={data.id} />
-                            </Col>
-                            <Col>
-                                <EditUserVenue data={data} />
-                            </Col>
+                            <EditUserVenue data={data} />
+                            <DeleteUserVenue id={data.id} />
                         </div>
                     </div>
                 );
@@ -224,9 +220,10 @@ function SingleVenue() {
                     </Carousel.Item>
                 )}
             </Carousel>
-            <div className='mt-3'>
-                <h1 className='mb-1'>{data.name}</h1>
-                <p className='undertitle-p'>Price: {data.price}kr per day</p>
+            <h1 className='my-3'>{data.name}</h1>
+            <div className='d-flex gap-1 align-items-center'>
+                <h2 className='undertitle-p mb-0'>{data.price} kr</h2>
+                <p className='text-muted'>per day</p>
             </div>
             <hr />
             <Link
@@ -238,22 +235,18 @@ function SingleVenue() {
                 {data.owner.avatar ? (
                     <img
                         src={data.owner.avatar}
-                        className='rounded-circle'
+                        className='rounded'
                         alt={`Venue owner ${data.owner.name}'s Avatar`}
                     />
                 ) : (
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='currentColor'
-                        className='bi bi-person-circle mw-100 mh-100'
+                        className='bi bi-person-fill mw-100 mh-100 bg-dark text-light p-1 rounded'
                         viewBox='0 0 16 16'
                         alt={`Venue owner ${data.owner.name}'s Avatar`}
                     >
-                        <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
-                        <path
-                            fillRule='evenodd'
-                            d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'
-                        />
+                        <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                     </svg>
                 )}
                 <div className='d-flex flex-column'>
@@ -280,14 +273,16 @@ function SingleVenue() {
                         <path d='M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z' />
                     </svg>
                     <p className='undertitle-p'>
-                        {'Up to ' + data.maxGuests + ' guests'}
+                        {data.maxGuests > 1
+                            ? 'Up to ' + data.maxGuests + ' guests'
+                            : 'Up to ' + data.maxGuests + ' guest'}
                     </p>
                 </div>
                 <div
                     className={
                         data.meta.wifi
-                            ? 'd-inline-flex align-items-center gap-3'
-                            : 'd-inline-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3 mt-1'
+                            : 'd-inline-flex align-items-center gap-3 mt-1 text-muted'
                     }
                 >
                     <svg
@@ -311,8 +306,8 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.parking
-                            ? 'd-inline-flex align-items-center gap-3'
-                            : 'd-inline-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3 mt-1 '
+                            : 'd-inline-flex align-items-center gap-3 mt-1 text-muted'
                     }
                 >
                     <svg
@@ -335,8 +330,8 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.breakfast
-                            ? 'd-inline-flex align-items-center gap-3'
-                            : 'd-inline-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3 mt-1 '
+                            : 'd-inline-flex align-items-center gap-3 mt-1 text-muted'
                     }
                 >
                     <svg
@@ -363,8 +358,8 @@ function SingleVenue() {
                 <div
                     className={
                         data.meta.pets
-                            ? 'd-inline-flex align-items-center gap-3'
-                            : 'd-inline-flex align-items-center gap-3 text-muted'
+                            ? 'd-inline-flex align-items-center gap-3 mt-1 '
+                            : 'd-inline-flex align-items-center gap-3 mt-1 text-muted'
                     }
                     id='venueMetaPets'
                 >

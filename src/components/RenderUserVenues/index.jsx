@@ -31,7 +31,7 @@ function RenderUserVenues(props) {
     }
 
     return (
-        <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-content-center px-1'>
             <div id='venues-container'>
                 {dataAuth.map((venue, key) => (
                     <Link
@@ -40,8 +40,9 @@ function RenderUserVenues(props) {
                         }}
                         key={key}
                         aria-label={`Go to venue ${venue.name}`}
+                        className='venueContainer rounded'
                     >
-                        <div className='venueContainer d-flex flex-column my-2 p-2 rounded'>
+                        <div className='d-flex flex-column p-2'>
                             <div className='venueImgContainer rounded shadow-sm d-inline-block'>
                                 <img
                                     className='img-fluid venueImg'
@@ -51,8 +52,8 @@ function RenderUserVenues(props) {
                                     alt={venue.name}
                                 />
                             </div>
-                            <p className='venueTitle title-p'>{venue.name}</p>
-                            <p>Price: {venue.price}kr</p>
+                            <p className='venueTitle'>{venue.name}</p>
+                            <p>{venue.price} kr / day</p>
                         </div>
                     </Link>
                 ))}

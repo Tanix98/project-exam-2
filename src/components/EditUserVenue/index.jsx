@@ -175,10 +175,17 @@ function EditUserVenue(props) {
         });
     };
     const handlePriceChange = (e) => {
-        setEditVenueFormData({
-            ...editVenueFormData,
-            price: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setEditVenueFormData({
+                ...editVenueFormData,
+                price: '',
+            });
+        } else {
+            setEditVenueFormData({
+                ...editVenueFormData,
+                price: Number(e.target.value),
+            });
+        }
     };
     const handleDescriptionChange = (e) => {
         setEditVenueFormData({
@@ -187,10 +194,17 @@ function EditUserVenue(props) {
         });
     };
     const handleGuestsChange = (e) => {
-        setEditVenueFormData({
-            ...editVenueFormData,
-            maxGuests: Number(e.target.value),
-        });
+        if (Number(e.target.value) === 0) {
+            setEditVenueFormData({
+                ...editVenueFormData,
+                maxGuests: '',
+            });
+        } else {
+            setEditVenueFormData({
+                ...editVenueFormData,
+                maxGuests: Number(e.target.value),
+            });
+        }
     };
     const handleWifiChange = () => {
         if (venueWifi === false) {
@@ -277,9 +291,9 @@ function EditUserVenue(props) {
     };
 
     return (
-        <div>
+        <Col>
             <Button
-                variant='outline-dark'
+                variant='outline-primary'
                 className='rounded-pill w-100'
                 onClick={handleOpen}
                 onKeyDown={handleKeyDownOpen}
@@ -327,7 +341,6 @@ function EditUserVenue(props) {
                             <Form.Control
                                 name='price'
                                 type='number'
-                                min='1'
                                 value={editVenueFormData.price}
                                 placeholder='Enter price'
                                 onKeyDown={handleKeyDownNumber}
@@ -339,7 +352,6 @@ function EditUserVenue(props) {
                             <Form.Control
                                 name='max guests'
                                 type='number'
-                                min='1'
                                 placeholder='Enter max guests'
                                 value={editVenueFormData.maxGuests}
                                 onKeyDown={handleKeyDownNumber}
@@ -469,54 +481,54 @@ function EditUserVenue(props) {
                     {isLoading ? (
                         <Col>
                             <Button
-                                variant='dark rounded-pill'
+                                variant='primary rounded-pill'
                                 className='px-4 w-100'
-                                onClick={handleClose}
-                                onKeyDown={handleKeyDownClose}
+                                onClick={handleEditVenue}
+                                onKeyDown={handleKeyDown}
                                 disabled
                             >
-                                Cancel
+                                Edit
                             </Button>
                         </Col>
                     ) : (
                         <Col>
                             <Button
-                                variant='dark rounded-pill'
+                                variant='primary rounded-pill'
                                 className='px-4 w-100'
-                                onClick={handleClose}
-                                onKeyDown={handleKeyDownClose}
+                                onClick={handleEditVenue}
+                                onKeyDown={handleKeyDown}
                             >
-                                Cancel
+                                Edit
                             </Button>
                         </Col>
                     )}
                     {isLoading ? (
                         <Col>
                             <Button
-                                variant='primary rounded-pill'
+                                variant='dark rounded-pill'
                                 className='px-4 w-100'
-                                onClick={handleEditVenue}
-                                onKeyDown={handleKeyDown}
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
                                 disabled
                             >
-                                Edit
+                                Cancel
                             </Button>
                         </Col>
                     ) : (
                         <Col>
                             <Button
-                                variant='primary rounded-pill'
+                                variant='dark rounded-pill'
                                 className='px-4 w-100'
-                                onClick={handleEditVenue}
-                                onKeyDown={handleKeyDown}
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
                             >
-                                Edit
+                                Cancel
                             </Button>
                         </Col>
                     )}
                 </Modal.Footer>
             </Modal>
-        </div>
+        </Col>
     );
 }
 

@@ -137,16 +137,18 @@ function EditUserBooking(props) {
             handleEditBooking();
         }
     }
+    // Only allow numbers, shift and backspace
     function handleKeyDownNumber(event) {
-        if (!/[0-9]/.test(event.key)) {
-            if (event.keyCode !== 8) {
-                if (event.keyCode === 13) {
-                    handleEditBooking();
-                } else {
-                    event.preventDefault();
-                }
-            }
+        if (/[0-9]/.test(event.key)) {
+            return;
         }
+        if (event.keyCode === 8) {
+            return;
+        }
+        if (event.keyCode === 9) {
+            return;
+        }
+        event.preventDefault();
     }
     function handleKeyDownClose(event) {
         if (event.keyCode === 13) {
@@ -167,6 +169,7 @@ function EditUserBooking(props) {
             ...editBookingFormData,
             dateTo: e.target.value,
         });
+        console.log(editBookingFormData.dateTo);
     }
     function handleGuestsChange(e) {
         if (Number(e.target.value) === 0) {
@@ -198,22 +201,27 @@ function EditUserBooking(props) {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-3'
+                className='mt-4'
             >
                 <Modal.Body>
-                    <Form.Label>Guests</Form.Label>
+                    <Form.Label htmlFor='edit-booking-guest-amount'>
+                        Guests
+                    </Form.Label>
                     <Form.Control
-                        name='guests'
+                        id='edit-booking-guest-amount'
                         type='number'
+                        min={0}
                         value={editBookingFormData.guests}
                         onChange={handleGuestsChange}
                         onKeyDown={handleKeyDownNumber}
                         className='mb-2'
                         autoFocus
                     />
-                    <Form.Label>Check-in</Form.Label>
+                    <Form.Label htmlFor='edit-booking-check-in'>
+                        Check-in
+                    </Form.Label>
                     <Form.Control
-                        name='check-in'
+                        id='edit-booking-check-in'
                         type='date'
                         placeholder='Enter check-in date'
                         value={editBookingFormData.dateFrom}
@@ -221,9 +229,11 @@ function EditUserBooking(props) {
                         onKeyDown={handleKeyDownEdit}
                         className='mb-2'
                     />
-                    <Form.Label>Check-out</Form.Label>
+                    <Form.Label htmlFor='edit-booking-check-out'>
+                        Check-out
+                    </Form.Label>
                     <Form.Control
-                        name='check-out'
+                        id='edit-booking-check-out'
                         type='date'
                         placeholder='Enter check-out date'
                         value={editBookingFormData.dateTo}

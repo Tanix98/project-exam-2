@@ -8,6 +8,10 @@
 .venueContainer:hover {
     background-color: var(--element-hover) !important;
 }
+#venues-container p {
+    min-width: 90%;
+    width: 0;
+}
 
 .venueImgContainer {
     max-height: 325px;
@@ -50,6 +54,12 @@
 .venueTitle {
     font-family: 'Sora', sans-serif;
     font-weight: 600;
+    max-height: 100px;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 @media only screen and (min-width: 620px) {

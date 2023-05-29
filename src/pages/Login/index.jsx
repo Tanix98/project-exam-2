@@ -96,6 +96,7 @@ function Login() {
                     if (error.path[0] === 'password') {
                         setSignupPasswordError(error.message);
                     }
+                    return null;
                 });
             }
         } catch (error) {
@@ -206,9 +207,11 @@ function Login() {
                     </Link>
                 </div>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Email address *</Form.Label>
+                    <Form.Label htmlFor='login-email'>
+                        Email address *
+                    </Form.Label>
                     <Form.Control
-                        name='email'
+                        id='login-email'
                         type='email'
                         placeholder='Enter email address'
                         value={loginFormData.email}
@@ -222,9 +225,9 @@ function Login() {
                     <p className='text-danger mt-1'>{loginEmailError}</p>
                 </Form.Group>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Password *</Form.Label>
+                    <Form.Label htmlFor='login-password'>Password *</Form.Label>
                     <Form.Control
-                        name='password'
+                        id='login-password'
                         type='password'
                         placeholder='Enter password'
                         value={loginFormData.password}
@@ -261,9 +264,9 @@ function Login() {
                     </Link>
                 </div>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Name *</Form.Label>
+                    <Form.Label htmlFor='register-name'>Name *</Form.Label>
                     <Form.Control
-                        name='name'
+                        id='register-name'
                         type='name'
                         placeholder='Enter name'
                         value={signupFormData.name}
@@ -277,9 +280,11 @@ function Login() {
                     <p className='text-danger mt-2'>{signupNameError}</p>
                 </Form.Group>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Email address *</Form.Label>
+                    <Form.Label htmlFor='register-email'>
+                        Email address *
+                    </Form.Label>
                     <Form.Control
-                        name='email'
+                        id='register-email'
                         type='email'
                         placeholder='Enter email address'
                         value={signupFormData.email}
@@ -293,9 +298,11 @@ function Login() {
                     <p className='text-danger mt-2'>{signupEmailError}</p>
                 </Form.Group>
                 <Form.Group className='mb-3'>
-                    <Form.Label>Password *</Form.Label>
+                    <Form.Label htmlFor='register-password'>
+                        Password *
+                    </Form.Label>
                     <Form.Control
-                        name='password'
+                        id='register-password'
                         type='password'
                         placeholder='Enter password'
                         value={signupFormData.password}
@@ -309,7 +316,9 @@ function Login() {
                     <p className='text-danger mt-2'>{signupPasswordError}</p>
                 </Form.Group>
                 <Form.Group className='mb-3 d-block'>
-                    <Form.Label>Account type *</Form.Label>
+                    <Form.Label aria-label='Choose account type'>
+                        Account type *
+                    </Form.Label>
                     <Form.Check
                         className='mb-1'
                         value='false'

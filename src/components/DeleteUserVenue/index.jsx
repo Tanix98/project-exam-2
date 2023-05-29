@@ -29,11 +29,14 @@ function DeleteUserVenue(props) {
                     },
                 }
             );
-            navigate(
-                `/profile/${localStorage
-                    .getItem('userName')
-                    .replace(/['"]+/g, '')}`
-            );
+            const data = response.text();
+            if (data) {
+                navigate(
+                    `/profile/${localStorage
+                        .getItem('userName')
+                        .replace(/['"]+/g, '')}`
+                );
+            }
         } catch (error) {
             console.log(error);
         }

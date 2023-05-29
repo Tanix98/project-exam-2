@@ -236,51 +236,49 @@ function RenderVenues(props) {
                                         }}
                                         key={key}
                                         aria-label={`Go to venue ${venue.name}`}
-                                        className='venueContainer rounded'
+                                        className='venueContainer rounded d-flex flex-column p-2'
                                     >
-                                        <div className='d-flex flex-column p-2'>
-                                            <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                                                <img
-                                                    className='img-fluid venueImg'
-                                                    src={
-                                                        venue.media[0]
-                                                            ? venue.media[0]
-                                                            : noImg
-                                                    }
-                                                    alt={venue.name}
-                                                />
-                                            </div>
-                                            <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
-                                                {venue.owner.avatar ? (
-                                                    <img
-                                                        src={venue.owner.avatar}
-                                                        className='rounded'
-                                                        alt={`Venue owner ${venue.owner.name}'s Avatar`}
-                                                    />
-                                                ) : (
-                                                    <svg
-                                                        xmlns='http://www.w3.org/2000/svg'
-                                                        fill='currentColor'
-                                                        className='bi bi-person-circle mw-100 mh-100'
-                                                        viewBox='0 0 16 16'
-                                                        alt={`Venue owner ${venue.owner.name}'s Avatar`}
-                                                    >
-                                                        <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
-                                                        <path
-                                                            fillRule='evenodd'
-                                                            d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'
-                                                        />
-                                                    </svg>
-                                                )}
-                                                <p className='text-muted'>
-                                                    {venue.owner.name}
-                                                </p>
-                                            </div>
-                                            <p className='venueTitle title-p'>
-                                                {venue.name}
-                                            </p>
-                                            <p>{venue.price} kr / day</p>
+                                        <div className='venueImgContainer rounded shadow-sm d-inline-block'>
+                                            <img
+                                                className='img-fluid venueImg'
+                                                src={
+                                                    venue.media[0]
+                                                        ? venue.media[0]
+                                                        : noImg
+                                                }
+                                                alt={venue.name}
+                                            />
                                         </div>
+                                        <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
+                                            {venue.owner.avatar ? (
+                                                <img
+                                                    src={venue.owner.avatar}
+                                                    className='rounded'
+                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                                />
+                                            ) : (
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    fill='currentColor'
+                                                    className='bi bi-person-circle mw-100 mh-100'
+                                                    viewBox='0 0 16 16'
+                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                                >
+                                                    <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
+                                                    <path
+                                                        fillRule='evenodd'
+                                                        d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z'
+                                                    />
+                                                </svg>
+                                            )}
+                                            <p className='text-muted text-truncate'>
+                                                {venue.owner.name}
+                                            </p>
+                                        </div>
+                                        <p className='venueTitle title-p'>
+                                            {venue.name}
+                                        </p>
+                                        <p>{venue.price} kr / day</p>
                                     </Link>
                                 ))}
                         </div>
@@ -298,44 +296,42 @@ function RenderVenues(props) {
                                 }}
                                 key={key}
                                 aria-label={`Go to venue ${venue.name}`}
-                                className='venueContainer rounded'
+                                className='venueContainer rounded d-flex flex-column p-2'
                             >
-                                <div className='d-flex flex-column p-2'>
-                                    <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                                        <img
-                                            className='img-fluid venueImg'
-                                            src={
-                                                venue.media[0]
-                                                    ? venue.media[0]
-                                                    : noImg
-                                            }
-                                            alt={venue.name}
-                                        />
-                                    </div>
-                                    <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
-                                        {venue.owner.avatar ? (
-                                            <img
-                                                src={venue.owner.avatar}
-                                                alt={`Venue owner ${venue.owner.name}'s Avatar`}
-                                            />
-                                        ) : (
-                                            <svg
-                                                xmlns='http://www.w3.org/2000/svg'
-                                                fill='currentColor'
-                                                className='bi bi-person-fill mw-100 mh-100 bg-dark text-light'
-                                                viewBox='0 0 16 16'
-                                                alt={`Venue owner ${venue.owner.name}'s Avatar`}
-                                            >
-                                                <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
-                                            </svg>
-                                        )}
-                                        <p className='text-muted'>
-                                            {venue.owner.name}
-                                        </p>
-                                    </div>
-                                    <p className='venueTitle'>{venue.name}</p>
-                                    <p>{venue.price} kr / day</p>
+                                <div className='venueImgContainer rounded shadow-sm d-inline-block'>
+                                    <img
+                                        className='img-fluid venueImg'
+                                        src={
+                                            venue.media[0]
+                                                ? venue.media[0]
+                                                : noImg
+                                        }
+                                        alt={venue.name}
+                                    />
                                 </div>
+                                <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
+                                    {venue.owner.avatar ? (
+                                        <img
+                                            src={venue.owner.avatar}
+                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                        />
+                                    ) : (
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            fill='currentColor'
+                                            className='bi bi-person-fill mw-100 mh-100 bg-dark text-light'
+                                            viewBox='0 0 16 16'
+                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                        >
+                                            <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
+                                        </svg>
+                                    )}
+                                    <p className='text-muted text-truncate'>
+                                        {venue.owner.name}
+                                    </p>
+                                </div>
+                                <p className='venueTitle'>{venue.name}</p>
+                                <p>{venue.price} kr / day</p>
                             </Link>
                         ))}
                     </div>

@@ -1,15 +1,15 @@
-.custom-header-searchbar-booking {
-    position: relative !important;
-}
-
-.custom-header-searchbar-booking:focus {
-    z-index: 2;
-}
-
 .searchResultsBooking {
     position: absolute;
     top: 74px;
     width: 100%;
+}
+@media only screen and (min-width: 576px) {
+    .searchResultsBooking {
+        left: 50%;
+        transform: translate(-50%);
+        max-height: 160px;
+        max-width: 100%;
+    }
 }
 
 #search-list-booking {
@@ -20,11 +20,89 @@
     background-color: var(--element-hover);
 }
 
-@media only screen and (min-width: 576px) {
-    .searchResultsBooking {
-        left: 50%;
-        transform: translate(-50%);
-        max-height: 160px;
-        max-width: 100%;
+/* MUI calendar border */
+.MuiPickersLayout-root {
+    max-width: 100% !important;
+    width: auto !important;
+    border: 1px solid #ced4da !important;
+}
+
+/* MUI calendar responsiveness */
+@media only screen and (max-width: 360px) {
+    .css-hlj6pa-MuiDialogActions-root {
+        justify-content: start !important;
     }
+}
+.css-4pax7l-MuiPickersLayout-root {
+    min-width: 0px !important;
+}
+.MuiPickersCalendarHeader-root {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    min-width: 0px !important;
+}
+.css-15v8kdh-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    min-width: 0px !important;
+}
+/* MUI calendar button colors */
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    display: none !important;
+}
+/*.MuiDialogActions-root {
+    display: none !important;
+}*/
+.css-1beqopj-MuiPickersYear-yearButton.Mui-selected {
+    background-color: var(--link) !important;
+}
+.css-1beqopj-MuiPickersYear-yearButton.Mui-selected:hover {
+    background-color: var(--link-hover) !important;
+}
+.css-1jsy6pn-MuiButtonBase-root-MuiPickersDay-root.Mui-selected,
+.css-qa7bje-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+    background-color: var(--link) !important;
+}
+.css-1jsy6pn-MuiButtonBase-root-MuiPickersDay-root.Mui-selected:hover,
+.css-qa7bje-MuiButtonBase-root-MuiPickersDay-root.Mui-selected:hover {
+    background-color: var(--link-hover) !important;
+}
+/*.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    color: var(--link) !important;
+    border: 1px var(--link) solid !important;
+    border-radius: 20px !important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root:first-child {
+    color: var(--dark) !important;
+    border: 1px var(--dark) solid !important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root:first-child:hover {
+    color: white !important;
+    background-color: var(--dark) !important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover {
+    color: white !important;
+    background-color: var(--link) !important;
+}*/
+
+/* MUI calendar scrollbar styling */
+.MuiYearCalendar-root {
+    /* scrollbar is only supported by Firefox as of 16.05.2023 */
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG) !important;
+}
+/* webkit-scrollbar is supported by a majority of browsers, but not Firefox as of 16.05.2023 */
+.MuiYearCalendar-root::-webkit-scrollbar {
+    width: 11px !important;
+}
+.MuiYearCalendar-root::-webkit-scrollbar-track {
+    background: var(--scrollbarBG) !important;
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+}
+.MuiYearCalendar-root::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) !important;
+    border: 3px solid var(--scrollbarBG) !important;
+    border-radius: 10px !important;
 }

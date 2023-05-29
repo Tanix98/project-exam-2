@@ -93,12 +93,14 @@ function EditUserAvatar() {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-3'
+                className='mt-4'
             >
                 <Modal.Body>
-                    <Form.Label>Media URL</Form.Label>
+                    <Form.Label htmlFor='edit-user-avatar-media-url'>
+                        Media URL
+                    </Form.Label>
                     <Form.Control
-                        name='media'
+                        id='edit-user-avatar-media-url'
                         type='url'
                         placeholder='Enter media URL'
                         value={editAvatarFormData.avatar}

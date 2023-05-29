@@ -2,7 +2,6 @@ import '../SingleVenue/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDog } from '@fortawesome/free-solid-svg-icons';
 import LoadingScreen from '../../components/LoadingScreen';
-import LoadingError from '../../components/LoadingError';
 import UseApiGet from '../../api/UseApiGet';
 import EditUserVenue from '../../components/EditUserVenue';
 import DeleteUserVenue from '../../components/DeleteUserVenue';
@@ -11,7 +10,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
-import { Button, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 function SingleVenue() {
     const navigate = useNavigate();
@@ -35,12 +34,29 @@ function SingleVenue() {
     // If false, only show 100 characters of venue description. Show all if true
     const [showMore, setShowMore] = useState(false);
 
+    const link = (
+        <Link to='/' className='linkText' aria-label='Return to homepage'>
+            return to homepage.
+        </Link>
+    );
+
     if (isLoading) {
         return <LoadingScreen />;
     }
 
     if (isError || data.errors) {
-        return <LoadingError />;
+        return (
+            <Container className='d-flex justify-content-center'>
+                <div>
+                    <h1 className='mb-3'>Venue not found!</h1>
+                    <p className='mb-1'>
+                        The venue that you are requesting was deleted or never
+                        existed.
+                    </p>
+                    <p>Check that you entered the link correctly, or {link}</p>
+                </div>
+            </Container>
+        );
     }
 
     const dateString = new Date(data.created);

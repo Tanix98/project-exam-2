@@ -7,6 +7,12 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { StaticDatePicker } from '@mui/x-date-pickers';
+import { DateCalendar } from '@mui/x-date-pickers';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
+const dayjs = require('dayjs');
+dayjs().format();
 
 export default function CreateBooking() {
     useEffect(() => {
@@ -15,7 +21,7 @@ export default function CreateBooking() {
 
     let { id } = useParams();
 
-    // Create venue api call loading state
+    // Create booking api call loading state
     const [isLoadingPost, setIsLoadingPost] = useState(false);
 
     const navigate = useNavigate();
@@ -28,100 +34,112 @@ export default function CreateBooking() {
     const [bookingEnd, setBookingEnd] = useState('');
     const [bookingGuests, setBookingGuests] = useState(1);*/
     const [createBookingFormData, setCreateBookingFormData] = useState({
-        dateFrom: '',
-        dateTo: '',
+        dateFrom: null,
+        dateTo: null,
         guests: '',
         venueId: id,
     });
     const [createBookingSubmitAlert, setCreateBookingSubmitAlert] =
         useState('');
 
-    // Search states and useEffect
-    const [filteredData, setFilteredData] = useState([]);
-    const [searchWord, setSearchWord] = useState('');
-    // onBlur to hide search autocomplete, is not accessible as shift focus cannot select the autocomplete list
-    const [focused, setFocused] = useState(
-        'searchResultsBooking d-flex bg-light shadow-sm rounded-bottom'
-    );
-    const onFocus = () =>
-        setFocused(
-            'searchResultsBooking d-flex bg-light shadow-sm rounded-bottom'
-        );
-    const onBlur = () => {
-        setTimeout(
-            () =>
-                setFocused(
-                    'searchResultsBooking d-none bg-light shadow-sm rounded-bottom'
-                ),
-            200
-        );
-    };
-
-    // Get venue id and name when user clicks on search result
-    const [chosenVenueName, setChosenVenueName] = useState('Select a venue');
-    const [createBookingPageTitle, setCreateBookingPageTitle] =
-        useState('Create booking');
-    const getVenueId = (id) => {
-        setCreateBookingFormData({
-            ...createBookingFormData,
-            venueId: id,
-        });
-    };
-    const getVenueName = (name) => {
-        setChosenVenueName(name);
-        setSearchWord('');
-    };
-    useEffect(() => {
-        if (chosenVenueName !== 'Select a venue') {
-            setCreateBookingPageTitle('Create booking at ' + chosenVenueName);
-        }
-    }, [chosenVenueName]);
-    /*
-    const [chosenVenueId, setChosenVenueId] = useState("");
-    const getVenueId = (id) => {
-        setChosenVenueId(id);
-    };
-    useEffect(() => {
-        setCreateBookingFormData({
-            ...createBookingFormData,
-            venueId: chosenVenueId,
-        });
-        console.log(createBookingFormData.venueId);
-    }, [chosenVenueId]);*/
-
-    /*useEffect(() => {
-        onBlur();
-        setCreateBookingFormData({
-            ...createBookingFormData,
-            venueId: selectedVenue,
-        });
-    }, [selectedVenue]);*/
-
-    let apiCall = 'https://api.noroff.dev/api/v1/holidaze/venues';
-    if (id) {
-        apiCall = `https://api.noroff.dev/api/v1/holidaze/venues/${id}`;
-    }
-
-    const { data, isLoading, isError } = UseApiGet(apiCall);
-
     // Get total amount of days when both dates have been picked
     const [totalDaysAmount, setTotalDaysAmount] = useState('');
+    const [startDateRaw, setStartDateRaw] = useState('');
+    const [endDateRaw, setEndDateRaw] = useState('');
 
     useEffect(() => {
         if (createBookingFormData.dateFrom && createBookingFormData.dateTo) {
-            const bookingStart = new Date(
-                createBookingFormData.dateFrom.substring(0, 16)
-            );
-            const bookingEnd = new Date(
-                createBookingFormData.dateTo.substring(0, 16)
-            );
-            console.log(bookingEnd);
-            const differenceInTime =
-                bookingEnd.getTime() - bookingStart.getTime();
-            const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+            const differenceInDays = endDateRaw.diff(startDateRaw, 'days');
             setTotalDaysAmount(differenceInDays);
+            console.log('submited dates are ');
+            console.log(createBookingFormData.dateFrom);
+            console.log(createBookingFormData.dateTo);
         }
     }, [createBookingFormData.dateFrom, createBookingFormData.dateTo]);
+
+    const { data, isLoading, isError } = UseApiGet(
+        `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`
+    );
+
+    // Return new array without unecessary object parameters
+    const [filteredVenueBookings, setFilteredVenueBookings] = useState('');
+    const [venueBookingsDates, setVenueBookingsDates] = useState('');
+    useEffect(() => {
+        if (data.bookings) {
+            setFilteredVenueBookings(
+                data.bookings.map(function (booking) {
+                    delete booking.id;
+                    delete booking.guests;
+                    delete booking.created;
+                    delete booking.updated;
+                    return booking;
+                })
+            );
+
+            //getAllDates(filteredVenueBookings);
+        }
+    }, [data]);
+    useEffect(() => {
+        console.log(filteredVenueBookings);
+        if (filteredVenueBookings) {
+            const datesArray = [];
+
+            filteredVenueBookings.forEach((booking) => {
+                // Set dates to dayjs
+                console.log('string date: ' + booking.dateFrom);
+                const startDate = dayjs(booking.dateFrom);
+                const endDate = dayjs(booking.dateTo);
+                console.log('dayjs date: ');
+                console.log(startDate);
+
+                // Loop through the dates between start and end, and push them into new array
+                let current = startDate;
+                while (current.isBefore(endDate) || current.isSame(endDate)) {
+                    datesArray.push(current.format('YYYY-MM-DD'));
+                    current = current.add(1, 'day');
+                }
+            });
+
+            setVenueBookingsDates(datesArray);
+        }
+    }, [filteredVenueBookings]);
+    useEffect(() => {
+        console.log('this is all da dates ');
+        console.log(venueBookingsDates);
+    }, [venueBookingsDates]);
+    const getDisabledDates = (date) => {
+        console.log(date.format('YYYY-MM-DD'));
+        if (venueBookingsDates.includes(date.format('YYYY-MM-DD'))) {
+            return true;
+        }
+    };
+    /*function getAllDates(array) {
+        const datesArray = [];
+
+        array.forEach((booking) => {
+            // Set dates to dayjs
+            const startDate = dayjs(booking.dateFrom);
+            const endDate = dayjs(booking.dateTo);
+
+            // Loop through the dates and push them into the array
+            let current = startDate;
+            while (current.isBefore(endDate) || current.isSame(endDate)) {
+                datesArray.push(current.format('YYYY-MM-DD'));
+                current = current.add(1, 'day');
+            }
+        });
+
+        setAllVenueBookingsDates(datesArray);
+
+        return datesArray;
+    }*/
+
+    // Increase start date by one day and keep going until reaching end date, and put all the dates in a new array
+    /*useEffect(() => {
+        filteredDataBookings.map(function(booking) {
+            booking.dateFrom.add(1, 'day'); 
+        });
+    }, [filteredVenueBookings])*/
 
     if (isLoading) {
         return <LoadingScreen />;
@@ -132,7 +150,7 @@ export default function CreateBooking() {
     }
 
     // Check if user logged in
-    const link = (
+    const linkLogin = (
         <Link to='/login' className='linkText' aria-label='Log in or sign up'>
             Go to log in page.
         </Link>
@@ -142,11 +160,38 @@ export default function CreateBooking() {
             <Container className='d-flex justify-content-center'>
                 <div>
                     <h1 className='mb-3'>Access denied!</h1>
-                    <p>You must be logged in to create a booking. {link}</p>
+                    <p>
+                        You must be logged in to create a booking. {linkLogin}
+                    </p>
                 </div>
             </Container>
         );
     }
+
+    // Check if user owns venue
+    /*
+    const linkHome = (
+        <Link to='/login' className='linkText' aria-label='Homepage'>
+            Return to homepage.
+        </Link>
+    );
+    if (
+        data.owner.name ===
+        localStorage.getItem('userName').replace(/['"]+/g, '')
+    ) {
+        return (
+            <Container className='d-flex justify-content-center'>
+                <div>
+                    <h1 className='mb-3'>Access denied!</h1>
+                    <p>
+                        You cannot create a booking at a venue you own.{' '}
+                        {linkHome}
+                    </p>
+                </div>
+            </Container>
+        );
+    }
+    */
 
     // Create venue function
     const handleCreateBooking = async () => {
@@ -183,28 +228,19 @@ export default function CreateBooking() {
             if (bookingData.errors) {
                 setIsLoadingPost(false);
                 setCreateBookingSubmitAlert(bookingData.errors[0].message);
-                if (
-                    bookingData.errors[0].message ===
-                        'dateFrom cannot be in the past' ||
-                    bookingData.errors[0].message ===
-                        'dateTo cannot be in the past'
-                ) {
-                    setCreateBookingSubmitAlert(
-                        'Check-in and check-out dates cannot be in the past'
-                    );
+                if (bookingData.errors[0].message === 'dateFrom is required') {
+                    setCreateBookingSubmitAlert('Check-in date is required');
                 }
-                if (
-                    bookingData.errors[0].message ===
-                    'dateFrom cannot be after dateTo'
-                ) {
-                    setCreateBookingSubmitAlert(
-                        'Check-in date cannot be after check-out date'
-                    );
+                if (bookingData.errors[0].message === 'dateTo is required') {
+                    setCreateBookingSubmitAlert('Check-out date is required');
                 }
                 if (
                     bookingData.errors[0].message === 'Guests must be a number'
                 ) {
                     setCreateBookingSubmitAlert('Guests must be a number');
+                }
+                if (bookingData.errors[0].message === 'venueId is required') {
+                    setCreateBookingSubmitAlert('A venue must be selected');
                 }
             }
 
@@ -223,22 +259,28 @@ export default function CreateBooking() {
         }
     };
 
+    // Do not allow typing in date
+    /*function handleKeyDownDate(event) {
+        event.preventDefault();
+    }*/
     // On enter trigger create venue function
     function handleKeyDown(event) {
         if (event.keyCode === 13) {
             handleCreateBooking();
         }
     }
+    // Only allow numbers, shift and backspace
     function handleKeyDownNumber(event) {
-        if (!/[0-9]/.test(event.key)) {
-            if (event.keyCode !== 8) {
-                if (event.keyCode === 13) {
-                    handleCreateBooking();
-                } else {
-                    event.preventDefault();
-                }
-            }
+        if (/[0-9]/.test(event.key)) {
+            return;
         }
+        if (event.keyCode === 8) {
+            return;
+        }
+        if (event.keyCode === 9) {
+            return;
+        }
+        event.preventDefault();
     }
     function handleKeyDownCancel(event) {
         if (event.keyCode === 13) {
@@ -251,17 +293,21 @@ export default function CreateBooking() {
         navigate(`/venue/${data.id}`);
     };
 
-    const handleCheckinChange = (e) => {
+    const handleCheckinChange = (newValue) => {
+        console.log(newValue);
         setCreateBookingFormData({
             ...createBookingFormData,
-            dateFrom: e.target.value,
+            dateFrom: newValue.format('YYYY-MM-DD'),
         });
+        setStartDateRaw(newValue);
     };
-    const handleCheckoutChange = (e) => {
+    const handleCheckoutChange = (newValue) => {
+        console.log(newValue);
         setCreateBookingFormData({
             ...createBookingFormData,
-            dateTo: e.target.value,
+            dateTo: newValue.format('YYYY-MM-DD'),
         });
+        setEndDateRaw(newValue);
     };
     const handleGuestsChange = (e) => {
         if (Number(e.target.value) === 0) {
@@ -287,25 +333,6 @@ export default function CreateBooking() {
         }
     }*/
 
-    function handleFilter(event) {
-        const searchWord = event.target.value;
-        try {
-            const newFilter = data.filter((venue) => {
-                return venue.name
-                    .toLowerCase()
-                    .includes(searchWord.toLowerCase());
-            });
-            if (searchWord.replace(/ /g, '') === '') {
-                setFilteredData([]);
-            } else {
-                setFilteredData(newFilter);
-            }
-            setSearchWord(searchWord);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
     /*function search() {
         navigate(`/Search/${searchWord}`);
     }*/
@@ -325,100 +352,58 @@ export default function CreateBooking() {
     return (
         <div>
             <Container className='formContainerLarge d-block'>
-                {id ? (
-                    <h1 className='mb-4'>{`Create booking at ${data.name}`}</h1>
-                ) : (
-                    <h1 className='mb-4'>{createBookingPageTitle}</h1>
-                )}
+                <h1 className='mb-4'>{`Create booking at ${data.name}`}</h1>
                 <Form className='d-flex flex-column gap-3'>
-                    {id ? (
-                        <Form.Group>
-                            <Form.Label>Venue *</Form.Label>
-                            <Form.Control
-                                type='text'
-                                placeholder='Select a venue'
-                                className='rounded'
-                                aria-label='Search'
-                                value={data.name}
-                                disabled
-                            />
-                        </Form.Group>
-                    ) : (
-                        <Form.Group className='position-relative'>
-                            <Form.Label>Venue *</Form.Label>
-                            <Form.Control
-                                type='text'
-                                placeholder={chosenVenueName}
-                                className='rounded'
-                                aria-label='Search'
-                                value={searchWord}
-                                onChange={handleFilter}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                            />
-                            {filteredData.length > 0 && (
-                                <div className={focused}>
-                                    <div
-                                        id='search-list-booking'
-                                        className='scrollBarContent rounded'
-                                    >
-                                        {filteredData.map((venue, key) => {
-                                            return (
-                                                <Link
-                                                    className='search-list-item-booking text-decoration-none text-dark d-block p-2'
-                                                    key={key}
-                                                    aria-label='Select venue'
-                                                    onClick={() => {
-                                                        getVenueId(venue.id);
-                                                        getVenueName(
-                                                            venue.name
-                                                        );
-                                                    }}
-                                                >
-                                                    {venue.name}
-                                                </Link>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            )}
-                        </Form.Group>
-                    )}
                     <Form.Group>
-                        <Form.Label>Guests *</Form.Label>
+                        <Form.Label htmlFor='create-booking-guests'>
+                            Guests *
+                        </Form.Label>
                         <Form.Control
-                            name='guests'
+                            id='create-booking-guests'
                             type='number'
+                            min={0}
                             value={createBookingFormData.guests}
                             placeholder='Enter guest amount'
                             onKeyDown={handleKeyDownNumber}
                             onChange={handleGuestsChange}
                         ></Form.Control>
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Check-in *</Form.Label>
-                        <Form.Control
-                            name='check-in'
-                            type='date'
+                    <Form.Group className='d-flex flex-column'>
+                        <Form.Label htmlFor='create-booking-check-in'>
+                            Check-in *
+                        </Form.Label>
+                        <StaticDatePicker
+                            id='create-booking-check-in'
+                            className='rounded'
                             value={createBookingFormData.dateFrom}
-                            placeholder='Enter check-in date'
-                            onKeyDown={handleKeyDown}
-                            onChange={handleCheckinChange}
-                        ></Form.Control>
+                            onChange={(newValue) =>
+                                handleCheckinChange(newValue)
+                            }
+                            maxDate={dayjs(endDateRaw).subtract(1, 'day')}
+                            shouldDisableDate={getDisabledDates}
+                            disablePast
+                            showDaysOutsideCurrentMonth
+                        />
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Check-out *</Form.Label>
-                        <Form.Control
-                            name='check-out'
-                            type='date'
+                    <Form.Group className='d-flex flex-column'>
+                        <Form.Label htmlFor='create-booking-check-out'>
+                            Check-out *
+                        </Form.Label>
+                        <StaticDatePicker
+                            id='create-booking-check-out'
+                            className='rounded'
                             value={createBookingFormData.dateTo}
-                            placeholder='Enter check-out date'
-                            onKeyDown={handleKeyDown}
-                            onChange={handleCheckoutChange}
-                        ></Form.Control>
+                            onChange={(newValue) =>
+                                handleCheckoutChange(newValue)
+                            }
+                            minDate={dayjs(startDateRaw).add(1, 'day')}
+                            shouldDisableDate={getDisabledDates}
+                            disablePast
+                            showDaysOutsideCurrentMonth
+                        />
                     </Form.Group>
                     <h2 className='text-danger'>{createBookingSubmitAlert}</h2>
-                    <div className='d-flex gap-2'>
+                    <div className='d-flex gap-1'>
                         <p className='undertitle-p'>Length: </p>
                         {totalDaysAmount && (
                             <p className='undertitle-p'>
@@ -445,46 +430,46 @@ export default function CreateBooking() {
                         {isLoadingPost ? (
                             <Col>
                                 <Button
-                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCancel}
-                                    onKeyDown={handleKeyDownCancel}
+                                    onClick={handleCreateBooking}
+                                    onKeyDown={handleKeyDown}
                                     disabled
                                 >
-                                    Cancel
+                                    Create booking
                                 </Button>
                             </Col>
                         ) : (
                             <Col>
                                 <Button
-                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCancel}
-                                    onKeyDown={handleKeyDownCancel}
+                                    onClick={handleCreateBooking}
+                                    onKeyDown={handleKeyDown}
                                 >
-                                    Cancel
+                                    Create booking
                                 </Button>
                             </Col>
                         )}
                         {isLoadingPost ? (
                             <Col>
                                 <Button
+                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCreateBooking}
-                                    onKeyDown={handleKeyDown}
+                                    onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                     disabled
                                 >
-                                    Create booking
+                                    Cancel
                                 </Button>
                             </Col>
                         ) : (
                             <Col>
                                 <Button
+                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCreateBooking}
-                                    onKeyDown={handleKeyDown}
+                                    onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                 >
-                                    Create booking
+                                    Cancel
                                 </Button>
                             </Col>
                         )}
@@ -494,3 +479,17 @@ export default function CreateBooking() {
         </div>
     );
 }
+
+/*
+
+<Form.Control
+                            name='check-in'
+                            type='date'
+                            value={createBookingFormData.dateFrom}
+                            placeholder='Enter check-in date'
+                            onKeyDown={handleKeyDown}
+                            onChange={handleCheckinChange}
+                        ></Form.Control>
+
+                        
+*/

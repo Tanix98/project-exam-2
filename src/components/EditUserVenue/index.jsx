@@ -145,16 +145,18 @@ function EditUserVenue(props) {
             setVenueMedia('');
         }
     }
+    // Only allow numbers, shift and backspace
     function handleKeyDownNumber(event) {
-        if (!/[0-9]/.test(event.key)) {
-            if (event.keyCode !== 8) {
-                if (event.keyCode === 13) {
-                    handleEditVenue();
-                } else {
-                    event.preventDefault();
-                }
-            }
+        if (/[0-9]/.test(event.key)) {
+            return;
         }
+        if (event.keyCode === 8) {
+            return;
+        }
+        if (event.keyCode === 9) {
+            return;
+        }
+        event.preventDefault();
     }
 
     // Insert input field values on change
@@ -305,17 +307,21 @@ function EditUserVenue(props) {
                 show={open}
                 onHide={handleClose}
                 animation={false}
-                className='mt-3'
+                className='mt-4'
             >
                 <Modal.Header>
-                    <Modal.Title>Edit venue</Modal.Title>
+                    <Modal.Title className='undertitle-p'>
+                        Edit venue
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body id='edit-venue-modal' className='scrollBarContent'>
                     <Form className='d-flex flex-column gap-3'>
                         <Form.Group>
-                            <Form.Label>Title *</Form.Label>
+                            <Form.Label htmlFor='edit-venue-title'>
+                                Title *
+                            </Form.Label>
                             <Form.Control
-                                name='title'
+                                id='edit-venue-title'
                                 type='text'
                                 value={editVenueFormData.name}
                                 placeholder='Enter title'
@@ -324,9 +330,11 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Description *</Form.Label>
+                            <Form.Label htmlFor='edit-venue-description'>
+                                Description *
+                            </Form.Label>
                             <Form.Control
-                                name='description'
+                                id='edit-venue-description'
                                 as='textarea'
                                 rows={4}
                                 className='scrollBarContent'
@@ -337,10 +345,13 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Price *</Form.Label>
+                            <Form.Label htmlFor='edit-venue-price'>
+                                Price *
+                            </Form.Label>
                             <Form.Control
-                                name='price'
+                                id='edit-venue-price'
                                 type='number'
+                                min={0}
                                 value={editVenueFormData.price}
                                 placeholder='Enter price'
                                 onKeyDown={handleKeyDownNumber}
@@ -348,10 +359,13 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Max guests *</Form.Label>
+                            <Form.Label htmlFor='edit-venue-max-guests'>
+                                Max guests *
+                            </Form.Label>
                             <Form.Control
-                                name='max guests'
+                                id='edit-venue-max-guests'
                                 type='number'
+                                min={0}
                                 placeholder='Enter max guests'
                                 value={editVenueFormData.maxGuests}
                                 onKeyDown={handleKeyDownNumber}
@@ -359,9 +373,11 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Media</Form.Label>
+                            <Form.Label htmlFor='edit-venue-media-urls'>
+                                Media
+                            </Form.Label>
                             <Form.Control
-                                name='media'
+                                id='edit-venue-media-urls'
                                 type='text'
                                 value={venueMedia}
                                 placeholder='Enter media URL'
@@ -397,8 +413,11 @@ function EditUserVenue(props) {
                         </Form.Group>
                         <div className='d-flex flex-wrap justify-content-between'>
                             <Form.Group className='d-flex flex-column align-items-center'>
-                                <Form.Label>Wi-Fi</Form.Label>
+                                <Form.Label htmlFor='edit-venue-wifi-included'>
+                                    Wi-Fi
+                                </Form.Label>
                                 <Form.Check
+                                    id='edit-venue-wifi-included'
                                     value={venueWifi}
                                     type='checkbox'
                                     checked={venueWifi === false}
@@ -406,8 +425,11 @@ function EditUserVenue(props) {
                                 />
                             </Form.Group>
                             <Form.Group className='d-flex flex-column align-items-center'>
-                                <Form.Label>Parking</Form.Label>
+                                <Form.Label htmlFor='edit-venue-parking-included'>
+                                    Parking
+                                </Form.Label>
                                 <Form.Check
+                                    id='edit-venue-parking-included'
                                     value={venueParking}
                                     type='checkbox'
                                     checked={venueParking === false}
@@ -415,8 +437,11 @@ function EditUserVenue(props) {
                                 />
                             </Form.Group>
                             <Form.Group className='d-flex flex-column align-items-center'>
-                                <Form.Label>Breakfast</Form.Label>
+                                <Form.Label htmlFor='edit-venue-breakfast-included'>
+                                    Breakfast
+                                </Form.Label>
                                 <Form.Check
+                                    id='edit-venue-breakfast-included'
                                     value={venueBreakfast}
                                     type='checkbox'
                                     checked={venueBreakfast === false}
@@ -424,8 +449,11 @@ function EditUserVenue(props) {
                                 />
                             </Form.Group>
                             <Form.Group className='d-flex flex-column align-items-center'>
-                                <Form.Label>Pets</Form.Label>
+                                <Form.Label htmlFor='edit-venue-pets-allowed'>
+                                    Pets
+                                </Form.Label>
                                 <Form.Check
+                                    id='edit-venue-pets-allowed'
                                     value={venuePets}
                                     type='checkbox'
                                     checked={venuePets === false}
@@ -434,9 +462,11 @@ function EditUserVenue(props) {
                             </Form.Group>
                         </div>
                         <Form.Group>
-                            <Form.Label>Address</Form.Label>
+                            <Form.Label htmlFor='edit-venue-address'>
+                                Address
+                            </Form.Label>
                             <Form.Control
-                                name='address'
+                                id='edit-venue-address'
                                 type='text'
                                 value={editVenueFormData.location.address}
                                 placeholder='Enter address'
@@ -445,9 +475,11 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>City</Form.Label>
+                            <Form.Label htmlFor='edit-venue-city'>
+                                City
+                            </Form.Label>
                             <Form.Control
-                                name='city'
+                                id='edit-venue-city'
                                 type='text'
                                 value={editVenueFormData.location.city}
                                 placeholder='Enter city name'
@@ -456,9 +488,11 @@ function EditUserVenue(props) {
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Country</Form.Label>
+                            <Form.Label htmlFor='edit-venue-country'>
+                                Country
+                            </Form.Label>
                             <Form.Control
-                                name='country'
+                                id='edit-venue-country'
                                 type='text'
                                 value={editVenueFormData.location.country}
                                 placeholder='Enter country name'

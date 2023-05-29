@@ -5,7 +5,6 @@ import UseApiGetAuth from '../../api/UseApiGetAuth';
 import EditUserBooking from '../EditUserBooking';
 import DeleteUserBooking from '../deleteUserBooking';
 import GetTotalAmountOfDays from '../GetTotalAmountOfDays/index';
-import { Col } from 'react-bootstrap';
 
 function RenderUserBookings(props) {
     const { dataAuth, isLoadingAuth, isErrorAuth } = UseApiGetAuth(props.url);

@@ -40,21 +40,17 @@ function RenderUserVenues(props) {
                         }}
                         key={key}
                         aria-label={`Go to venue ${venue.name}`}
-                        className='venueContainer rounded'
+                        className='venueContainer rounded d-flex flex-column p-2'
                     >
-                        <div className='d-flex flex-column p-2'>
-                            <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                                <img
-                                    className='img-fluid venueImg'
-                                    src={
-                                        venue.media[0] ? venue.media[0] : noImg
-                                    }
-                                    alt={venue.name}
-                                />
-                            </div>
-                            <p className='venueTitle'>{venue.name}</p>
-                            <p>{venue.price} kr / day</p>
+                        <div className='venueImgContainer rounded shadow-sm d-inline-block'>
+                            <img
+                                className='img-fluid venueImg'
+                                src={venue.media[0] ? venue.media[0] : noImg}
+                                alt={venue.name}
+                            />
                         </div>
+                        <p className='venueTitle'>{venue.name}</p>
+                        <p>{venue.price} kr / day</p>
                     </Link>
                 ))}
             </div>

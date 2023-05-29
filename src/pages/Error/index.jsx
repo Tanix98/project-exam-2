@@ -9,7 +9,7 @@ function Error() {
 
     const link = (
         <Link to='/' className='linkText' aria-label='Return to homepage'>
-            return to the homepage.
+            return to homepage.
         </Link>
     );
 

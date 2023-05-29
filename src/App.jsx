@@ -11,24 +11,34 @@ import Search from './pages/Search';
 import CreateVenue from './pages/CreateVenue';
 import CreateBooking from './pages/CreateBooking';
 import { Routes, Route } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
     return (
-        <Routes>
-            <Route path='/' element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path='/search' element={<Search />} />
-                <Route path='/search/:searchTerm' element={<Search />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/venue/:id' element={<SingleVenue />} />
-                <Route path='/venue/bookings/:id' element={<VenueBookings />} />
-                <Route path='/profile/:name' element={<Profile />} />
-                <Route path='/create-venue' element={<CreateVenue />} />
-                <Route path='/create-booking' element={<CreateBooking />} />
-                <Route path='/create-booking/:id' element={<CreateBooking />} />
-                <Route path='*' element={<Error />} />
-            </Route>
-        </Routes>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Routes>
+                <Route path='/' element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path='/search' element={<Search />} />
+                    <Route path='/search/:searchTerm' element={<Search />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/venue/:id' element={<SingleVenue />} />
+                    <Route
+                        path='/venue/bookings/:id'
+                        element={<VenueBookings />}
+                    />
+                    <Route path='/profile/:name' element={<Profile />} />
+                    <Route path='/create-venue' element={<CreateVenue />} />
+                    <Route path='/create-booking' element={<CreateBooking />} />
+                    <Route
+                        path='/create-booking/:id'
+                        element={<CreateBooking />}
+                    />
+                    <Route path='*' element={<Error />} />
+                </Route>
+            </Routes>
+        </LocalizationProvider>
     );
 }
 

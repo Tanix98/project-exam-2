@@ -97,7 +97,6 @@ export default function CreateVenue() {
                 }
             );
             const data = await response.json();
-            console.log(data);
 
             if (data.errors) {
                 setIsLoading(false);
@@ -131,16 +130,18 @@ export default function CreateVenue() {
             setVenueMedia('');
         }
     }
+    // Only allow numbers, shift and backspace
     function handleKeyDownNumber(event) {
-        if (!/[0-9]/.test(event.key)) {
-            if (event.keyCode !== 8) {
-                if (event.keyCode === 13) {
-                    handleCreateVenue();
-                } else {
-                    event.preventDefault();
-                }
-            }
+        if (/[0-9]/.test(event.key)) {
+            return;
         }
+        if (event.keyCode === 8) {
+            return;
+        }
+        if (event.keyCode === 9) {
+            return;
+        }
+        event.preventDefault();
     }
 
     // Insert input field values on change
@@ -298,9 +299,11 @@ export default function CreateVenue() {
                 <h1 className='mb-4'>Create venue</h1>
                 <Form className='d-flex flex-column gap-3'>
                     <Form.Group>
-                        <Form.Label>Title *</Form.Label>
+                        <Form.Label htmlFor='create-venue-title'>
+                            Title *
+                        </Form.Label>
                         <Form.Control
-                            name='title'
+                            id='create-venue-title'
                             type='text'
                             value={createVenueFormData.name}
                             placeholder='Enter title'
@@ -309,9 +312,11 @@ export default function CreateVenue() {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Description *</Form.Label>
+                        <Form.Label htmlFor='create-venue-description'>
+                            Description *
+                        </Form.Label>
                         <Form.Control
-                            name='description'
+                            id='create-venue-description'
                             as='textarea'
                             rows={4}
                             className='scrollBarContent'
@@ -322,10 +327,13 @@ export default function CreateVenue() {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Price *</Form.Label>
+                        <Form.Label htmlFor='create-venue-price'>
+                            Price *
+                        </Form.Label>
                         <Form.Control
-                            name='price'
+                            id='create-venue-price'
                             type='number'
+                            min={0}
                             value={createVenueFormData.price}
                             placeholder='Enter price'
                             onKeyDown={handleKeyDownNumber}
@@ -333,10 +341,13 @@ export default function CreateVenue() {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Max guests *</Form.Label>
+                        <Form.Label htmlFor='create-venue-max-guests'>
+                            Max guests *
+                        </Form.Label>
                         <Form.Control
-                            name='max guests'
+                            id='create-venue-max-guests'
                             type='number'
+                            min={0}
                             placeholder='Enter max guests'
                             value={createVenueFormData.maxGuests}
                             onKeyDown={handleKeyDownNumber}
@@ -344,9 +355,11 @@ export default function CreateVenue() {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Media</Form.Label>
+                        <Form.Label htmlFor='create-venue-media-urls'>
+                            Media
+                        </Form.Label>
                         <Form.Control
-                            name='media'
+                            id='create-venue-media-urls'
                             type='text'
                             value={venueMedia}
                             placeholder='Enter media URL'
@@ -382,8 +395,11 @@ export default function CreateVenue() {
                     </Form.Group>
                     <div className='d-flex flex-wrap justify-content-between'>
                         <Form.Group className='d-flex flex-column align-items-center'>
-                            <Form.Label>Wi-Fi</Form.Label>
+                            <Form.Label htmlFor='create-venue-wifi-included'>
+                                Wi-Fi
+                            </Form.Label>
                             <Form.Check
+                                id='create-venue-wifi-included'
                                 value={venueWifi}
                                 type='checkbox'
                                 checked={venueWifi === false}
@@ -391,8 +407,11 @@ export default function CreateVenue() {
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-column align-items-center'>
-                            <Form.Label>Parking</Form.Label>
+                            <Form.Label htmlFor='create-venue-parking-included'>
+                                Parking
+                            </Form.Label>
                             <Form.Check
+                                id='create-venue-parking-included'
                                 value={venueParking}
                                 type='checkbox'
                                 checked={venueParking === false}
@@ -400,8 +419,11 @@ export default function CreateVenue() {
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-column align-items-center'>
-                            <Form.Label>Breakfast</Form.Label>
+                            <Form.Label htmlFor='create-venue-breakfast-included'>
+                                Breakfast
+                            </Form.Label>
                             <Form.Check
+                                id='create-venue-breakfast-included'
                                 value={venueBreakfast}
                                 type='checkbox'
                                 checked={venueBreakfast === false}
@@ -409,8 +431,11 @@ export default function CreateVenue() {
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-column align-items-center'>
-                            <Form.Label>Pets</Form.Label>
+                            <Form.Label htmlFor='create-venue-pets-allowed'>
+                                Pets
+                            </Form.Label>
                             <Form.Check
+                                id='create-venue-pets-allowed'
                                 value={venuePets}
                                 type='checkbox'
                                 checked={venuePets === false}
@@ -419,9 +444,11 @@ export default function CreateVenue() {
                         </Form.Group>
                     </div>
                     <Form.Group>
-                        <Form.Label>Address</Form.Label>
+                        <Form.Label htmlFor='create-venue-address'>
+                            Address
+                        </Form.Label>
                         <Form.Control
-                            name='address'
+                            id='create-venue-address'
                             type='text'
                             value={createVenueFormData.location.address}
                             placeholder='Enter address'
@@ -430,9 +457,11 @@ export default function CreateVenue() {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>City</Form.Label>
+                        <Form.Label htmlFor='create-venue-city'>
+                            City
+                        </Form.Label>
                         <Form.Control
-                            name='city'
+                            id='create-venue-city'
                             type='text'
                             value={createVenueFormData.location.city}
                             placeholder='Enter city name'
@@ -440,10 +469,10 @@ export default function CreateVenue() {
                             onChange={handleCityChange}
                         ></Form.Control>
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group htmlFor='create-venue-country'>
                         <Form.Label>Country</Form.Label>
                         <Form.Control
-                            name='country'
+                            id='create-venue-country'
                             type='text'
                             value={createVenueFormData.location.country}
                             placeholder='Enter country name'
@@ -462,46 +491,46 @@ export default function CreateVenue() {
                         {isLoading ? (
                             <Col>
                                 <Button
-                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCancel}
-                                    onKeyDown={handleKeyDownCancel}
+                                    onClick={handleCreateVenue}
+                                    onKeyDown={handleKeyDown}
                                     disabled
                                 >
-                                    Cancel
+                                    Create venue
                                 </Button>
                             </Col>
                         ) : (
                             <Col>
                                 <Button
-                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCancel}
-                                    onKeyDown={handleKeyDownCancel}
+                                    onClick={handleCreateVenue}
+                                    onKeyDown={handleKeyDown}
                                 >
-                                    Cancel
+                                    Create venue
                                 </Button>
                             </Col>
                         )}
                         {isLoading ? (
                             <Col>
                                 <Button
+                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCreateVenue}
-                                    onKeyDown={handleKeyDown}
+                                    onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                     disabled
                                 >
-                                    Create venue
+                                    Cancel
                                 </Button>
                             </Col>
                         ) : (
                             <Col>
                                 <Button
+                                    variant='dark'
                                     className='rounded-pill w-100 px-2'
-                                    onClick={handleCreateVenue}
-                                    onKeyDown={handleKeyDown}
+                                    onClick={handleCancel}
+                                    onKeyDown={handleKeyDownCancel}
                                 >
-                                    Create venue
+                                    Cancel
                                 </Button>
                             </Col>
                         )}

@@ -13,12 +13,12 @@ function Home() {
     const queryParams = new URLSearchParams(window.location.search);
     const page = queryParams.get('page');
     const navigate = useNavigate();
-    useEffect(() => {
+    /*useEffect(() => {
         if (!page) {
             navigate('/?page=1');
             window.location.reload(false);
         }
-    });
+    });*/
     useEffect(() => {
         if (Number(page) < 1) {
             navigate('/?page=1');

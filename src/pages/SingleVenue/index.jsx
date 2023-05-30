@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Carousel from 'react-bootstrap/Carousel';
 import { Button } from 'react-bootstrap';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function SingleVenue() {
     const navigate = useNavigate();
@@ -219,19 +220,19 @@ function SingleVenue() {
                             key={key}
                             className='carouselImgContainer rounded text-center'
                         >
-                            <img
+                            <LazyLoadImage
                                 className='carouselImg rounded shadow-sm my-auto'
                                 src={venueImg}
-                                alt={data.title}
+                                alt={data.name}
                             />
                         </Carousel.Item>
                     ))
                 ) : (
                     <Carousel.Item className='carouselImgContainer rounded'>
-                        <img
+                        <LazyLoadImage
                             className='carouselImg rounded shadow-sm'
                             src={noImg}
-                            alt={data.title}
+                            alt={data.name}
                         />
                     </Carousel.Item>
                 )}
@@ -249,10 +250,10 @@ function SingleVenue() {
                 aria-label="Go to venue owner's profile"
             >
                 {data.owner.avatar ? (
-                    <img
+                    <LazyLoadImage
                         src={data.owner.avatar}
                         className='rounded'
-                        alt={`Venue owner ${data.owner.name}'s Avatar`}
+                        alt={`${data.owner.name}'s avatar`}
                     />
                 ) : (
                     <svg
@@ -260,7 +261,7 @@ function SingleVenue() {
                         fill='currentColor'
                         className='bi bi-person-fill mw-100 mh-100 bg-dark text-light p-1 rounded'
                         viewBox='0 0 16 16'
-                        alt={`Venue owner ${data.owner.name}'s Avatar`}
+                        alt={`${data.owner.name}'s avatar`}
                     >
                         <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                     </svg>

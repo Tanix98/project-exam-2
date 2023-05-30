@@ -10,6 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Header() {
     const { data } = UseApiGet(
@@ -157,7 +158,7 @@ export default function Header() {
                 <div className='d-flex flex-column gap-2 w-100'>
                     <div className='d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center gap-3'>
                         <Link to='/?page=1' aria-label='To homepage'>
-                            <img
+                            <LazyLoadImage
                                 src={holidazeLogo}
                                 alt='Holidaze logo'
                                 className='mw-100 mh-100'
@@ -222,7 +223,6 @@ export default function Header() {
                                     id='header-menu-btn'
                                     className='bg-transparent border-0 p-0'
                                     aria-haspopup='true'
-                                    aria-controls='menu'
                                     onClick={handleClick}
                                     onKeyDown={handleKeyDown}
                                 >
@@ -242,7 +242,7 @@ export default function Header() {
                                     {localStorage
                                         .getItem('userAvatar')
                                         .replace(/['"]+/g, '') ? (
-                                        <img
+                                        <LazyLoadImage
                                             src={localStorage
                                                 .getItem('userAvatar')
                                                 .replace(/['"]+/g, '')}

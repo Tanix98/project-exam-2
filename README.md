@@ -13,3 +13,5 @@ Icons from [Bootstrap](https://icons.getbootstrap.com) and [Font Awesome](https:
 Calendar date picker made with [MUI](https://mui.com/) and [DayJS](https://day.js.org/)
 
 Redux ToolKit [RTK](https://redux-toolkit.js.org/)
+
+Lazy loading with [react-lazy-load-image-component](https://www.npmjs.com/package/react-lazy-load-image-component)

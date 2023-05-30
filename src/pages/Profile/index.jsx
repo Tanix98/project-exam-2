@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button, Col } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function Profile() {
     let { name } = useParams();
@@ -82,10 +83,10 @@ function Profile() {
                     {dataAuth.venueManager ? (
                         <Col className='text-center'>
                             {dataAuth.avatar ? (
-                                <img
+                                <LazyLoadImage
                                     src={dataAuth.avatar}
                                     className='profile-page-avatar rounded'
-                                    alt={`${dataAuth.name}'s Avatar`}
+                                    alt={`${dataAuth.name}'s avatar`}
                                 />
                             ) : (
                                 <svg
@@ -93,7 +94,7 @@ function Profile() {
                                     fill='currentColor'
                                     className='bi bi-person-fill profile-page-avatar mw-100 mh-100 bg-dark text-light p-1 rounded'
                                     viewBox='0 0 16 16'
-                                    alt={`${dataAuth.name}'s Avatar`}
+                                    alt={`${dataAuth.name}'s avatar`}
                                 >
                                     <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                                 </svg>
@@ -104,10 +105,10 @@ function Profile() {
                     ) : (
                         <Col className='text-center'>
                             {dataAuth.avatar ? (
-                                <img
+                                <LazyLoadImage
                                     src={dataAuth.avatar}
                                     className='profile-page-avatar rounded'
-                                    alt={`${dataAuth.name}'s Avatar`}
+                                    alt={`${dataAuth.name}'s avatar`}
                                 />
                             ) : (
                                 <svg
@@ -115,7 +116,7 @@ function Profile() {
                                     fill='currentColor'
                                     className='bi bi-person-fill profile-page-avatar mw-100 mh-100 bg-dark text-light p-1 rounded'
                                     viewBox='0 0 16 16'
-                                    alt={`${dataAuth.name}'s Avatar`}
+                                    alt={`${dataAuth.name}'s avatar`}
                                 >
                                     <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                                 </svg>

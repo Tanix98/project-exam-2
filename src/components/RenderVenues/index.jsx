@@ -6,6 +6,7 @@ import UseApiGet from '../../api/UseApiGet';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function RenderVenues(props) {
     const { data, isLoading, isError } = UseApiGet(props.url);
@@ -247,7 +248,7 @@ function RenderVenues(props) {
                                         className='venueContainer rounded d-flex flex-column p-2'
                                     >
                                         <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                                            <img
+                                            <LazyLoadImage
                                                 className='img-fluid venueImg'
                                                 src={
                                                     venue.media[0]
@@ -259,10 +260,10 @@ function RenderVenues(props) {
                                         </div>
                                         <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
                                             {venue.owner.avatar ? (
-                                                <img
+                                                <LazyLoadImage
                                                     src={venue.owner.avatar}
                                                     className='rounded'
-                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                                    alt={`${venue.owner.name}'s avatar`}
                                                 />
                                             ) : (
                                                 <svg
@@ -270,7 +271,7 @@ function RenderVenues(props) {
                                                     fill='currentColor'
                                                     className='bi bi-person-circle mw-100 mh-100'
                                                     viewBox='0 0 16 16'
-                                                    alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                                    alt={`${venue.owner.name}'s avatar`}
                                                 >
                                                     <path d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                                                     <path
@@ -307,7 +308,7 @@ function RenderVenues(props) {
                                 className='venueContainer rounded d-flex flex-column p-2'
                             >
                                 <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                                    <img
+                                    <LazyLoadImage
                                         className='img-fluid venueImg'
                                         src={
                                             venue.media[0]
@@ -319,9 +320,9 @@ function RenderVenues(props) {
                                 </div>
                                 <div className='venueOwner mt-1 d-flex align-items-center gap-1'>
                                     {venue.owner.avatar ? (
-                                        <img
+                                        <LazyLoadImage
                                             src={venue.owner.avatar}
-                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                            alt={`${venue.owner.name}'s avatar`}
                                         />
                                     ) : (
                                         <svg
@@ -329,7 +330,7 @@ function RenderVenues(props) {
                                             fill='currentColor'
                                             className='bi bi-person-fill mw-100 mh-100 bg-dark text-light'
                                             viewBox='0 0 16 16'
-                                            alt={`Venue owner ${venue.owner.name}'s Avatar`}
+                                            alt={`${venue.owner.name}'s avatar`}
                                         >
                                             <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z' />
                                         </svg>

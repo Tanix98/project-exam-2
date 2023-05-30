@@ -4,6 +4,7 @@ import LoadingError from '../LoadingError';
 import noImg from '../../assets/imgs/no_img.svg';
 import UseApiGetAuth from '../../api/UseApiGetAuth';
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function RenderUserVenues(props) {
     const { dataAuth, isLoadingAuth, isErrorAuth } = UseApiGetAuth(props.url);
@@ -43,7 +44,7 @@ function RenderUserVenues(props) {
                         className='venueContainer rounded d-flex flex-column p-2'
                     >
                         <div className='venueImgContainer rounded shadow-sm d-inline-block'>
-                            <img
+                            <LazyLoadImage
                                 className='img-fluid venueImg'
                                 src={venue.media[0] ? venue.media[0] : noImg}
                                 alt={venue.name}

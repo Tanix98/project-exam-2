@@ -1,6 +1,6 @@
 # Holidaze
 
-Holidaze is a booking web application made with React and Bootstrap. Users can register, log in, create bookings and venues. [Click here for hosted build.]()
+Holidaze is a booking web application made with React and Bootstrap. Users can register, log in, create bookings and venues. [Click here for hosted build.](https://holidaze-98.netlify.app/?page=1)
 
 ## Running project locally and testing
 

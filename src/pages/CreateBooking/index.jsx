@@ -8,9 +8,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { StaticDatePicker } from '@mui/x-date-pickers';
-import { DateCalendar } from '@mui/x-date-pickers';
-import { MobileDatePicker } from '@mui/x-date-pickers';
-import { DatePicker } from '@mui/x-date-pickers';
 const dayjs = require('dayjs');
 dayjs().format();
 

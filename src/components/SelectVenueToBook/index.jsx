@@ -116,8 +116,7 @@ function SelectVenueToBook() {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-4'
-                id='selectVenueModal'
+                className='mt-5 modal-width'
             >
                 <Modal.Header>
                     <Modal.Title className='undertitle-p'>

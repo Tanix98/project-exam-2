@@ -48,7 +48,11 @@
     height: 100%;
 }
 
-#venue-description-hidden {
+.venue-description {
+    white-space: pre-line;
+}
+
+.venue-description-hidden {
     -webkit-line-clamp: 3;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -56,7 +60,7 @@
     -webkit-box-orient: vertical;
 }
 
-#venue-description-open {
+.venue-description-open {
     -webkit-line-clamp: auto;
     overflow: hidden;
     text-overflow: ellipsis;

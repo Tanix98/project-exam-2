@@ -1,9 +1,11 @@
-/*import { useNavigate } from 'react-router-dom';*/
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { DatePicker } from '@mui/x-date-pickers';
+const dayjs = require('dayjs');
+dayjs().format();
 
 function EditUserBooking(props) {
     // Edit booking api call loading state
@@ -109,9 +111,9 @@ function EditUserBooking(props) {
             }
 
             if (!data.errors) {
-                setIsLoading(false);
+                /*setIsLoading(false);
                 setEditBookingSubmitAlert();
-                /*navigate(
+                navigate(
                     `/profile/${localStorage
                         .getItem('userName')
                         .replace(/['"]+/g, '')}`
@@ -158,19 +160,6 @@ function EditUserBooking(props) {
     }
 
     // Edit forms
-    function handleCheckinChange(e) {
-        setEditBookingFormData({
-            ...editBookingFormData,
-            dateFrom: e.target.value,
-        });
-    }
-    function handleCheckoutChange(e) {
-        setEditBookingFormData({
-            ...editBookingFormData,
-            dateTo: e.target.value,
-        });
-        console.log(editBookingFormData.dateTo);
-    }
     function handleGuestsChange(e) {
         if (Number(e.target.value) === 0) {
             setEditBookingFormData({
@@ -201,7 +190,7 @@ function EditUserBooking(props) {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-4'
+                className='mt-5 modal-width'
             >
                 <Modal.Body>
                     <Form.Label htmlFor='edit-booking-guest-amount'>
@@ -217,30 +206,28 @@ function EditUserBooking(props) {
                         className='mb-2'
                         autoFocus
                     />
-                    <Form.Label htmlFor='edit-booking-check-in'>
-                        Check-in
-                    </Form.Label>
-                    <Form.Control
-                        id='edit-booking-check-in'
-                        type='date'
-                        placeholder='Enter check-in date'
-                        value={editBookingFormData.dateFrom}
-                        onChange={handleCheckinChange}
-                        onKeyDown={handleKeyDownEdit}
-                        className='mb-2'
-                    />
-                    <Form.Label htmlFor='edit-booking-check-out'>
-                        Check-out
-                    </Form.Label>
-                    <Form.Control
-                        id='edit-booking-check-out'
-                        type='date'
-                        placeholder='Enter check-out date'
-                        value={editBookingFormData.dateTo}
-                        onChange={handleCheckoutChange}
-                        onKeyDown={handleKeyDownEdit}
-                        className='mb-2'
-                    />
+                    <div className='d-flex flex-column mt-1'>
+                        <Form.Label htmlFor='edit-booking-check-in'>
+                            Check-in
+                        </Form.Label>
+                        <DatePicker
+                            id='edit-booking-check-in'
+                            value={dayjs(editBookingFormData.dateFrom)}
+                            className='mb-2'
+                            disabled
+                        />
+                    </div>
+                    <div className='d-flex flex-column mt-1'>
+                        <Form.Label htmlFor='edit-booking-check-out'>
+                            Check-out
+                        </Form.Label>
+                        <DatePicker
+                            id='edit-booking-check-out'
+                            value={dayjs(editBookingFormData.dateTo)}
+                            className='mb-2'
+                            disabled
+                        />
+                    </div>
                     <p className='text-danger'>
                         {editBookingSubmitAlert.substring(0, 200)}
                     </p>
@@ -252,46 +239,50 @@ function EditUserBooking(props) {
                             <p>Loading...</p>
                         </div>
                     )}
-                    {isLoading ? (
-                        <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditBooking}
-                            onKeyDown={handleKeyDownEdit}
-                            disabled
-                        >
-                            Edit avatar
-                        </Button>
-                    ) : (
-                        <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditBooking}
-                            onKeyDown={handleKeyDownEdit}
-                        >
-                            Edit avatar
-                        </Button>
-                    )}
-                    {isLoading ? (
-                        <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
-                            disabled
-                        >
-                            Close
-                        </Button>
-                    ) : (
-                        <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
-                        >
-                            Close
-                        </Button>
-                    )}
+                    <Col>
+                        {isLoading ? (
+                            <Button
+                                variant='primary rounded-pill'
+                                className='w-100 text-nowrap'
+                                onClick={handleEditBooking}
+                                onKeyDown={handleKeyDownEdit}
+                                disabled
+                            >
+                                Edit booking
+                            </Button>
+                        ) : (
+                            <Button
+                                variant='primary rounded-pill'
+                                className='w-100 text-nowrap'
+                                onClick={handleEditBooking}
+                                onKeyDown={handleKeyDownEdit}
+                            >
+                                Edit booking
+                            </Button>
+                        )}
+                    </Col>
+                    <Col>
+                        {isLoading ? (
+                            <Button
+                                variant='dark rounded-pill'
+                                className='w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                                disabled
+                            >
+                                Close
+                            </Button>
+                        ) : (
+                            <Button
+                                variant='dark rounded-pill'
+                                className='w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                            >
+                                Close
+                            </Button>
+                        )}
+                    </Col>
                 </Modal.Footer>
             </Modal>
         </Col>

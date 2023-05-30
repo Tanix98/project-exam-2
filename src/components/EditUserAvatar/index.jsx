@@ -93,7 +93,7 @@ function EditUserAvatar() {
                 onHide={handleClose}
                 animation={false}
                 size='sm'
-                className='mt-4'
+                className='mt-5 modal-width'
             >
                 <Modal.Body>
                     <Form.Label htmlFor='edit-user-avatar-media-url'>
@@ -123,46 +123,50 @@ function EditUserAvatar() {
                             <p>Loading...</p>
                         </div>
                     )}
-                    {isLoading ? (
-                        <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditAvatar}
-                            onKeyDown={handleKeyDownEdit}
-                            disabled
-                        >
-                            Edit avatar
-                        </Button>
-                    ) : (
-                        <Button
-                            variant='primary rounded-pill'
-                            className='px-4 w-100 col text-nowrap'
-                            onClick={handleEditAvatar}
-                            onKeyDown={handleKeyDownEdit}
-                        >
-                            Edit avatar
-                        </Button>
-                    )}
-                    {isLoading ? (
-                        <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
-                            disabled
-                        >
-                            Close
-                        </Button>
-                    ) : (
-                        <Button
-                            variant='dark rounded-pill'
-                            className='px-4 w-100 col'
-                            onClick={handleClose}
-                            onKeyDown={handleKeyDownClose}
-                        >
-                            Close
-                        </Button>
-                    )}
+                    <Col>
+                        {isLoading ? (
+                            <Button
+                                variant='primary rounded-pill'
+                                className='w-100 text-nowrap'
+                                onClick={handleEditAvatar}
+                                onKeyDown={handleKeyDownEdit}
+                                disabled
+                            >
+                                Edit avatar
+                            </Button>
+                        ) : (
+                            <Button
+                                variant='primary rounded-pill'
+                                className='w-100 text-nowrap'
+                                onClick={handleEditAvatar}
+                                onKeyDown={handleKeyDownEdit}
+                            >
+                                Edit avatar
+                            </Button>
+                        )}
+                    </Col>
+                    <Col>
+                        {isLoading ? (
+                            <Button
+                                variant='dark rounded-pill'
+                                className='w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                                disabled
+                            >
+                                Close
+                            </Button>
+                        ) : (
+                            <Button
+                                variant='dark rounded-pill'
+                                className='w-100'
+                                onClick={handleClose}
+                                onKeyDown={handleKeyDownClose}
+                            >
+                                Close
+                            </Button>
+                        )}
+                    </Col>
                 </Modal.Footer>
             </Modal>
         </Col>

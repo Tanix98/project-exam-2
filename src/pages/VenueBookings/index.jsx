@@ -50,7 +50,11 @@ export default function VenueBookings() {
 
     return (
         <Container className='m-auto' id='bookings-container'>
-            <h1 className='mb-4'>Bookings for {data.name}</h1>
+            <h1 className='mb-4'>
+                {data.bookings.length}{' '}
+                {data.bookings.length === 1 ? ' booking for' : ' bookings for'}{' '}
+                {data.name}
+            </h1>
             <div className='d-flex gap-3 flex-wrap' id='venue-bookings'>
                 {data.bookings.map((booking, index) => (
                     <div

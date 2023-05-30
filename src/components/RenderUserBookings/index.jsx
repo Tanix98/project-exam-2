@@ -5,9 +5,12 @@ import UseApiGetAuth from '../../api/UseApiGetAuth';
 import EditUserBooking from '../EditUserBooking';
 import DeleteUserBooking from '../deleteUserBooking';
 import GetTotalAmountOfDays from '../GetTotalAmountOfDays/index';
+const dayjs = require('dayjs');
 
 function RenderUserBookings(props) {
     const { dataAuth, isLoadingAuth, isErrorAuth } = UseApiGetAuth(props.url);
+
+    const today = dayjs().format('YYYY-MM-DD');
 
     if (isLoadingAuth) {
         return <LoadingScreen />;
@@ -74,7 +77,9 @@ function RenderUserBookings(props) {
                         <hr className='pb-1' />
                     </div>
                     <div className='d-flex flex-wrap gap-2'>
-                        <EditUserBooking id={booking.id} />
+                        {booking.dateFrom > today && (
+                            <EditUserBooking id={booking.id} />
+                        )}
                         <DeleteUserBooking id={booking.id} />
                     </div>
                 </div>

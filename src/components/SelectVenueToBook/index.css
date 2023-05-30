@@ -1,23 +1,12 @@
-@media only screen and (min-width: 576px) {
-    #selectVenueModal {
-        max-width: 400px !important;
-    }
-}
-
 .searchResultsBooking {
     position: absolute;
     top: 74px;
     width: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    max-height: 160px;
+    max-width: 100%;
 }
-@media only screen and (min-width: 576px) {
-    .searchResultsBooking {
-        left: 50%;
-        transform: translate(-50%);
-        max-height: 160px;
-        max-width: 100%;
-    }
-}
-
 #search-list-booking {
     width: 100%;
 }

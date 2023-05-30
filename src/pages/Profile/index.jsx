@@ -24,13 +24,19 @@ function Profile() {
     // Toggle between user booking and user venues
     const [bookingsDisplay, setBookingsDisplay] = useState('d-flex');
     const [venuesDisplay, setVenuesDisplay] = useState('d-none');
+    const [myBookingsBtnColor, setMyBookingsBtnColor] = useState('dark');
+    const [myVenuesBtnColor, setMyVenuesBtnColor] = useState('outline-dark');
     const viewBookings = () => {
         setBookingsDisplay('d-flex');
         setVenuesDisplay('d-none');
+        setMyBookingsBtnColor('dark');
+        setMyVenuesBtnColor('outline-dark');
     };
     const viewVenues = () => {
         setBookingsDisplay('d-none');
         setVenuesDisplay('d-flex');
+        setMyBookingsBtnColor('outline-dark');
+        setMyVenuesBtnColor('dark');
     };
     const handleKeyDownViewBookings = (event) => {
         if (event.keyCode === 13) {
@@ -129,31 +135,35 @@ function Profile() {
                             }
                         >
                             {dataAuth.venueManager ? (
-                                <div className='d-flex flex-wrap gap-2'>
+                                <>
                                     <EditUserAvatar />
-                                    <Col>
-                                        <Button
-                                            variant='outline-dark'
-                                            className='w-100 rounded-pill'
-                                            onClick={viewBookings}
-                                            onKeyDown={
-                                                handleKeyDownViewBookings
-                                            }
-                                        >
-                                            My bookings
-                                        </Button>
-                                    </Col>
-                                    <Col>
-                                        <Button
-                                            variant='outline-dark'
-                                            className='w-100 rounded-pill'
-                                            onClick={viewVenues}
-                                            onKeyDown={handleKeyDownViewVenues}
-                                        >
-                                            My venues
-                                        </Button>
-                                    </Col>
-                                </div>
+                                    <div className='d-flex flex-wrap gap-2 mt-1'>
+                                        <Col>
+                                            <Button
+                                                variant={myBookingsBtnColor}
+                                                className='w-100 rounded-pill'
+                                                onClick={viewBookings}
+                                                onKeyDown={
+                                                    handleKeyDownViewBookings
+                                                }
+                                            >
+                                                My bookings
+                                            </Button>
+                                        </Col>
+                                        <Col>
+                                            <Button
+                                                variant={myVenuesBtnColor}
+                                                className='w-100 rounded-pill'
+                                                onClick={viewVenues}
+                                                onKeyDown={
+                                                    handleKeyDownViewVenues
+                                                }
+                                            >
+                                                My venues
+                                            </Button>
+                                        </Col>
+                                    </div>
+                                </>
                             ) : (
                                 <EditUserAvatar />
                             )}

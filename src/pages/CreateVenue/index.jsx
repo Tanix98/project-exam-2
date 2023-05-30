@@ -322,7 +322,6 @@ export default function CreateVenue() {
                             className='scrollBarContent'
                             value={createVenueFormData.description}
                             placeholder='Enter description'
-                            onKeyDown={handleKeyDown}
                             onChange={handleDescriptionChange}
                         ></Form.Control>
                     </Form.Group>

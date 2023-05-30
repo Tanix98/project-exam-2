@@ -137,7 +137,7 @@ function SingleVenue() {
                             onClick={NavigateToVenueBookings}
                             onKeyDown={handleKeyDownVenueBookings}
                         >
-                            View Bookings
+                            View Bookings ({data.bookings.length})
                         </Button>
                         <div className='d-flex flex-wrap gap-3'>
                             <EditUserVenue data={data} />
@@ -177,10 +177,10 @@ function SingleVenue() {
                 <div className='my-3'>
                     <p className='undertitle-p'>Description:</p>
                     <p
-                        id={
+                        className={
                             showMore
-                                ? 'venue-description-open'
-                                : 'venue-description-hidden'
+                                ? 'venue-description venue-description-open'
+                                : 'venue-description venue-description-hidden'
                         }
                     >
                         {data.description}
@@ -198,7 +198,7 @@ function SingleVenue() {
             return (
                 <div className='my-3'>
                     <p className='undertitle-p'>Description:</p>
-                    <p>{data.description}</p>
+                    <p className='venue-description'>{data.description}</p>
                 </div>
             );
         }

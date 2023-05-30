@@ -8,6 +8,7 @@
 @media only screen and (min-width: 443px) {
     #user-bookings-container {
         justify-content: start;
+        max-width: 820px;
     }
     #user-booking {
         width: auto;

@@ -144,3 +144,10 @@ button {
     border: 3px solid var(--scrollbarBG);
     border-radius: 10px;
 }
+
+.modal-width .modal-dialog {
+    max-width: 400px !important;
+    margin: auto !important;
+    padding-left: 11px !important;
+    padding-right: 11px !important;
+}

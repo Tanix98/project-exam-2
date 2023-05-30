@@ -68,8 +68,7 @@ function DeleteUserBooking(props) {
                 show={open}
                 onHide={handleClose}
                 animation={false}
-                size='sm'
-                className='mt-5'
+                className='mt-5 modal-width'
             >
                 <Modal.Body>
                     <p className='text-danger'>

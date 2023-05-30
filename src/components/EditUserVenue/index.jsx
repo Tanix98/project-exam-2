@@ -1,5 +1,5 @@
 import '../EditUserVenue/index.css';
-import { Link /*, useNavigate*/ } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
@@ -307,7 +307,7 @@ function EditUserVenue(props) {
                 show={open}
                 onHide={handleClose}
                 animation={false}
-                className='mt-4'
+                className='mt-5 mt-sm-4'
             >
                 <Modal.Header>
                     <Modal.Title className='undertitle-p'>
@@ -336,11 +336,10 @@ function EditUserVenue(props) {
                             <Form.Control
                                 id='edit-venue-description'
                                 as='textarea'
-                                rows={4}
+                                rows={6}
                                 className='scrollBarContent'
                                 value={editVenueFormData.description}
                                 placeholder='Enter description'
-                                onKeyDown={handleKeyDown}
                                 onChange={handleDescriptionChange}
                             ></Form.Control>
                         </Form.Group>

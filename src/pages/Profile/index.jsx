@@ -138,31 +138,25 @@ function Profile() {
                             {dataAuth.venueManager ? (
                                 <>
                                     <EditUserAvatar />
-                                    <div className='d-flex flex-wrap gap-2 mt-1'>
-                                        <Col>
-                                            <Button
-                                                variant={myBookingsBtnColor}
-                                                className='w-100 rounded-pill'
-                                                onClick={viewBookings}
-                                                onKeyDown={
-                                                    handleKeyDownViewBookings
-                                                }
-                                            >
-                                                My bookings
-                                            </Button>
-                                        </Col>
-                                        <Col>
-                                            <Button
-                                                variant={myVenuesBtnColor}
-                                                className='w-100 rounded-pill'
-                                                onClick={viewVenues}
-                                                onKeyDown={
-                                                    handleKeyDownViewVenues
-                                                }
-                                            >
-                                                My venues
-                                            </Button>
-                                        </Col>
+                                    <div className='d-flex flex-nowrap mt-1'>
+                                        <Button
+                                            variant={myBookingsBtnColor}
+                                            className='rounded-left'
+                                            onClick={viewBookings}
+                                            onKeyDown={
+                                                handleKeyDownViewBookings
+                                            }
+                                        >
+                                            My bookings
+                                        </Button>
+                                        <Button
+                                            variant={myVenuesBtnColor}
+                                            className='rounded-right'
+                                            onClick={viewVenues}
+                                            onKeyDown={handleKeyDownViewVenues}
+                                        >
+                                            My venues
+                                        </Button>
                                     </div>
                                 </>
                             ) : (

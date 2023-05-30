@@ -3,3 +3,16 @@
     height: 125px;
     object-fit: cover;
 }
+
+.rounded-left {
+    border-top-left-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.rounded-right {
+    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}

@@ -52,7 +52,12 @@ export default function CreateBooking() {
             console.log(createBookingFormData.dateFrom);
             console.log(createBookingFormData.dateTo);
         }
-    }, [createBookingFormData.dateFrom, createBookingFormData.dateTo]);
+    }, [
+        createBookingFormData.dateFrom,
+        createBookingFormData.dateTo,
+        startDateRaw,
+        endDateRaw,
+    ]);
 
     const { data, isLoading, isError } = UseApiGet(
         `https://api.noroff.dev/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`

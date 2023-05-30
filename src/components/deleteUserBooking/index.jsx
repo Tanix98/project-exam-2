@@ -26,6 +26,7 @@ function DeleteUserBooking(props) {
                     },
                 }
             );
+            console.log(response.text());
 
             window.location.reload(false);
         } catch (error) {

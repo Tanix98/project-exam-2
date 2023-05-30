@@ -60,6 +60,10 @@ a {
 button {
     white-space: nowrap;
 }
+button,
+input {
+    border-width: 2px !important;
+}
 
 .linkText {
     color: var(--link) !important;

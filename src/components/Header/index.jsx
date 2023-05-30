@@ -168,6 +168,7 @@ export default function Header() {
                                 className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
                                 onClick={search}
                                 onKeyDown={handleKeyDownSearch}
+                                aria-label='Search venues'
                             >
                                 <svg
                                     xmlns='http://www.w3.org/2000/svg'
@@ -349,6 +350,7 @@ export default function Header() {
                             className='custom-header-searchbar-btn d-flex border-0 m-auto bg-transparent p-1'
                             onClick={search}
                             onKeyDown={handleKeyDownSearch}
+                            aria-label='Search venues'
                         >
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'

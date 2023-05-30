@@ -42,6 +42,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToPreviousPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to previous page of venues list'
                         disabled
                     >
                         <svg
@@ -61,6 +62,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToNextPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to next page of venues list'
                         disabled
                     >
                         <svg
@@ -85,6 +87,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToPreviousPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to previous page of venues list'
                     >
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -103,6 +106,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToNextPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to next page of venues list'
                         disabled
                     >
                         <svg
@@ -127,6 +131,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToPreviousPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to previous page of venues list'
                         disabled
                     >
                         <svg
@@ -146,6 +151,7 @@ function RenderVenues(props) {
                         variant='light'
                         onClick={navigateToNextPage}
                         className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                        aria-label='Go to next page of venues list'
                     >
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -168,6 +174,7 @@ function RenderVenues(props) {
                     variant='light'
                     onClick={navigateToPreviousPage}
                     className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                    aria-label='Go to previous page of venues list'
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -186,6 +193,7 @@ function RenderVenues(props) {
                     variant='light'
                     onClick={navigateToNextPage}
                     className='pageArrows d-flex align-items-center justify-content-center shadow-sm rounded-pill'
+                    aria-label='Go to next page of venues list'
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'

@@ -1,10 +1,28 @@
 # Holidaze
 
+![Holidaze web app preview](/src/assets/imgs/holidaze_preview.webp)
+
 Holidaze is a booking web application made with React and Bootstrap. Users can register, log in, create and update bookings and venues. [Click here for hosted build.](https://holidaze-98.netlify.app/?page=1)
 
-## Running project locally
+## Run project locally
 
-Open the project folder in a terminal and type `npm i` to install dependencies, and `npm start` to run the project.
+1. Clone the repo:
+
+```bash
+git clone https://github.com/Tanix98/project-exam-2
+```
+
+2. Install the dependencies:
+
+```
+npm install
+```
+
+3. To run the app, run the following commands:
+
+```bash
+npm run start
+```
 
 ## Credits
 
